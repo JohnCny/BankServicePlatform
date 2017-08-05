@@ -28,7 +28,7 @@ _DBUSER = "root"  # 数据库用户名
 _DBPASS = "root"  # 数据库用户名密码
 _DBHOST = "192.168.3.252"  # 服务器
 _DBPORT = '3306'  #服务器端口
-_DBNAME = "bsp"  # 数据库名称
+_DBNAME = "bank_service_platform"  # 数据库名称
 #远程
 # _DBUSER = "root"  # 数据库用户名
 # _DBPASS = "Qkroot"  # 数据库用户名密码

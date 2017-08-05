@@ -2,8 +2,9 @@
 __author__ = 'Johnny'
 
 import sys
+from tools import helper
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from .core import db
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -14,5 +15,8 @@ app = Flask(__name__)
 # 读取配置文件
 app.config.from_object('BankServicePlatform.settings.ProConfig') # mysql
 
-# 初始化数据库
-db = SQLAlchemy(app)
+
+
+
+
+

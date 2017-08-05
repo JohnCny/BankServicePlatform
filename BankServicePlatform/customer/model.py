@@ -3,7 +3,7 @@ __author__ = 'Johnny'
 
 from BankServicePlatform import db
 
-class Customer(db.model):
+class Customer(db.Model):
     __tablename__="customer"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -15,4 +15,4 @@ class Customer(db.model):
     channel=db.Column(db.Integer())#渠道
     create_date=db.Column(db.DateTime())#创建时间
 
-    quotaes=db.relationship('Quota', backref='customer',lazy='dynamic',uselist=False)#额度关联
+    quotaes=db.relationship('Quota', backref='customer',lazy='dynamic')#额度关联
