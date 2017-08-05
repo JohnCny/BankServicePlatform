@@ -1,5 +1,6 @@
-__author__ = 'Johnny'
 # -*- coding: utf-8 -*-
+__author__ = 'Johnny'
+
 
 import pkgutil
 import importlib

@@ -3,7 +3,7 @@ __author__ = 'Johnny'
 
 from BankServicePlatform import db
 
-class Product(db.model):
+class Product(db.Model):
     __tablename__="product"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -13,4 +13,4 @@ class Product(db.model):
     min_quota=db.Column(db.Integer())#最小额度
     max_quota=db.Column(db.Integer())#最大额度
 
-    quotaes=db.relationship('Quota', backref='product',lazy='dynamic',uselist=False)#额度关联
+    quotaes=db.relationship('Quota', backref='product',uselist=False)#额度关联
