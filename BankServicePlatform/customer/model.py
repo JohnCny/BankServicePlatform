@@ -1,6 +1,7 @@
-__author__ = 'Johnny'
 # -*- coding: utf-8 -*-
-from ..core import db
+__author__ = 'Johnny'
+
+from BankServicePlatform import db
 
 class Customer(db.model):
     __tablename__="customer"
@@ -13,3 +14,5 @@ class Customer(db.model):
     phone=db.Column(db.String(20))#手机号码
     channel=db.Column(db.Integer())#渠道
     create_date=db.Column(db.DateTime())#创建时间
+
+    quotaes=db.relationship('Quota', backref='customer',lazy='dynamic',uselist=False)#额度关联
