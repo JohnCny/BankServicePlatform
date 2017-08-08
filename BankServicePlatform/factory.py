@@ -7,9 +7,10 @@ from celery import Celery
 from flask import Flask
 from flask_security import SQLAlchemyUserDatastore
 
-from .core import db
+from .core import db,security
 from .tools.helper import register_blueprints
 from .middleware import HTTPMethodOverrideMiddleware
+from .models import Customer
 
 
 def create_app(package_name, package_path, settings_override=None,
@@ -31,7 +32,7 @@ def create_app(package_name, package_path, settings_override=None,
 
     db.init_app(app)
     # mail.init_app(app)
-    # security.init_app(app, SQLAlchemyUserDatastore(db, User, Role),
+    # security.init_app(app, SQLAlchemyUserDatastore(db, Customer),
     #                   register_blueprint=register_security_blueprint)
 
     register_blueprints(app, package_name, package_path)

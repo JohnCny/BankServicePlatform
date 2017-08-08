@@ -13,7 +13,7 @@ def list():
     """
         查询，返回全部
     """
-    return helper.show_result_content(customer.all())
+    return customer.all()
 
 @route(bp,'/<customer_id>')
 def show(customer_id):
@@ -36,3 +36,8 @@ def update(customer_id):
 def delete(customer_id):
     customer.delete(customer.get_or_404(customer_id))
     return None,204
+
+@route(bp,'/<customer_id>/quotas')
+def quotas(customer_id):
+    return customer.get_or_404(customer_id).quotaes
+

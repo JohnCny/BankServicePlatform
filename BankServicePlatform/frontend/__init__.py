@@ -33,7 +33,7 @@ def handle_error(e):
 def route(bp, *args, **kwargs):
     def decorator(f):
         @bp.route(*args, **kwargs)
-        @login_required
+        # @login_required
         @wraps(f)
         def wrapper(*args, **kwargs):
             return f(*args, **kwargs)
