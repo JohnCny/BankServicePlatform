@@ -2,9 +2,12 @@
 __author__ = 'Johnny'
 
 from BankServicePlatform import db
+from ..tools.helper import JsonSerializer
 
+class QuotaJsonSerializer(JsonSerializer):
+    pass
 
-class Quota(db.Model):
+class Quota(QuotaJsonSerializer,db.Model):
     __tablename__="quota"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -15,9 +18,9 @@ class Quota(db.Model):
     version=db.Column(db.Integer())#防并发，每次更新该值+1
 
     quota_recordes=db.relationship('QuotaRecord', backref='quota',lazy='dynamic')#额度记录
-    quota_user_recordes=db.relationship('QuotaUsedRecord', backref='quota',lazy='dynamic')#使用额度记录
+    quota_used_recordes=db.relationship('QuotaUsedRecord', backref='quota',lazy='dynamic')#使用额度记录
 
-class QuotaRecord(db.Model):
+class QuotaRecord(QuotaJsonSerializer,db.Model):
     __tablename__="quota_record"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -26,7 +29,7 @@ class QuotaRecord(db.Model):
     original_quota=db.Column(db.Integer())#原始额度
     updated_quota=db.Column(db.Integer())#变更后额度
 
-class QuotaUsedRecord(db.Model):
+class QuotaUsedRecord(QuotaJsonSerializer,db.Model):
     __tablename__="quota_used_record"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -37,7 +40,7 @@ class QuotaUsedRecord(db.Model):
 
     quota_billes=db.relationship('QuotaBill', backref='quota_used_record',uselist=False)#额度账单
 
-class QuotaBill(db.Model):
+class QuotaBill(QuotaJsonSerializer,db.Model):
     __tablename__="quota_bill"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -48,7 +51,7 @@ class QuotaBill(db.Model):
 
     quota_repaymentes=db.relationship('QuotaRepayment', backref='quota_bill',lazy='dynamic')#账单还款记录
 
-class QuotaRepayment(db.Model):
+class QuotaRepayment(QuotaJsonSerializer,db.Model):
     __tablename__="quota_repayment"
 
     id = db.Column(db.Integer(), primary_key=True)
