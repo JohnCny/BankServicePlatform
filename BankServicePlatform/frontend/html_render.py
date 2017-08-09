@@ -6,18 +6,12 @@ from flask import Blueprint, render_template
 from . import route
 
 
-
 bp = Blueprint('/', __name__)
 
 
 @route(bp, '/')
 def index():
     return render_template('mmdl.html')
-
-#用户
-@route(bp,'/customer')
-def customer():
-    return render_template('customer.html')
 
 #贷款详情
 @route(bp,'/dkxq')

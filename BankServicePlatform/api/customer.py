@@ -15,7 +15,7 @@ def list():
     """
         查询，返回全部
     """
-    return helper.show_result_content(customer.all())
+    return customer.all()
 
 @route(bp,'/quota/')
 def get_customer_quota():
@@ -31,7 +31,7 @@ def show(customer_id):
     """
         查找单个
     """
-    return helper.show_result_content(customer.get_or_404(customer_id))
+    return customer.get_or_404(customer_id)
 
 @route(bp,'/<customer_id>/quotas')
 def quotas(customer_id):
@@ -45,11 +45,11 @@ def quotas(customer_id):
 """页面组成字典或者json"""
 @route(bp,'/',methods=['POST'])
 def new():
-    return helper.show_result_content(customer.create(**request.json))
+    return customer.create(**request.json)
 
 @route(bp,'/<customer_id>',methods=['PUT'])
 def update(customer_id):
-    return helper.show_result_content(customer.update(customer.get_or_404(customer_id),**request.json))
+    return customer.update(customer.get_or_404(customer_id),**request.json)
 
 @route(bp,'/<customer_id>',methods=['DELETE'])
 def delete(customer_id):

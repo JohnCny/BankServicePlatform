@@ -6,7 +6,7 @@ from ..tools.helper import JsonSerializer
 import datetime
 
 class CustomerJsonSerializer(JsonSerializer):
-    __json_hidden__ = ["quotaes"]
+    __json_public__ = ["real_name","identification_number","phone"]
 
 class Customer(CustomerJsonSerializer,db.Model):
     __tablename__="customer"
