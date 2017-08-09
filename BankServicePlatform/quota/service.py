@@ -16,5 +16,9 @@ class QuotaBillService(Service):
 class QuotaUsedRecordService(Service):
     __model__ = QuotaUsedRecord
 
+    def _preprocess_params(self, kwargs):
+        kwargs=super(QuotaUsedRecordService,self)._preprocess_params(kwargs)
+        return kwargs.get('quota_used_record')
+
 class QuotaRepaymentService(Service):
     __model__ = QuotaRepayment

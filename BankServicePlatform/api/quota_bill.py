@@ -13,29 +13,29 @@ def show(quota_bill_id):
     """
         查找单个
     """
-    return helper.show_result_content(quota_bill.get_or_404(quota_bill_id))
+    return quota_bill.get_or_404(quota_bill_id)
+
+@route(bp,'/<quota_bill_id>/repayment')
+def show_repayment(quota_bill_id):
+    """
+    查找每笔账单还款情况
+    :param quota_bill_id:
+    :return:
+    """
+    return quota_bill.get_or_404(quota_bill_id).quota_repaymentes.all()
 
 
 """页面组成字典或者json"""
 @route(bp,'/',methods=['POST'])
 def new():
-    return helper.show_result_content(quota_bill.create(**request.json))
+    return quota_bill.create(**request.json)
 
 @route(bp,'/<quota_bill_id>',methods=['PUT'])
 def update(quota_bill_id):
-    return helper.show_result_content(quota_bill.update(quota_bill.get_or_404(quota_bill_id),**request.json))
+    return quota_bill.update(quota_bill.get_or_404(quota_bill_id),**request.json)
 
 @route(bp,'/<quota_bill_id>',methods=['DELETE'])
 def delete(quota_bill_id):
     quota_bill.delete(quota_bill.get_or_404(quota_bill_id))
     return None,204
 
-"""==============================================还款记录====================================================="""
-@route(bp,'/<quota_bill_id>/repayments')
-def repayments(quota_bill_id):
-    quota_bill.get_or_404(quota_bill_id).quota_repaymentes
-
-@route(bp,'/<quota_bill_id>/repayments/<quota_repayments_id>',methods=['PUT'])
-def add_record(quota_used_record_id,quota_bill_id):
-    quota_bill.add_quota_repayment(quota_bill.get_or_404(quota_used_record_id),quota_repayment.get_or_404(quota_bill_id))
-    return None,204
