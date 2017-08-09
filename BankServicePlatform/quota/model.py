@@ -15,7 +15,7 @@ class Quota(QuotaJsonSerializer,db.Model):
     customer_id=db.Column(db.Integer,db.ForeignKey('customer.id'))
     product_id=db.Column(db.Integer,db.ForeignKey('product.id'),default=1)#todo:今后需改为多产品
     amount=db.Column(db.Integer())#总额度
-    available_amount=db.Column(db.Float())#可用额度
+    available_amount=db.Column(db.Float(),default=0)#可用额度
     version=db.Column(db.Integer())#防并发，每次更新该值+1
 
     quota_recordes=db.relationship('QuotaRecord', backref='quota',lazy='dynamic')#额度记录
