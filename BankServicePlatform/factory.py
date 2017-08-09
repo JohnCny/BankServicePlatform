@@ -5,12 +5,11 @@ import os
 
 from celery import Celery
 from flask import Flask
-from flask_security import SQLAlchemyUserDatastore
+
 
 from .core import db,security
 from .tools.helper import register_blueprints
 from .middleware import HTTPMethodOverrideMiddleware
-from .models import Customer
 
 
 def create_app(package_name, package_path, settings_override=None,

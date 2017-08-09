@@ -4,12 +4,11 @@ __author__ = 'Johnny'
 from BankServicePlatform import db
 from ..tools.helper import JsonSerializer
 import datetime
-from flask_security import UserMixin
 
 class CustomerJsonSerializer(JsonSerializer):
-    pass
+    __json_hidden__ = ["quotaes"]
 
-class Customer(CustomerJsonSerializer,UserMixin,db.Model):
+class Customer(CustomerJsonSerializer,db.Model):
     __tablename__="customer"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -21,5 +20,5 @@ class Customer(CustomerJsonSerializer,UserMixin,db.Model):
     channel=db.Column(db.Integer())#渠道
     create_date=db.Column(db.DateTime(),default=datetime.datetime.now())#创建时间
 
-    quotaes=db.relationship('Quota', backref=db.backref('customer',lazy='select'))#额度关联
+    quotaes=db.relationship('Quota', backref='customer',uselist=False)#额度关联
 

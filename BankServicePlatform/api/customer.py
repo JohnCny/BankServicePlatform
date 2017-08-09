@@ -8,12 +8,23 @@ from .import route
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
+current_user=1;
+
 @route(bp,'/')
 def list():
     """
         查询，返回全部
     """
-    return customer.all()
+    return helper.show_result_content(customer.all())
+
+@route(bp,'/quota/')
+def get_customer_quota():
+    """
+    根据用户获得额度
+    :return:
+    """
+    return customer.get_or_404(current_user).quotaes
+
 
 @route(bp,'/<customer_id>')
 def show(customer_id):
@@ -22,6 +33,14 @@ def show(customer_id):
     """
     return helper.show_result_content(customer.get_or_404(customer_id))
 
+@route(bp,'/<customer_id>/quotas')
+def quotas(customer_id):
+    """
+    查找每个用户的额度
+    :param customer_id:
+    :return:
+    """
+    return customer.get_or_404(customer_id).quotaes
 
 """页面组成字典或者json"""
 @route(bp,'/',methods=['POST'])
@@ -37,7 +56,5 @@ def delete(customer_id):
     customer.delete(customer.get_or_404(customer_id))
     return None,204
 
-@route(bp,'/<customer_id>/quotas')
-def quotas(customer_id):
-    return customer.get_or_404(customer_id).quotaes
+
 
