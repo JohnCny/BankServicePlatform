@@ -9,7 +9,7 @@ from flask import Blueprint
 from flask.json import JSONEncoder as BaseJSONEncoder
 from sqlalchemy.ext.declarative import DeclarativeMeta
 import json
-
+from json_encoding import json_serial
 
 
 
@@ -82,6 +82,7 @@ class AlchemyEncoder(json.JSONEncoder):
 # 返回内容
 def show_result_content(obj):
     return json.dumps(obj, cls=AlchemyEncoder,ensure_ascii = False) #json文本
+
 
 # 返回成功提示
 def show_result_success(info):

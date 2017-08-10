@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from BankServicePlatform import db
+from ..core import db
+from ..tools.helper import JsonSerializer
 
-class Product(db.Model):
+class ProductJsonSerializer(JsonSerializer):
+    pass
+
+class Product(ProductJsonSerializer,db.Model):
     __tablename__="product"
 
     id = db.Column(db.Integer(), primary_key=True)

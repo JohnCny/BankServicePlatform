@@ -1,5 +1,5 @@
 import json
-import datetime
+from datetime import date,datetime
 import decimal
 
 class DateEncoder(json.JSONEncoder):
@@ -22,4 +22,7 @@ class DateDecimalEncoder(json.JSONEncoder):
         if isinstance(obj, decimal.Decimal):
             return float(obj)
 
-
+def json_serial(obj):
+     if isinstance(obj, (datetime, date)):
+        serial = obj.isoformat()
+        return serial

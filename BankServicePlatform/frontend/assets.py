@@ -15,21 +15,19 @@ css_all = Bundle("css/bootstrap.min.css", css_bankserviceplatform,
                  filters="cssmin", output="css/bankserviceplatform.min.css")
 
 #: vendor js bundle
-js_vendor = Bundle("js/vendor/jquery-1.10.1.min.js",
-                   "js/vendor/bootstrap-2.3.3.min.js",
-                   "js/vendor/underscore-1.4.4.min.js",
-                   "js/vendor/backbone-1.0.0.min.js",
-                   filters="jsmin", output="js/vendor.min.js")
+js_quote = Bundle("js/quote/jquery-3.2.1.min.js",
+                   "js/quote/underscore-1.8.3.min.js",
+                   "js/quote/backbone-1.3.3.min.js")
 
 #: application js bundle
-js_main = Bundle("coffee/*.coffee", filters="coffeescript", output="js/main.js")
-
+# js_customer = Bundle("coffee/*.coffee", filters="coffeescript", output="js/customer.js")
+js_customer = Bundle("js/customer.js")
 
 def init_app(app):
     webassets = Environment(app)
     webassets.register('css_all', css_all)
-    webassets.register('js_vendor', js_vendor)
-    webassets.register('js_main', js_main)
+    webassets.register('js_quote', js_quote)
+    webassets.register('js_main', js_customer)
     webassets.manifest = 'cache' if not app.debug else False
     webassets.cache = not app.debug
     webassets.debug = app.debug
