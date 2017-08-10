@@ -1,7 +1,6 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-# -*- coding: utf-8 -*-
 """
     BankServicePlatform.core
     ~~~~~~~~~~~~~

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from BankServicePlatform import db
+from ..core import db
 from ..tools.helper import JsonSerializer
 
 class ProductJsonSerializer(JsonSerializer):
