@@ -3,13 +3,13 @@ __author__ = 'Johnny'
 
 from functools import wraps
 
-from flask import jsonify
+from flask import jsonify,url_for,redirect
 from ..factory import auth
-from ..core import BankServicePlatformError,BankServicePlatformFormError,login_manager
+from ..core import BankServicePlatformError,BankServicePlatformFormError
 from ..tools.helper import JSONEncoder
 from .. import factory
 
-
+_auth=auth
 
 
 def create_app(settings_override=None):
@@ -32,7 +32,7 @@ def route(bp, *args, **kwargs):
 
     def decorator(f):
         @bp.route(*args, **kwargs)
-        @auth.login_required
+        @_auth.login_required
         @wraps(f)
         def wrapper(*args, **kwargs):
             sc = 200
@@ -44,7 +44,6 @@ def route(bp, *args, **kwargs):
         return f
 
     return decorator
-
 
 def route_nl(bp, *args, **kwargs):
     kwargs.setdefault('strict_slashes', False)

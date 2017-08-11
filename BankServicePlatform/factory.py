@@ -8,11 +8,13 @@ from flask import Flask
 
 from flask_httpauth import HTTPBasicAuth
 
-from .core import db,login_manager
+from .core import db
 from .tools.helper import register_blueprints
 from .middleware import HTTPMethodOverrideMiddleware
 from .models import Customer
 from flask import g
+
+
 
 auth=HTTPBasicAuth()
 
@@ -34,7 +36,7 @@ def create_app(package_name, package_path,settings_overrde=None):
 
     db.init_app(app)
 
-    login_manager.init_app(app)
+    # login_manager.init_app(app)
 
     # mail.init_app(app)
     # security.init_app(app, SQLAlchemyUserDatastore(db, Customer,Role),
@@ -89,3 +91,7 @@ def verify_password(phone_or_token,password):
 
     g.customer=customer
     return True
+
+@auth.error_handler
+def unauthorized():
+    return 'UnAuthorized',500
