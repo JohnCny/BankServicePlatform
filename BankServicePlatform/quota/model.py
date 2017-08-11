@@ -19,7 +19,7 @@ class Quota(QuotaJsonSerializer,db.Model):
     version=db.Column(db.Integer())#防并发，每次更新该值+1
 
     quota_recordes=db.relationship('QuotaRecord', backref='quota',lazy='dynamic')#额度记录
-    quota_used_recordes=db.relationship('QuotaUsedRecord', backref='quota',lazy='select')#使用额度记录
+    quota_used_recordes=db.relationship('QuotaUsedRecord', backref='quota',lazy='dynamic')#使用额度记录
 
 
 class QuotaRecordJsonSerializer(JsonSerializer):
@@ -49,7 +49,7 @@ class QuotaUsedRecord(QuotaUsedRecordJsonSerializer,db.Model):
     quota_billes=db.relationship('QuotaBill', backref='quota_used_record',uselist=False)#额度账单
 
 class QuotaBillJsonSerializer(JsonSerializer):
-    __json_public__ = ["period_principal","period_interest","period_remain","create_date"]
+    __json_public__ = ["period_amount","period_remain","create_date"]
 
 class QuotaBill(QuotaBillJsonSerializer,db.Model):
     __tablename__="quota_bill"
