@@ -1,64 +1,70 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>	
-	<meta charset="utf-8">
-	<title>快审通</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
-	<meta name="author" content="Muhammad Usman">
-	<link href="../static/css/main.css" rel="stylesheet">
-	<script type="text/javascript" src="../static/js/main.js"></script>
-	<style type="text/css">
-	
-	</style>
-	<script type="text/javascript">
-		
-	</script>
+
+<head>
+    <meta charset="utf-8">
+    <title>快审通</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+    <link href="../static/css/main.css" rel="stylesheet">
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/jquery.serializejson.min.js"></script>
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+    </script>
 </head>
+
 <body>
-	<div class="top">
-		<span class="back"><img src="../static/img/back.png"/></span>
-		<span class="title">注册</span>
-		<span class="right" onclick="changePage('yzmdl.html')">登录</span>
-	</div>
-	<div class="center">
-		<div class="content topContent">
-			<table class="normalTable">
-				<tr>
-					<td class="pull-right" style="width:25%">姓名：</td>
-					<td style="width:45%"><input type="text" placeholder="请输入姓名" id="real_name"/></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="pull-right" style="width:25%">手机号：</td>
-					<td style="width:45%"><input type="text" placeholder="请输入手机号" id="phone"/></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="pull-right" style="width:25%">身份证：</td>
-					<td style="width:45%"><input type="text" placeholder="请输入身份证" id="identification_number"/></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="pull-right" style="width:25%">密码：</td>
-					<td style="width:45%"><input type="password" placeholder="请输入密码"/></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="pull-right">验证码：</td>
-					<td><input type="text" placeholder="请输入验证码"/></td>
-					<td><img src="../static/img/yzm.png" class="yzm"/></td>
-				</tr>
-				<tr>
-					<td class="pull-right">短信验证码：</td>
-					<td><input type="text" placeholder="请输入短信验证码"/></td>
-					<td><input type="button" value="获取验证码" class="btn btn-yzm"/></td>
-				</tr>
-			</table>		
-		</div>
-	</div>
-	<div class="bottom">
-		<input type="button" value="登录" class="btn btn-login"/>
-	</div>
+    <div class="top">
+        <span class="back"><img src="../static/img/back.png"/></span>
+        <span class="title">注册</span>
+        <span class="right" onclick="changePage('yzmdl')">登录</span>
+    </div>
+    <form id="contentForm" class="center">
+        <div class="content topContent">
+            <table class="normalTable">
+                <tr>
+                    <td class="pull-right" style="width:25%">姓名：</td>
+                    <td style="width:45%"><input type="text" placeholder="请输入姓名" name="real_name" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="pull-right" style="width:25%">手机号：</td>
+                    <td style="width:45%"><input type="text" placeholder="请输入手机号" name="phone" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="pull-right" style="width:25%">身份证：</td>
+                    <td style="width:45%"><input type="text" placeholder="请输入身份证" name="identification_number" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="pull-right" style="width:25%">密码：</td>
+                    <td style="width:45%"><input type="password" placeholder="请输入密码" name="password" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="pull-right">验证码：</td>
+                    <td><input type="text" placeholder="请输入验证码" name="" /></td>
+                    <td><img src="../static/img/yzm.png" class="yzm" /></td>
+                </tr>
+                <tr>
+                    <td class="pull-right">短信验证码：</td>
+                    <td><input type="text" placeholder="请输入短信验证码" name="" /></td>
+                    <td><input type="button" value="获取验证码" class="btn btn-yzm" /></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <div class="bottom">
+        <input id="subBtn" type="button" value="登录" class="btn btn-login" />
+    </div>
 </body>
+
+<script type="text/javascript" src="../static/js/zc.js"></script>
+
 </html>
