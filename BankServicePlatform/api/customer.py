@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from flask import Blueprint,request
+from flask import Blueprint,request,g
 from ..services import customer
 from ..tools import helper
-from .import route
+from .import route,route_nl
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
@@ -43,9 +43,11 @@ def quotas(customer_id):
     return customer.get_or_404(customer_id).quotaes
 
 """页面组成字典或者json"""
-@route(bp,'/',methods=['POST'])
+@route_nl(bp,'/',methods=['POST'])
 def new():
-    return customer.create(**request.json)
+    g.customer=customer.create(**request.json)
+    token=g.customer.generate_auth_token()
+    return token.decode('ascii')
 
 @route(bp,'/<customer_id>',methods=['PUT'])
 def update(customer_id):

@@ -1,16 +1,30 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template,request
+from flask_login import login_user
 
-from . import route
-
+from . import route,route_nl
+from ..services import customer
 
 bp = Blueprint('/', __name__)
 
+@route_nl(bp,'/login',methods=['POST'])
+def login():
+    result=customer.first(**request.json)
+    if result:
+        login_user(result)
+        return "Success",200
+    else:
+        return "Failed",400
 
-@route(bp, '/')
+
+@route_nl(bp, '/')
 def index():
+    return render_template('mmdl.html')
+
+@route_nl(bp, '/login')
+def showlogin():
     return render_template('mmdl.html')
 
 #贷款详情
@@ -49,16 +63,16 @@ def ysx():
     return render_template('ysx.html')
 
 #验证码登录
-@route(bp,'/yzmdl')
+@route_nl(bp,'/yzmdl')
 def yzmdl():
     return render_template('yzmdl.html')
 
 #注册
-@route(bp,'/zc')
+@route_nl(bp,'/zc')
 def zc():
     return render_template('zc.html')
 
 #找回密码
-@route(bp,'/zhmm')
+@route_nl(bp,'/zhmm')
 def zhmm():
     return render_template('zhmm.html')
