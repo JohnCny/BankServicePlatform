@@ -1,71 +1,60 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>	
-	<meta charset="utf-8">
-	<title>快审通</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
-	<meta name="author" content="Muhammad Usman">
-	<link href="../static/css/main.css" rel="stylesheet">
-	<script src="js/jquery-1.7.2.min.js"></script>
-	<script src="../static/js/main.js"></script>
-	<style type="text/css">
-	
-	</style>
-	<script type="text/javascript">
-		
-	</script>
+
+<head>
+    <meta charset="utf-8">
+    <title>快审通</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+    <link href="../static/css/main.css" rel="stylesheet">
+    <script type="text/javascript" src="../static/js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/underscore-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/backbone-1.3.3.min.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/jquery.serializejson.min.js"></script>
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+    </script>
 </head>
+
 <body>
-	<div class="top">
-		<span class="back" onclick="changePage('ysx.html')"><img src="../static/img/back.png"/></span>
-		<span class="title">贷款详情</span>
-	</div>
-	<div class="center"	style="bottom:0">
-		<div class="content topContent">			
-			<table class="normalTable">
-				<tr>
-					<td><b class="black strong kg">2017年08月</b></td>
-					<td></td>
-				</tr>				
-				<tr>
-					<td><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ 5,000.00</span></td>
-					<td><span class="gray kg">申请日期：2016.08.06</span></td>
-				</tr>					
-				<tr>
-					<td><span class="gray kg">应还本金余额：￥4000.00</span></td>
-					<td rowspan="2"><b class="red kg right" style="font-size:20px;">未还完</b></td>
-				</tr>					
-				<tr>
-					<td><span class="gray kg">应还利息：￥89.60</td>
-				</tr>
-				<tr>
-					<td colspan="2"><span class="black strong kg">最后还款日期：2016.12.01</span></td>
-				</tr>				
-			</table>
-		</div>
-		<div class="content topContent">		
-			<table class="normalTable">
-				<tr>
-					<td><b class="black strong kg">2017年07月</b></td>
-					<td></td>
-				</tr>				
-				<tr>
-					<td><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ 5,000.00</span></td>
-					<td><span class="gray kg">申请日期：2016.07.06</span></td>
-				</tr>					
-				<tr>
-					<td><span class="gray kg">应还本金余额：￥4000.00</span></td>
-					<td rowspan="2"><b class="green kg right" style="font-size:20px;">已还完</b></td>
-				</tr>					
-				<tr>
-					<td><span class="gray kg">应还利息：￥89.60</td>
-				</tr>
-				<tr>
-					<td colspan="2"><span class="black strong kg">最后还款日期：2016.12.01</span></td>
-				</tr>				
-			</table>	
-		</div>
-	</div>
+    <div class="top">
+        <span class="back" onclick="changePage('ysx.html')"><img src="../static/img/back.png"/></span>
+        <span class="title">贷款详情</span>
+    </div>
+    <div class="center" style="bottom:0">
+        <div class="content topContent">
+            <table id="single_content" class="normalTable">
+                <script type="text/template" id="single_template">
+                    <tr>
+                        <td><b class="black strong kg"><%= '缺字段' %></b></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result.period_amount %>
+                    </span>
+                        </td>
+                        <td><span class="gray kg">申请日期：<%= result.create_date %></span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="gray kg">应还本金余额：￥<%= '缺字段' %></span></td>
+                        <td rowspan="2"><b class="red kg right" style="font-size:20px;"><%= result.status %></b></td>
+                    </tr>
+                    <tr>
+                        <td><span class="gray kg">应还利息：￥<%= '缺字段' %></td>
+				    </tr>
+				    <tr>
+					    <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
+                    </tr>
+                </script>
+            </table>
+        </div>
+    </div>
 </body>
+
+<script type="text/javascript" src="../static/js/dksqjl.js"></script>
+
 </html>

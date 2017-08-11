@@ -1,64 +1,70 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>	
-	<meta charset="utf-8">
-	<title>快审通</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
-	<meta name="author" content="Muhammad Usman">
-	<link href="../static/css/main.css" rel="stylesheet">
-	<script src="js/jquery-1.7.2.min.js"></script>
-	<script src="../static/js/main.js"></script>
-	<style type="text/css">
-	
-	</style>
-	<script type="text/javascript">
-		
-	</script>
+
+<head>
+    <meta charset="utf-8">
+    <title>快审通</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+    <link href="../static/css/main.css" rel="stylesheet">
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="../static/js/main.js"></script>
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+    </script>
 </head>
+
 <body>
-	<div class="top">
-		<span class="back"><img src="../static/img/back.png"/></span>
-		<span class="title">快审通</span>
-	</div>
-	<div class="center">
-		<div class="content topContent" style="background:#8bcb54;padding:30px 0;border-radius:10px 10px 0 0;">			
-			<p class="bz left">可用额度</p>
-			<h1 class="left">￥5,000.00</h1>
-			<p class="right sqjl"><a href="放弃提额-贷款申请记录.html"><img src="../static/img/sqjl.png"/>申请记录</a></p>
-		</div>
-		<div class="content topContent" style="margin-top:0;border-radius:0 0 10px 10px;">			
-			<table class="normalTable">
-				<tr>
-					<td><span class="black strong kg">总额度</span><span class="gray">（最多可贷5万）</span></td>
-					<td></td>
-				</tr>				
-				<tr>
-					<td><span class="black strong kg" style="font-size:20px;">¥ 5,000.00</span></td>
-					<td>
-						<input type="button" class="btn btn-tsed right" value="提升额度" id="btn1" onclick="$('#dialog').show()"/>
-						<input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2"/>
-					</td>
-				</tr>					
-				<tr>
-					<td></td>
-					<td><span class="gray strong right" id="state">提额状态：<span class="strong yellow">正在处理</span></span></td>
-				</tr>
-			</table>		
-		</div>
-	</div>
-	<div class="bottom">
-		<input type="button" value="申请贷款" class="btn btn-login" onclick="changePage('我要贷款.html')"/>
-	</div>
-	<div id="dialog">
-		<div class="display-div">
-			<p class="tsTitle"><img src="../static/img/ok.png" style="width:21px;margin-top:-4px;"/>您的提额申请已提交<img src="../static/img/sqjl_g.png" style="width:21px;"/></p>
-			<p class="Center">我行将<span class="blue strong">电话或现场</span>调查信息，请保持您<br/>18290895563的电话畅通</p>
-			
-			<div class="button">
-				<input type="button" value="确定" class="btn btn-login btn-small" onclick="$('#dialog').hide();$('#btn1').hide();$('#btn2').show();$('#state').show();"/>
-			</div>
-		</div><!-- /display-div -->
-	</div>
+    <div class="top">
+        <span class="back"><img src="../static/img/back.png"/></span>
+        <span class="title">快审通</span>
+    </div>
+    <div class="center">
+        <div class="content topContent" style="background:#8bcb54;padding:30px 0;border-radius:10px 10px 0 0;">
+            <p class="bz left">可用额度</p>
+            <h1 class="left">￥5,000.00</h1>
+            <p class="right sqjl">
+                <a href="放弃提额-贷款申请记录.html"><img src="../static/img/sqjl.png" />申请记录</a>
+            </p>
+        </div>
+        <div class="content topContent" style="margin-top:0;border-radius:0 0 10px 10px;">
+            <table class="normalTable">
+                <tr>
+                    <td><span class="black strong kg">总额度</span><span class="gray">（最多可贷5万）</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><span class="black strong kg" style="font-size:20px;">¥ 5,000.00</span></td>
+                    <td>
+                        <input type="button" class="btn btn-tsed right" value="提升额度" id="btn1" onclick="$('#dialog').show()" />
+                        <input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><span class="gray strong right" id="state">提额状态：<span class="strong yellow">正在处理</span></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="bottom">
+        <input type="button" value="申请贷款" class="btn btn-login" onclick="changePage('wydk')" />
+    </div>
+    <div id="dialog">
+        <div class="display-div">
+            <p class="tsTitle"><img src="../static/img/ok.png" style="width:21px;margin-top:-4px;" />您的提额申请已提交<img src="../static/img/sqjl_g.png" style="width:21px;" /></p>
+            <p class="Center">我行将<span class="blue strong">电话或现场</span>调查信息，请保持您<br/>18290895563的电话畅通</p>
+
+            <div class="button">
+                <input type="button" value="确定" class="btn btn-login btn-small" onclick="$('#dialog').hide();$('#btn1').hide();$('#btn2').show();$('#state').show();" />
+            </div>
+        </div>
+        <!-- /display-div -->
+    </div>
 </body>
+
 </html>

@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>	
-	<meta charset="utf-8">
-	<title>快审通</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
-	<meta name="author" content="Muhammad Usman">
-	<link href="../static/css/main.css" rel="stylesheet">
-	<script type="text/javascript" src="../static/js/main.js"></script>
-	<style type="text/css">
-	
-	</style>
-	<script type="text/javascript">
-		
-	</script>
+
+<head>
+    <meta charset="utf-8">
+    <title>快审通</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+    <link href="../static/css/main.css" rel="stylesheet">
+    <script type="text/javascript" src="../static/js/main.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../static/js/vendor/jquery.serializejson.min.js"></script>
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+    </script>
 </head>
+
 <body>
-	<div class="top">
-		<span class="back"><img src="../static/img/back.png"/></span>
-		<span class="title">登录</span>
-		<span class="right" onclick="changePage('zc.html')">注册</span>
-	</div>
-	<div class="center">
-		<ul class="loginTab">
-			<li onclick="changePage('yzmdl.html')">验证码登录</li>
-			<li class="active">密码登录</li>
-		</ul>
-		<div class="content">
-			<table class="normalTable">
-				<tr>
-					<td class="pull-right" style="width:25%">用户名：</td>
-					<td style="width:45%"><input type="text" placeholder="请输入用户名"/></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="pull-right">密码：</td>
-					<td><input type="password" placeholder="请输入密码"/></td>
-					<td><a class="red" href="找回密码.html">忘记密码？</a></td>
-				</tr>
-			</table>		
-		</div>
-	</div>
-	<div class="bottom">
-		<input type="button" value="登录" class="btn btn-login"/>
-	</div>
+    <div class="top">
+        <span class="back"><img src="../static/img/back.png"/></span>
+        <span class="title">登录</span>
+        <span class="right" onclick="changePage('zc')">注册</span>
+    </div>
+    <form id="contentForm" class="center">
+        <ul class="loginTab">
+            <li onclick="changePage('yzmdl')">验证码登录</li>
+            <li class="active">密码登录</li>
+        </ul>
+        <div class="content">
+            <table class="normalTable">
+                <tr>
+                    <td class="pull-right" style="width:25%">用户名：</td>
+                    <td style="width:45%"><input type="text" placeholder="请输入用户名" name="real_name" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="pull-right">密码：</td>
+                    <td><input type="password" placeholder="请输入密码" name="password" /></td>
+                    <td><a class="red" href="zhmm">忘记密码？</a></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <div class="bottom">
+        <input id="subBtn" type="button" value="登录" class="btn btn-login" />
+    </div>
 </body>
+
+<script type="text/javascript" src="../static/js/mmdl.js"></script>
+
 </html>
