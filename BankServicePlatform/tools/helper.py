@@ -9,7 +9,7 @@ from flask import Blueprint
 from flask.json import JSONEncoder as BaseJSONEncoder
 from sqlalchemy.ext.declarative import DeclarativeMeta
 import json
-from json_encoding import json_serial
+
 
 
 
