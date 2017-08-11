@@ -24,7 +24,7 @@ def show_quota_bill(quota_used_record_id):
     :param quota_used_record_id:
     :return:
     """
-    return quota_used_record.get_or_404(quota_used_record_id).quota_billes.all()
+    return quota_used_record.get_or_404(quota_used_record_id).quota_billes
 
 """页面组成字典或者json"""
 @route(bp,'/',methods=['POST'])
