@@ -62,10 +62,20 @@ def wyhk():
 def ysx():
     return render_template('ysx.html')
 
+#我要贷款
+@route(bp,'/dksqjl')
+def dksqjl():
+    return render_template('dksqjl.html')
+
 #验证码登录
 @route_nl(bp,'/yzmdl')
 def yzmdl():
     return render_template('yzmdl.html')
+
+#密码登录
+@route(bp,'/mmdl')
+def mmdl():
+    return render_template('mmdl.html')
 
 #注册
 @route_nl(bp,'/zc')

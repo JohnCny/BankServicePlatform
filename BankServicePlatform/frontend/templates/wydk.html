@@ -1,77 +1,80 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>	
-	<meta charset="utf-8">
-	<title>快审通</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
-	<meta name="author" content="Muhammad Usman">
-	<link href="../static/css/main.css" rel="stylesheet">
-	<script src="js/jquery-1.7.2.min.js"></script>
-	<script src="../static/js/main.js"></script>
-	<style type="text/css">
-	
-	</style>
-	<script type="text/javascript">
-		
-	</script>
+
+<head>
+    <meta charset="utf-8">
+    <title>快审通</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+    <link href="../static/css/main.css" rel="stylesheet">
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="../static/js/main.js"></script>
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+    </script>
 </head>
+
 <body>
-	<div class="top">
-		<span class="back"><img src="../static/img/back.png"/></span>
-		<span class="title">快审通</span>
-	</div>
-	<div class="center">
-		<div class="content topContent" style="background:#ea5e6b;padding:30px 0;border-radius:10px 10px 0 0;">
-			<h1>￥5,000.00</h1>
-			<p class="bz">当前可贷额度</p>
-		</div>
-		<div class="content topContent" style="margin-top:0;border-radius:0 0 10px 10px;">
-			<table class="normalTable">
-				<tr>
-					<td class="pull-right" style="width:20%">贷款金额：</td>
-					<td><input type="text" placeholder="请输入贷款金额"/></td>
-				</tr>
-				<tr>
-					<td class="pull-right">贷款期限：</td>
-					<td>
-						<select>
+    <div class="top">
+        <span class="back"><img src="../static/img/back.png"/></span>
+        <span class="title">快审通</span>
+    </div>
+    <div class="center">
+        <div class="content topContent" style="background:#ea5e6b;padding:30px 0;border-radius:10px 10px 0 0;">
+            <h1>￥5,000.00</h1>
+            <p class="bz">当前可贷额度</p>
+        </div>
+        <div class="content topContent" style="margin-top:0;border-radius:0 0 10px 10px;">
+            <table class="normalTable">
+                <tr>
+                    <td class="pull-right" style="width:20%">贷款金额：</td>
+                    <td><input type="text" placeholder="请输入贷款金额" /></td>
+                </tr>
+                <tr>
+                    <td class="pull-right">贷款期限：</td>
+                    <td>
+                        <select>
 							<option>1个月</option>
 							<option>2个月</option>
 						</select>
-					</td>
-				</tr>
-			</table>
-			<table class="normalTable">
-				<tr>
-					<td class="pull-right">还款方式：</td>
-					<td><span class="red strong">每月等额</span></td>
-				</tr>				
-				<tr>
-					<td class="pull-right">总利息：</td>
-					<td><span class="red strong">￥14.50</span></td>
-				</tr>				
-				<tr>
-					<td class="pull-right">每期应还：</td>
-					<td><span class="red strong">￥1014.50</span></td>
-				</tr>
-			</table>		
-		</div>
-	</div>
-	<div class="bottom">
-		<input type="button" value="提交" class="btn btn-login" onclick="$('#dialog').show()"/>
-	</div>
-	<div id="dialog">
-		<div class="display-div">
-			<img src="../static/img/ts.png"/>
-			<div class="tsxx">
-				<p class="green tsTitle">贷款成功!</p>
-				<p>贷款金额将尽快发放至<br/><span class="blue strong">您的银行卡</span>内。</p>
-			</div>
-			<div class="button">
-				<input type="button" value="确定" class="btn btn-login btn-small" onclick="$('#dialog').hide();changePage('ysx.html')"/>
-			</div>
-		</div><!-- /display-div -->
-	</div>
+                    </td>
+                </tr>
+            </table>
+            <table class="normalTable">
+                <tr>
+                    <td class="pull-right">还款方式：</td>
+                    <td><span class="red strong">每月等额</span></td>
+                </tr>
+                <tr>
+                    <td class="pull-right">总利息：</td>
+                    <td><span class="red strong">￥14.50</span></td>
+                </tr>
+                <tr>
+                    <td class="pull-right">每期应还：</td>
+                    <td><span class="red strong">￥1014.50</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="bottom">
+        <input type="button" value="提交" class="btn btn-login" onclick="$('#dialog').show()" />
+    </div>
+    <div id="dialog">
+        <div class="display-div">
+            <img src="../static/img/ts.png" />
+            <div class="tsxx">
+                <p class="green tsTitle">贷款成功!</p>
+                <p>贷款金额将尽快发放至<br/><span class="blue strong">您的银行卡</span>内。</p>
+            </div>
+            <div class="button">
+                <input type="button" value="确定" class="btn btn-login btn-small" onclick="$('#dialog').hide();changePage('ysx')" />
+            </div>
+        </div>
+        <!-- /display-div -->
+    </div>
 </body>
+
 </html>
