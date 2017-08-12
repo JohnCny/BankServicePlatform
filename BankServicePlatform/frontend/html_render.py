@@ -1,23 +1,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from flask import Blueprint, render_template,request
-from flask_login import login_user
+from flask import Blueprint, render_template
+
 
 from . import route,route_nl
-from ..services import customer
 
-bp = Blueprint('/', __name__)
 
-@route_nl(bp,'/login',methods=['POST'])
-def login():
-    result=customer.first(**request.json)
-    if result:
-        login_user(result)
-        return "Success",200
-    else:
-        return "Failed",400
-
+bp = Blueprint('frontend', __name__)
 
 @route_nl(bp, '/')
 def index():

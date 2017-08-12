@@ -4,7 +4,7 @@ DEBUG = True
 
 SECRET_KEY = '\x9c\n)\xec7 ?o@\x86\xc4\xe5_\x00\x10\xd9A$\xd3\x81\xcd\x1d\xb3\x90'
 
-SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost:3306/bank_service_platform'
+SQLALCHEMY_DATABASE_URI = 'mysql://root:root@192.168.3.252:3306/bank_service_platform'
 
 SQLALCHEMY_TRACK_MODIFICATIONS=False
 
