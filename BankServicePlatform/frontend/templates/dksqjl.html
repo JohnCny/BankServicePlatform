@@ -34,20 +34,13 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result.period_amount %>
+                        <td><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result.used_quota %>
                     </span>
                         </td>
                         <td><span class="gray kg">申请日期：<%= result.create_date %></span></td>
                     </tr>
                     <tr>
-                        <td><span class="gray kg">应还本金余额：￥<%= '缺字段' %></span></td>
-                        <td rowspan="2"><b class="red kg right" style="font-size:20px;"><%= result.status %></b></td>
-                    </tr>
-                    <tr>
-                        <td><span class="gray kg">应还利息：￥<%= '缺字段' %></td>
-				    </tr>
-				    <tr>
-					    <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
+                        <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
                     </tr>
                 </script>
             </table>

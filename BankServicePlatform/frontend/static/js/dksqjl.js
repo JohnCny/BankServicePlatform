@@ -13,7 +13,7 @@ var loopView = new LoopView;
 
 //获取数据
 var LoopResult = Backbone.Collection.extend({
-    url: '/api/quota/quota_used_record/11/quota_bill'
+    url: '/api/quota/quota_used_record/11'
 });
 var loopResult = new LoopResult;
 loopResult.fetch({

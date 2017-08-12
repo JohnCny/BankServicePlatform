@@ -57,7 +57,7 @@ loopResult.fetch({
             for (var i = 0; i < period; i++) {
                 var tmp = deepCopy(response.data);
                 tmp.period_remain = i + 1;
-                tmp.create_date = addmulMonth(tmp.create_date, i + 1)
+                tmp.create_date = addmulMonth(tmp.create_date, i)
                 arr.push(tmp)
             }
             loopView.render({ result: arr });

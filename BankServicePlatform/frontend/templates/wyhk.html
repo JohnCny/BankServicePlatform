@@ -35,16 +35,10 @@
                     </tr>
                     <tr>
                         <td rowspan="4" style="width:30px"><img src="../static/img/ok_y.png" class="kg" style="width:20px;" /></td>
-                        <td colspan="2"><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result.period_amount %></span></td>
+                        <td colspan="2"><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result.used_quota %></span></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><span class="gray kg">本金余额：￥<%= '缺字段' %></span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><span class="gray kg">应还利息：￥<%= '缺字段' %></td>
-				    </tr>
-				    <tr>
-					    <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
+                        <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
                     </tr>
                 </script>
             </table>
@@ -54,8 +48,7 @@
                         <th style="width:30px"><img src="../static/img/ok_y.png" class="kg" style="width:20px;" /></th>
                         <th><span class="yellow">期次</span></th>
                         <th><span class="yellow">还款日</span></th>
-                        <th><span class="yellow">本金</span></th>
-                        <th><span class="yellow">利息</span></th>
+                        <th><span class="yellow">还款金额</span></th>
                     </tr>
                 </thead>
                 <tbody id="loop_content">
@@ -64,16 +57,13 @@
                             <tr>
                                 <td><input type="checkbox" class="kg" /></td>
                                 <td>
-                                    <%= result[i].period %>
+                                    <%= result[i].period_remain %>
                                 </td>
                                 <td>
-                                    <%= result[i].repayment_date %>
+                                    <%= result[i].create_date %>
                                 </td>
                                 <td>
-                                    <%= result[i].repayment_amount %>
-                                </td>
-                                <td>
-                                    <%= '缺字段' %>
+                                    <%= result[i].period_amount %>
                                 </td>
                             </tr>
                             <% } %>
