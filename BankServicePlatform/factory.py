@@ -8,7 +8,7 @@ from flask import Flask
 
 from flask_httpauth import HTTPBasicAuth
 
-from .core import db
+from .core import db,redis
 from .tools.helper import register_blueprints
 from .middleware import HTTPMethodOverrideMiddleware
 from .models import Customer
@@ -36,6 +36,7 @@ def create_app(package_name, package_path,settings_overrde=None):
 
     db.init_app(app)
 
+    redis.init_app(app)
     # login_manager.init_app(app)
 
     # mail.init_app(app)
