@@ -60,9 +60,9 @@ def get_wx_openid():
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
     response=requests.get(CODE_URL,verify=False)
-    print response.json()
-    print response.json().get('code',None)
-    code=json.loads(response.read()).get('code',None)
+    print response
+    print response.request['code']
+    code=response.request['code']
     print code
     #获取用户openid
     OPENID_URL="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8ca1ef28740b0106&secret=727125a17d9dd9d2508e7d3c46c85fbb" \
