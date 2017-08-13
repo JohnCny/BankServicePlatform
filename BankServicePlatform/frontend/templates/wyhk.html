@@ -27,6 +27,7 @@
     </div>
     <div class="center">
         <div class="content topContent">
+            <!-- 不显示了
             <table id="single_content" class="normalTable">
                 <script type="text/template" id="single_template">
                     <tr>
@@ -35,55 +36,57 @@
                     </tr>
                     <tr>
                         <td rowspan="4" style="width:30px"><img src="../static/img/ok_y.png" class="kg" style="width:20px;" /></td>
-                        <td colspan="2"><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result.period_amount %></span></td>
+                        <td colspan="2"><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result.used_quota %></span></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><span class="gray kg">本金余额：￥<%= '缺字段' %></span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><span class="gray kg">应还利息：￥<%= '缺字段' %></td>
-				    </tr>
-				    <tr>
-					    <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
+                        <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
                     </tr>
                 </script>
-            </table>
+            </table> -->
             <table class="normalTable Center">
                 <thead>
                     <tr>
                         <th style="width:30px"><img src="../static/img/ok_y.png" class="kg" style="width:20px;" /></th>
+                        <th><span class="yellow">订单号</span></th>
                         <th><span class="yellow">期次</span></th>
                         <th><span class="yellow">还款日</span></th>
-                        <th><span class="yellow">本金</span></th>
-                        <th><span class="yellow">利息</span></th>
+                        <th><span class="yellow">还款金额</span></th>
                     </tr>
                 </thead>
                 <tbody id="loop_content">
                     <script type="text/template" id="loop_template">
                         <% for(var i = 0; i < result.length; i++) { %>
                             <tr>
-                                <td><input type="checkbox" class="kg" /></td>
+                                <td><input type="checkbox" name="check_box" class="kg" onclick="getCount();"/></td>
                                 <td>
-                                    <%= result[i].period %>
+                                    <%= result[i].quota_used_record_id %>
                                 </td>
                                 <td>
-                                    <%= result[i].repayment_date %>
+                                    <%= result[i].period_remain %>
                                 </td>
                                 <td>
-                                    <%= result[i].repayment_amount %>
+                                    <%= result[i].create_date %>
                                 </td>
-                                <td>
-                                    <%= '缺字段' %>
+                                <td class="period_amount">
+                                    <%= result[i].period_amount %>
                                 </td>
                             </tr>
                             <% } %>
                     </script>
                 </tbody>
             </table>
+
+            <table class="normalTable" Center>
+				<tr>
+                    <td></td>
+                    <td></td>
+					<td class="pull-right">还款总额(¥ )：</td>
+					<td style="width:60%"><span class="yellow strong" style="font-size:20px;" id="total">0.00</span></td>
+				</tr>
         </div>
     </div>
     <div class="bottom">
-        <input type="button" value="还款" class="btn btn-login" onclick="changePage('hkqr')" />
+        <input id="subBtn" type="button" value="还款" class="btn btn-login"/>
     </div>
 </body>
 

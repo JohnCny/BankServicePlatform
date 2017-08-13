@@ -1,3 +1,4 @@
+/* 
 //模板
 var SingleView = Backbone.View.extend({
     el: "#single_content",
@@ -13,11 +14,12 @@ var singleView = new SingleView;
 
 //获取数据
 var SingleResult = Backbone.Collection.extend({
-    url: '/api/quota/quota_used_record/11/quota_bill'
+    url: '/api/quota/quota_used_record/11'
 });
 var singleResult = new SingleResult;
 singleResult.fetch({
     success: function(collection, response, options) {
+        response.data.create_date = GMTToStr(response.data.create_date)
         singleView.render({ result: response.data });
 
     },
@@ -25,6 +27,7 @@ singleResult.fetch({
         //错误提示
     }
 });
+*/
 
 //模板
 var LoopView = Backbone.View.extend({
@@ -41,16 +44,39 @@ var loopView = new LoopView;
 
 //获取数据
 var LoopResult = Backbone.Collection.extend({
-    url: '/api/quota/quota_bill/2/repayment'
+    url: '/api/quota/quota_bill'
 });
 var loopResult = new LoopResult;
 loopResult.fetch({
     success: function(collection, response, options) {
         //判断是否json数组
         if (Array.isArray(response.data)) {
-            loopView.render({ result: response.data });
+            var arr = [];
+            for (var i = 0; i < response.data.length; i++) {
+                var obj = response.data[i];
+                //生成剩余期数的还款bill记录
+                obj.create_date = GMTToStr(obj.create_date);
+                var period = parseInt(obj.period_remain, 10)
+                for (var j = 0; j < period; j++) {
+                    var tmp = deepCopy(obj);
+                    tmp.period_remain = j + 1;
+                    tmp.create_date = addmulMonth(tmp.create_date, j + 1)
+                    arr.push(tmp)
+                }
+            }
+            loopView.render({ result: arr });
         } else {
-            loopView.render({ result: [response.data] });
+            //生成剩余期数的还款bill记录
+            response.data.create_date = GMTToStr(response.data.create_date)
+            var period = parseInt(response.data.period_remain, 10)
+            var arr = []
+            for (var i = 0; i < period; i++) {
+                var tmp = deepCopy(response.data);
+                tmp.period_remain = i + 1;
+                tmp.create_date = addmulMonth(tmp.create_date, i + 1)
+                arr.push(tmp)
+            }
+            loopView.render({ result: arr });
         }
 
     },
@@ -58,3 +84,17 @@ loopResult.fetch({
         //错误提示
     }
 });
+
+
+//计算和
+function getCount(){
+    var total=0;
+    $("[name='check_box']:checked").each(function() 
+    {
+        //alert($(this).val());  
+        var period_amount=$(this).parents("tr").find(".period_amount").text();
+        total+=parseFloat($.trim(period_amount));
+    });
+    //alert(total.toFixed(2));
+    $("#total").html(total.toFixed(2));
+}

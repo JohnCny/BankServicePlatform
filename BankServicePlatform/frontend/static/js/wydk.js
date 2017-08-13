@@ -1,5 +1,5 @@
 //模板
-var LoopView = Backbone.View.extend({
+var SingleView = Backbone.View.extend({
     el: "#single_content",
     initialize: function() {},
     render: function(context) {
@@ -9,17 +9,16 @@ var LoopView = Backbone.View.extend({
         $(this.el).html(template(context));
     },
 });
-var loopView = new LoopView;
+var singleView = new SingleView;
 
 //获取数据
-var LoopResult = Backbone.Collection.extend({
-    url: '/api/quota/quota_used_record/11'
+var SingleResult = Backbone.Collection.extend({
+    url: '/api/quota/3'
 });
-var loopResult = new LoopResult;
-loopResult.fetch({
+var singleResult = new SingleResult;
+singleResult.fetch({
     success: function(collection, response, options) {
-        response.data.create_date = GMTToStr(response.data.create_date)
-        loopView.render({ result: response.data });
+        singleView.render({ result: response.data });
     },
     error: function(collection, response, options) {
         //错误提示
