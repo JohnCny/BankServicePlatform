@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # __author__ = 'Johnny'
 #
-from flask import Blueprint,request,g
+from flask import Blueprint,request,g,url_for,redirect
 import requests
 import json
 
@@ -68,7 +68,7 @@ def get_wx_openid():
     redirect_uri="http%3a%2f%2fbsp.qkjr.com.cn%2fapi%2flogin%2fget_openid"
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
-    r=urllib.urlopen(CODE_URL).read()
+    redirect(CODE_URL)
     return
 
 
