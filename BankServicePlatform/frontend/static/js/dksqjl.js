@@ -18,6 +18,7 @@ var LoopResult = Backbone.Collection.extend({
 var loopResult = new LoopResult;
 loopResult.fetch({
     success: function(collection, response, options) {
+        response.data.create_date = GMTToStr(response.data.create_date)
         loopView.render({ result: response.data });
     },
     error: function(collection, response, options) {
