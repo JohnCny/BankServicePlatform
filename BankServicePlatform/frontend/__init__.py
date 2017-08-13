@@ -4,7 +4,7 @@ __author__ = 'Johnny'
 
 from functools import wraps
 
-from flask import render_template,url_for,redirect
+from flask import render_template
 from ..factory import auth
 from .. import factory
 from . import assets

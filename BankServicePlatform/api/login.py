@@ -3,13 +3,18 @@
 #
 from flask import Blueprint,request,g
 
-from . import route_nl
+import json
+
+from . import route_nl,route_wx
+
+import urllib2 as urllib
 
 from ..core import  redis
 
 from ..models import Customer
 
 bp = Blueprint('login', __name__,url_prefix='/login')
+
 
 @route_nl(bp,'/',methods=['POST'])
 def login():
@@ -30,7 +35,40 @@ def login():
         return "Failed",400
 
 
-@route_nl(bp,'/get_token',methods=['GET'])
+@route_wx(bp,'/get_token',methods=['GET'])
 def get_token():
-    openid=dict(**request.json)['openid']
-    return redis.get(openid)
+    # access_token=redis.get("access_token",None)
+    # if access_token:
+    #     openid=dict(**request.json)['openid']
+    # else:
+    #     response_at=urllib.urlopen('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx8ca1ef28740b0106&secret=727125a17d9dd9d2508e7d3c46c85fbb')
+    #     access_token_get=json.loads(response_at.read()).get('access_token',None)
+    #     if access_token_get:
+    #         expires_in=json.loads(response_at.read()).get('expires_in',None)
+    #         redis.set("access_token",access_token_get,ex=expires_in)
+    #
+    #         openid=dict(**request.json)['openid']
+    #     else:
+    #         return "GET WX_ACCESS_TOKEN FAILED",500
+    #获取用户code
+    redirect_uri="http%3a%2f%2fbsp.qkjr.com.cn%2fapi%2flogin%2fget_openid"
+    CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
+             "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
+
+
+    return urllib.urlopen(CODE_URL).read()
+
+
+
+@route_wx(bp,'/get_openid')
+def get_openid():
+    code=request.args['code']
+    print ("code",code)
+    OPENID_URL="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8ca1ef28740b0106&secret=727125a17d9dd9d2508e7d3c46c85fbb" \
+               "&code="+code+"&grant_type=authorization_code"
+    response_oi=urllib.urlopen(OPENID_URL)
+    openid=json.loads(response_oi.read()).get('openid',None)
+    print("openid",openid)
+    # redis.set(openid,'')
+
+
