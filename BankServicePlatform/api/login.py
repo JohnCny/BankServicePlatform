@@ -9,7 +9,7 @@ from . import route_nl,route_wx
 
 import urllib2 as urllib
 
-from ..core import  redis,app
+from ..core import  redis
 
 from ..models import Customer
 
