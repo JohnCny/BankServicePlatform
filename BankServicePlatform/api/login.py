@@ -58,7 +58,7 @@ def get_token():
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
     print CODE_URL
     req=requests.get(CODE_URL,verify=False)
-    return str(req.status_code)
+    return str(req.text)
 
 
 
