@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # __author__ = 'Johnny'
 #
-from flask import Blueprint,request,g
+from flask import Blueprint,request,redirect
 import requests
 import json
 
@@ -9,7 +9,7 @@ from . import route_nl,route_wx
 
 import urllib2 as urllib
 
-from ..core import  redis
+from ..core import  redis,app
 
 from ..models import Customer
 
@@ -35,7 +35,7 @@ def login():
         return "Failed",400
 
 
-@route_wx(bp,'/get_token',methods=['GET'])
+@app.route('/api/login/get_token')
 def get_token():
     # access_token=redis.get("access_token",None)
     # if access_token:
@@ -57,8 +57,8 @@ def get_token():
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
     print CODE_URL
-    req=requests.get(CODE_URL,verify=False)
-    return str(req.text)
+
+    return redirect(CODE_URL)
 
 
 
