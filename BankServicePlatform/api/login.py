@@ -35,7 +35,7 @@ def login():
         return "Failed",400
 
 
-@app.route('/api/login/get_token')
+@bp.route('/get_token')
 def get_token():
     # access_token=redis.get("access_token",None)
     # if access_token:
