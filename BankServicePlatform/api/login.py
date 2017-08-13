@@ -59,6 +59,7 @@ def get_openid():
                "&code="+code+"&grant_type=authorization_code"
     response_oi=urllib.urlopen(OPENID_URL)
     openid=json.loads(response_oi.read()).get('openid',None)
+    print(openid)
     redis.set(openid,'')
 
 def get_wx_openid():
