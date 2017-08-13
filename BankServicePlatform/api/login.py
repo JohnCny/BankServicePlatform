@@ -71,7 +71,7 @@ def get_openid():
     response_oi=urllib.urlopen(OPENID_URL)
     openid=json.loads(response_oi.read()).get('openid',None)
     print("openid",openid)
-    redis.set(openid,'')
+    redis.set(openid,openid)
     return openid
 
 
