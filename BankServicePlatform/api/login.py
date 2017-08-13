@@ -55,11 +55,9 @@ def get_token():
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
 
-    try:
-        r=urllib.urlopen(CODE_URL).read()
-        return r
-    except:
-        pass
+
+    return urllib.urlopen(CODE_URL).read()
+
 
 
 @route_wx(bp,'/get_openid')
