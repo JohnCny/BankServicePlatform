@@ -69,6 +69,6 @@ def get_wx_openid():
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
     r=urllib.urlopen(CODE_URL).read()
-    return r
+    return
 
 
