@@ -2,7 +2,7 @@
 # __author__ = 'Johnny'
 #
 from flask import Blueprint,request,g
-
+import requests
 import json
 
 from . import route_nl
@@ -50,8 +50,7 @@ def get_token():
     #     else:
     #         return "GET WX_ACCESS_TOKEN FAILED",500
     openid=get_wx_openid()
-    print openid
-    # return redis.get(openid)
+    return redis.get(openid)
 
 def get_wx_openid():
     #获取用户code
@@ -60,8 +59,8 @@ def get_wx_openid():
     redirect_uri=urllib.quote(url.encode('utf8','replace'))
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
-    response=urllib.urlopen(CODE_URL)
-    return response.read()
+    response=requests.get(CODE_URL)
+    print response.text
     code=json.loads(response.read()).get('code',None)
     print code
     #获取用户openid
