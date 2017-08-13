@@ -51,10 +51,11 @@ def get_token():
     #     else:
     #         return "GET WX_ACCESS_TOKEN FAILED",500
     #获取用户code
-    redirect_uri="http%3a%2f%2fbsp.qkjr.com.cn%2fapi%2flogin%2fget_openid"
+    # redirect_uri="http%3a%2f%2fbsp.qkjr.com.cn%2fapi%2flogin%2fget_openid"
+    redirect_uri="http://bsp.qkjr.com.cn/api/login/get_openid"
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
-
+    print redirect_uri
     response=urllib.urlopen(CODE_URL).read()
     return response
 
