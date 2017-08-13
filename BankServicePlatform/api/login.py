@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # __author__ = 'Johnny'
 #
-from flask import Blueprint,request,g,url_for,redirect
-import requests
+from flask import Blueprint,request,g
+
 import json
 
-from . import route_nl
+from . import route_nl,route_wx
 
 import urllib2 as urllib
 
@@ -14,6 +14,7 @@ from ..core import  redis
 from ..models import Customer
 
 bp = Blueprint('login', __name__,url_prefix='/login')
+
 
 @route_nl(bp,'/',methods=['POST'])
 def login():
@@ -34,7 +35,7 @@ def login():
         return "Failed",400
 
 
-@route_nl(bp,'/get_token',methods=['GET'])
+@route_wx(bp,'/get_token',methods=['GET'])
 def get_token():
     # access_token=redis.get("access_token",None)
     # if access_token:
@@ -49,10 +50,19 @@ def get_token():
     #         openid=dict(**request.json)['openid']
     #     else:
     #         return "GET WX_ACCESS_TOKEN FAILED",500
-    get_wx_openid()
-    # return redis.get(openid)
+    #获取用户code
+    redirect_uri="http%3a%2f%2fbsp.qkjr.com.cn%2fapi%2flogin%2fget_openid"
+    CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
+             "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
 
-@route_nl(bp,'/get_openid')
+    try:
+        r=urllib.urlopen(CODE_URL).read()
+        return r
+    except:
+        pass
+
+
+@route_wx(bp,'/get_openid')
 def get_openid():
     code=request.args['code']
     print ("code",code)
@@ -62,14 +72,5 @@ def get_openid():
     openid=json.loads(response_oi.read()).get('openid',None)
     print("openid",openid)
     # redis.set(openid,'')
-
-def get_wx_openid():
-    #获取用户code
-    redirect_uri="http%3a%2f%2fbsp.qkjr.com.cn%2fapi%2flogin%2fget_openid"
-    CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
-             "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
-
-
-    return redirect(CODE_URL)
 
 
