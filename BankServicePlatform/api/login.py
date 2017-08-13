@@ -71,5 +71,6 @@ def get_openid():
     openid=json.loads(response_oi.read()).get('openid',None)
     print("openid",openid)
     redis.set(openid,'')
+    return openid,200
 
 
