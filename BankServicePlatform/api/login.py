@@ -32,5 +32,7 @@ def login():
 
 @route_nl(bp,'/get_token',methods=['GET'])
 def get_token():
+    print(dict(request.data))
+    print(dict(request.values))
     openid=dict(**request.json)['openid']
     return redis.get(openid)
