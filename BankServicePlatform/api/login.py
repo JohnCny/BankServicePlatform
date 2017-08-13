@@ -49,10 +49,10 @@ def get_token():
     #         openid=dict(**request.json)['openid']
     #     else:
     #         return "GET WX_ACCESS_TOKEN FAILED",500
-    return get_wx_openid()
+    get_wx_openid()
     # return redis.get(openid)
 
-@route_nl(bp,'/get_openid',methods=['GET'])
+@route_nl(bp,'/get_openid')
 def get_openid():
     code=request.args['code']
     print ("code",code)
@@ -68,6 +68,7 @@ def get_wx_openid():
     redirect_uri="http%3a%2f%2fbsp.qkjr.com.cn%2fapi%2flogin%2fget_openid"
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
+
 
     return redirect(CODE_URL)
 
