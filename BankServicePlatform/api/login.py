@@ -55,19 +55,21 @@ def get_token():
 @route_nl(bp,'/get_openid',methods=['GET'])
 def get_openid():
     code=request.get('code')
+    print ("code",code)
     OPENID_URL="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8ca1ef28740b0106&secret=727125a17d9dd9d2508e7d3c46c85fbb" \
                "&code="+code+"&grant_type=authorization_code"
     response_oi=urllib.urlopen(OPENID_URL)
     openid=json.loads(response_oi.read()).get('openid',None)
-    print(openid)
+    print("openid",openid)
     redis.set(openid,'')
 
 def get_wx_openid():
     #获取用户code
-    url="http://bsp.qkjr.com.cn/get_openid"
+    url="http://bsp.qkjr.com.cn/api/login/get_openid"
     url=url.decode('gbk','replace')
     redirect_uri=urllib.quote(url.encode('utf8','replace'))
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
     urllib.urlopen(CODE_URL)
+
 
