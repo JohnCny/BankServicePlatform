@@ -2,6 +2,9 @@ function changePage(src) {
     window.location.href = src
 }
 
+
+
+//js 深度拷贝
 function deepCopy(obj) {
     var cloneObject = {};
     for (var key in obj) {
@@ -12,7 +15,7 @@ function deepCopy(obj) {
     return cloneObject;
 }
 
-// yyyy-MM-dd n个月后 
+// 计算 yyyy-MM-dd n个月后 
 function addmulMonth(dtstr, n) {
     var d = new Date(dtstr)
     d.setMonth(d.getMonth() + n);
@@ -39,6 +42,7 @@ function GMTToStr(time) {
     return Str
 }
 
+//js Date 扩展
 Date.prototype.Format = function(fmt) { //author: meizz 
     var o = {
         "M+": this.getMonth() + 1, //月份 
