@@ -27,6 +27,7 @@
         <span class="right" onclick="changePage('zc')">注册</span>
     </div>
     <form id="contentForm" class="center">
+        <input type="hidden" name="openid" value="1" />
         <ul class="loginTab">
             <li onclick="changePage('yzmdl')">验证码登录</li>
             <li class="active">密码登录</li>
@@ -34,8 +35,8 @@
         <div class="content">
             <table class="normalTable">
                 <tr>
-                    <td class="pull-right" style="width:25%">用户名：</td>
-                    <td style="width:45%"><input type="text" placeholder="请输入用户名" name="real_name" /></td>
+                    <td class="pull-right" style="width:25%">手机号：</td>
+                    <td style="width:45%"><input type="text" placeholder="请输入手机号" name="phone" /></td>
                     <td></td>
                 </tr>
                 <tr>

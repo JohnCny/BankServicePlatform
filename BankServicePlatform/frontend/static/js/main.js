@@ -2,7 +2,10 @@ function changePage(src) {
     window.location.href = src
 }
 
-
+//微信公众号appid
+var appid = "wx8ca1ef28740b0106";
+var key_customer_id = appid + "_customer_id";
+var key_token = appid + "_token";
 
 //js 深度拷贝
 function deepCopy(obj) {
