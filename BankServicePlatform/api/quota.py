@@ -82,7 +82,7 @@ def pad_increase_amount(quota_id):
     data={
         "id":_quota.id,
         "customerName":_cutomer.real_name,
-        "cardId ":_cutomer.identification_number,
+        "sfzh":str(_cutomer.identification_number),
         "phoneNo":_cutomer.phone,
         "cardNum":_cutomer.bank_card_number,
         "applyAmt":_quota.amount,
@@ -90,17 +90,15 @@ def pad_increase_amount(quota_id):
         "applyTime":_quota_bill.create_date
     }
     data=urllib.urlencode(data)
-    req=urllib2.Request("http://192.168.3.38:8080/pccredit_remote/ipad/ks/getQuotaApply.json",data=data)
+    req=urllib2.Request("http://139.196.31.230:8080/PCCredit/ipad/ks/getQuotaApply.json",data=data)
     response=urllib2.urlopen(req,timeout=60)
 
-    code=response.getcode()
-    if code==200:
-        response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
-        result=response_json.get('result',None)
-        status=result.get('status',None)
-        if status:
-            if status=='Success':
-                return 'Success',200
+    response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
+    result=response_json.get('result',None)
+    status=result.get('status',None)
+
+    if status=='success':
+        return 'Success',200
 
     return 'Failed',200
 
