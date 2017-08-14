@@ -5,11 +5,10 @@ __author__ = 'Johnny'
 from functools import wraps
 
 from flask import render_template
-from ..factory import auth
+from flask_login import login_required
 from .. import factory
 from . import assets
 
-_auth=auth
 
 def create_app(settings_override=None):
     """Returns the bankserviceplatform dashboard application instance"""
@@ -33,7 +32,7 @@ def handle_error(e):
 def route(bp, *args, **kwargs):
     def decorator(f):
         @bp.route(*args, **kwargs)
-        @_auth.login_required
+        @login_required
         @wraps(f)
         def wrapper(*args, **kwargs):
             return f(*args, **kwargs)

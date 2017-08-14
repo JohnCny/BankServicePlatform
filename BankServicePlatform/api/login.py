@@ -12,8 +12,10 @@ import urllib2 as urllib
 from ..core import  redis
 from ..factory import verify_password
 from ..models import Customer
+from flask_login import login_user
 
 bp = Blueprint('login', __name__,url_prefix='/login')
+
 
 
 @route_nl(bp,'/',methods=['POST'])
@@ -39,11 +41,13 @@ def login():
     #     return "Failed",400\
     result=verify_password(phone,password)
     if result:
-        customer=Customer.query.filter_by(phone=phone).first()
-        token=customer.generate_auth_token()
+        g.customer=Customer.query.filter_by(phone=phone).first()
+        login_user(g.customer)
+        token=g.customer.generate_auth_token()
         redis.set(openid,token)
-        return {"customer":customer,"token":token}
+        return {"customer":g.customer,"token":token}
     else:
+        g.customer=None
         return "Failed",400
 
 
