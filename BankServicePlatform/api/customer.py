@@ -8,7 +8,6 @@ from .import route,route_nl
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
-current_user=g.customer
 
 @route(bp,'/')
 def list():
@@ -17,13 +16,13 @@ def list():
     """
     return customer.all()
 
-@route(bp,'/quota/')
-def get_customer_quota():
+@route(bp,'/<customer_id>/quota/')
+def get_customer_quota(customer_id):
     """
     根据用户获得额度
     :return:
     """
-    return customer.get_or_404(current_user).quotaes
+    return customer.get_or_404(customer_id).quotaes
 
 
 @route(bp,'/<customer_id>')
