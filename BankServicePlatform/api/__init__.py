@@ -11,7 +11,6 @@ from .. import factory
 
 _auth=auth
 
-
 def create_app(settings_override=None):
     """Returns the bankserviceplatform API application instance"""
 
@@ -27,12 +26,13 @@ def create_app(settings_override=None):
 
     return app
 
+
 def route(bp, *args, **kwargs):
     kwargs.setdefault('strict_slashes', False)
 
     def decorator(f):
         @bp.route(*args, **kwargs)
-        #@_auth.login_required
+        @_auth.login_required
         @wraps(f)
         def wrapper(*args, **kwargs):
             sc = 200
@@ -44,7 +44,6 @@ def route(bp, *args, **kwargs):
         return f
 
     return decorator
-
 
 def route_nl(bp, *args, **kwargs):
     kwargs.setdefault('strict_slashes', False)
