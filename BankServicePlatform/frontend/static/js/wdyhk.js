@@ -17,6 +17,7 @@ var LoopResult = Backbone.Collection.extend({
 });
 var loopResult = new LoopResult;
 loopResult.fetch({
+    beforeSend: sendAuthentication,
     success: function(collection, response, options) {
         //判断是否json数组
         if (Array.isArray(response.data)) {

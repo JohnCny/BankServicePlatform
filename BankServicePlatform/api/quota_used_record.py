@@ -41,8 +41,7 @@ def new():
     avaliable_remain=avaliable_amount-used_quota
     #获得利率和期限
     rate=0.18#todo:从产品获取利率
-    period=request_json['period']
-
+    period=float(request_json['period'])
 
     if avaliable_amount-used_quota>0:
         quota.update(quota.get_or_404(quota_id),available_amount=avaliable_remain)

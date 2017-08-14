@@ -17,6 +17,7 @@ var SingleResult = Backbone.Collection.extend({
 });
 var singleResult = new SingleResult;
 singleResult.fetch({
+    beforeSend: sendAuthentication,
     success: function(collection, response, options) {
         singleView.render({ result: response.data });
     },
