@@ -8,7 +8,7 @@ from .import route,route_nl
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
-current_user=1;
+current_user=g.customer
 
 @route(bp,'/')
 def list():

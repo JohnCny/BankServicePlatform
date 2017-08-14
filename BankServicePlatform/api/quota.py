@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from flask import Blueprint,request
+from flask import Blueprint,request,jsonify
 from ..services import quota,quota_record,quota_used_record
-from ..tools import helper
-import urllib2 as urllib
+from ..tools.json_encoding import DateEncoder
+import urllib
+import urllib2
 from .import route,route_nl
 import json
 
@@ -76,29 +77,31 @@ def delete(quota_id):
 @route_nl(bp,'/pad_increase_amount/<quota_id>')
 def pad_increase_amount(quota_id):
     _quota=quota.get_or_404(quota_id)
-    _quota_bill=quota.get_or_404(quota_id).quota_recordes.first().quota_billes.first()
+    _quota_bill=quota.get_or_404(quota_id).quota_used_recordes.first().quota_billes
     _cutomer=_quota.customer
     data={
         "id":_quota.id,
         "customerName":_cutomer.real_name,
         "cardId ":_cutomer.identification_number,
         "phoneNo":_cutomer.phone,
-        "cardNum":_cutomer.bank_card,
-        "applyAmt":_quota.amout,
+        "cardNum":_cutomer.bank_card_number,
+        "applyAmt":_quota.amount,
         "loanTerm":_quota_bill.period,
         "applyTime":_quota_bill.create_date
     }
-
-    req=urllib.Request("192.168.3.38:8080/pccredit_remote/ipad/ks/getQuotaApply.json",data)
-    response=urllib.urlopen(req)
-    response_json=json.loads(response.read())
-    status=response_json.get('status',None)
-
-    if status:
-        if status=='Success':
-            return 'Success',200
-        else:
-            return 'Failed',200
+    data=urllib.urlencode(data)
+    req=urllib2.Request("http://192.168.3.38:8080/pccredit_remote/ipad/ks/getQuotaApply.json",data=data)
+    response=urllib2.urlopen(req,timeout=60)
+    # response_json=json.loads(response.read(),encoding='utf8')
+    # status=response_json.get('status',None)
+    code=response.getcode()
+    if code=='200':
+        response_json=dict(response.read())
+        status=response_json.get('status',None)
+        if status:
+            if status=='Success':
+                return 'Success',200
+    return 'Failed',200
 
 
 @route_nl(bp,'/pad_update_amount',methods=['POST'])

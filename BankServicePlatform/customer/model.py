@@ -24,7 +24,7 @@ class Role(db.Model):
                 self.name != getattr(other, 'name', None))
 
 class CustomerJsonSerializer(JsonSerializer):
-    __json_public__ = ["real_name","identification_number","phone"]
+    __json_public__ = ["id","real_name","identification_number","phone"]
 
 class Customer(CustomerJsonSerializer,db.Model):
     __tablename__="customer"
@@ -36,6 +36,7 @@ class Customer(CustomerJsonSerializer,db.Model):
     identification_number=db.Column(db.String(20))#身份证
     phone=db.Column(db.String(20))#手机号码
     channel=db.Column(db.Integer())#渠道
+    bank_card_number=db.Column(db.String(25))#银行卡号
     #flask-security use，未使用flask-security
     email=db.Column(db.String(64))
     active=db.Column(db.Boolean())
