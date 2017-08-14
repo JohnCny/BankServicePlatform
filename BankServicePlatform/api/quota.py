@@ -50,7 +50,7 @@ def update(quota_id):
 @route(bp,'/update_amount',methods=['POST'])
 def update_amount():
     #todo:增加额度验证
-    request_json=dict(request.json)
+    request_json=dict(**request.json)
 
     quota_id=request_json['quota_id']
     _quota=quota.get_or_404(quota_id)
@@ -107,7 +107,7 @@ def pad_increase_amount(quota_id):
 @route_nl(bp,'/pad_update_amount',methods=['POST'])
 def pad_update_amount():
     #todo:增加额度验证
-    request_json=dict(request.json)
+    request_json=dict(**request.json)
 
     quota_id=request_json['quota_id']
     _quota=quota.get_or_404(quota_id)
