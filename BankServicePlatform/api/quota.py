@@ -4,7 +4,9 @@ __author__ = 'Johnny'
 from flask import Blueprint,request
 from ..services import quota,quota_record,quota_used_record
 from ..tools import helper
+import urllib2 as urllib
 from .import route,route_nl
+import json
 
 bp=Blueprint('quota',__name__,url_prefix='/quota')
 
@@ -72,7 +74,7 @@ def delete(quota_id):
 
 #==================================PAD交互=====================================
 @route_nl(bp,'/pad_increase_amount/<quota_id>')
-def pad_update_amount(quota_id):
+def pad_increase_amount(quota_id):
     _quota=quota.get_or_404(quota_id)
     _quota_bill=quota.get_or_404(quota_id).quota_recordes.first().quota_billes.first()
     _cutomer=_quota.customer
@@ -87,8 +89,20 @@ def pad_update_amount(quota_id):
         "applyTime":_quota_bill.create_date
     }
 
+    req=urllib.Request("192.168.3.38:8080/pccredit_remote/ipad/ks/getQuotaApply.json",data)
+    response=urllib.urlopen(req)
+    response_json=json.loads(response.read())
+    status=response_json.get('status',None)
+
+    if status:
+        if status=='Success':
+            return 'Success',200
+        else:
+            return 'Failed',200
+
+
 @route_nl(bp,'/pad_update_amount',methods=['POST'])
-def update_amount():
+def pad_update_amount():
     #todo:增加额度验证
     request_json=dict(request.json)
 
