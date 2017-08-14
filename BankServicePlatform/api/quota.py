@@ -3,11 +3,11 @@ __author__ = 'Johnny'
 
 from flask import Blueprint,request,jsonify
 from ..services import quota,quota_record,quota_used_record
-from ..tools.json_encoding import DateEncoder
+from ..tools.json_encoding import convert
 import urllib
 import urllib2
 from .import route,route_nl
-import json
+import json,yaml
 
 bp=Blueprint('quota',__name__,url_prefix='/quota')
 
@@ -92,15 +92,16 @@ def pad_increase_amount(quota_id):
     data=urllib.urlencode(data)
     req=urllib2.Request("http://192.168.3.38:8080/pccredit_remote/ipad/ks/getQuotaApply.json",data=data)
     response=urllib2.urlopen(req,timeout=60)
-    # response_json=json.loads(response.read(),encoding='utf8')
-    # status=response_json.get('status',None)
+
     code=response.getcode()
-    if code=='200':
-        response_json=dict(response.read())
-        status=response_json.get('status',None)
+    if code==200:
+        response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
+        result=response_json.get('result',None)
+        status=result.get('status',None)
         if status:
             if status=='Success':
                 return 'Success',200
+
     return 'Failed',200
 
 

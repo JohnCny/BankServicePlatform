@@ -3,7 +3,8 @@ __author__ = 'Johnny'
 
 from flask import Blueprint,request,g
 from ..services import customer
-from ..tools import helper
+from passlib.apps import custom_app_context as pwd_context
+
 from .import route,route_nl
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
@@ -44,7 +45,17 @@ def quotas(customer_id):
 """页面组成字典或者json"""
 @route_nl(bp,'/',methods=['POST'])
 def new():
-    g.customer=customer.create(**request.json)
+    request_json=dict(**request.json)
+    _cutomer=dict(request_json.get('customer'))
+
+    _password=_cutomer['password']
+    password=pwd_context.encrypt(_password)
+    _cutomer['password']=password
+
+    request_json['customer']=_cutomer
+
+    g.customer=customer.create(**request_json)
+
     token=g.customer.generate_auth_token()
     return {"customer":g.customer,
             "token":token.decode('ascii')}

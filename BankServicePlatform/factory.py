@@ -96,3 +96,4 @@ def verify_password(phone_or_token,password):
 @auth.error_handler
 def unauthorized():
     return redirect('/login')
+
