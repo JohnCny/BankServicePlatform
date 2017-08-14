@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # __author__ = 'Johnny'
 #
-from flask import Blueprint,request,g
+from flask import Blueprint,request,redirect,g,jsonify
 
 import json
 
-from . import route_nl,route_wx
+from . import route_nl
 
 import urllib2 as urllib
 
@@ -18,6 +18,10 @@ bp = Blueprint('login', __name__,url_prefix='/login')
 
 @route_nl(bp,'/',methods=['POST'])
 def login():
+    """
+    传入手机号码和获得的openid，将opeid和token的匹配写入redis
+    :return:
+    """
     phone=dict(**request.json)['phone']
     password=dict(**request.json)['password']
     openid=dict(**request.json)['openid']
@@ -28,14 +32,22 @@ def login():
     if result:
         g.customer=customer
         token=g.customer.generate_auth_token()
-        redis.set(openid,token)
+        redis.set(openid,token,ex=3600*24*7)
         return 'Success',200
         # return token.decode('ascii'),200
     else:
         return "Failed",400
 
+@route_nl(bp,'/get_token_by_openid')
+def get_token_by_openid():
+    openid=dict(**request.json)['openid']
+    token=redis.get(openid)
+    if token:
+        return token,200
+    else:
+        return "Need Logged In",500
 
-@route_wx(bp,'/get_token',methods=['GET'])
+@bp.route('/get_token')
 def get_token():
     # access_token=redis.get("access_token",None)
     # if access_token:
@@ -50,25 +62,26 @@ def get_token():
     #         openid=dict(**request.json)['openid']
     #     else:
     #         return "GET WX_ACCESS_TOKEN FAILED",500
+
     #获取用户code
     redirect_uri="http%3a%2f%2fbsp.qkjr.com.cn%2fapi%2flogin%2fget_openid"
     CODE_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8ca1ef28740b0106" \
              "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_base#wechat_redirect"
-
-
-    return urllib.urlopen(CODE_URL).read()
+    return redirect(CODE_URL)
 
 
 
-@route_wx(bp,'/get_openid')
+@bp.route('/get_openid')
 def get_openid():
+    #获得openid
     code=request.args['code']
-    print ("code",code)
     OPENID_URL="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8ca1ef28740b0106&secret=727125a17d9dd9d2508e7d3c46c85fbb" \
                "&code="+code+"&grant_type=authorization_code"
     response_oi=urllib.urlopen(OPENID_URL)
     openid=json.loads(response_oi.read()).get('openid',None)
-    print("openid",openid)
-    # redis.set(openid,'')
+
+    if openid:
+        redis.set(openid,None)
+        return jsonify(openid)
 
 

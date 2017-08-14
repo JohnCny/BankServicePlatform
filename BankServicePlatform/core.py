@@ -12,7 +12,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security
 from flask_redis import FlaskRedis
 
-
 # #: Flask-SQLAlchemy extension instance
 db = SQLAlchemy()
 

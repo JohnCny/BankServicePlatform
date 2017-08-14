@@ -4,7 +4,7 @@ __author__ = 'Johnny'
 import os
 
 from celery import Celery
-from flask import Flask
+from flask import Flask,redirect
 
 from flask_httpauth import HTTPBasicAuth
 
@@ -95,4 +95,4 @@ def verify_password(phone_or_token,password):
 
 @auth.error_handler
 def unauthorized():
-    return 'UnAuthorized',500
+    return redirect('/login')

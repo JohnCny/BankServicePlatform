@@ -45,20 +45,6 @@ def route(bp, *args, **kwargs):
 
     return decorator
 
-def route_wx(bp,*args,**kwargs):
-    kwargs.setdefault('strict_slashes', False)
-
-    def decorator(f):
-        @bp.route(*args,**kwargs)
-        @wraps(f)
-        def wrapper(*args,**kwargs):
-            sc=200
-            rv=f(*args,**kwargs)
-            return rv,sc
-
-        return f
-
-    return decorator
 
 def route_nl(bp, *args, **kwargs):
     kwargs.setdefault('strict_slashes', False)
