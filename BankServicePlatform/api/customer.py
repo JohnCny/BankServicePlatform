@@ -46,7 +46,8 @@ def quotas(customer_id):
 def new():
     g.customer=customer.create(**request.json)
     token=g.customer.generate_auth_token()
-    return token.decode('ascii')
+    return {"customer":g.customer,
+            "token":token.decode('ascii')}
 
 @route(bp,'/<customer_id>',methods=['PUT'])
 def update(customer_id):
