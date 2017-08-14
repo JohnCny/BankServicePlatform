@@ -4,7 +4,7 @@ __author__ = 'Johnny'
 from flask import Blueprint,request
 from ..services import quota,quota_record,quota_used_record
 from ..tools import helper
-from .import route
+from .import route,route_nl
 
 bp=Blueprint('quota',__name__,url_prefix='/quota')
 
@@ -70,3 +70,39 @@ def delete(quota_id):
     return None,204
 
 
+#==================================PAD交互=====================================
+@route_nl(bp,'/pad_increase_amount/<quota_id>')
+def pad_update_amount(quota_id):
+    _quota=quota.get_or_404(quota_id)
+    _quota_bill=quota.get_or_404(quota_id).quota_recordes.first().quota_billes.first()
+    _cutomer=_quota.customer
+    data={
+        "id":_quota.id,
+        "customerName":_cutomer.real_name,
+        "cardId ":_cutomer.identification_number,
+        "phoneNo":_cutomer.phone,
+        "cardNum":_cutomer.bank_card,
+        "applyAmt":_quota.amout,
+        "loanTerm":_quota_bill.period,
+        "applyTime":_quota_bill.create_date
+    }
+
+@route_nl(bp,'/pad_update_amount',methods=['POST'])
+def update_amount():
+    #todo:增加额度验证
+    request_json=dict(request.json)
+
+    quota_id=request_json['quota_id']
+    _quota=quota.get_or_404(quota_id)
+
+    original_quota=_quota.amount
+    updated_quota=request_json['updated_quota']
+
+    data={
+        "quota_id":quota_id,
+        "original_quota":original_quota,
+        "updated_quota":updated_quota
+    }
+    quota_record.create(**data)
+
+    return quota.update(_quota,amount=updated_quota)
