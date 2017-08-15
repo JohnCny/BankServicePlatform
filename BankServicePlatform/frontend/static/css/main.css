@@ -5,8 +5,9 @@ a{text-decoration:none;color:#fff;}
 .top span{display:inline-block;font-size:15px;color:#fff;line-height:50px;}
 .back{float:left;margin:10px 0 10px 10px;}
 .right{float:right;margin-right:10px;}
+.Right{float:left;width:94%;margin-left:3%;text-align:right;margin-top:15px;margin-bottom:60px;font-weight:normal;font-size:15px;text-decoration:underline}
 
-.center{position:fixed;top:50px;left:0;right:0;bottom:50px;width:100%;background:#eff0f4;}
+.center{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;background:#eff0f4;}
 
 .bottom{position:fixed;left:0;right:0;bottom:0;width:100%;height:50px;background:#fff;border-top:1px solid #ddd;box-shadow:-2px -2px 2px #ddd;text-align:center;line-height:50px;}
 
@@ -22,7 +23,7 @@ a{text-decoration:none;color:#fff;}
 .normalTable tr td{padding:10px 0;}
 .normalTable .pull-right{text-align: right;color:#676767;}
 
-.yzm{height:30px;}
+.yzm{width:90%;vertical-align:bottom;}
 
 /*我要贷款*/
 h1{color:#fff;font-size:30px;text-align:center;margin-top:10px;}
@@ -34,6 +35,11 @@ h1{color:#fff;font-size:30px;text-align:center;margin-top:10px;}
 .sqjl img{vertical-align:text-bottom;}
 .kg{margin-left:20px;}
 #btn2,#state{display:none;}
+
+/*添加银行卡*/
+.addYhk{float:left;width:96%;margin-left:3%;font-size:15px;line-height:25px;margin-top:15px;}
+.addYhk img{width:25px;vertical-align:middle;}
+
 /*<!--dialog-->*/
 #dialog{background:rgba(0,0,0,0.5); width:100%;height:100%;position:fixed;z-index:1000000;display:none;}
 .display-div{background:white;width:300px;margin:0 auto;margin-top:200px;overflow:auto;z-index:9999;border-radius:10px;}
@@ -54,12 +60,13 @@ select{width:85%;margin:0;padding:8px;border-radius:5px;border:0;color:#428bca;}
 .btn-yzm{background:#888;}
 .btn-login{background:rgb(99, 161, 255);width:90%;}
 .btn-tsed{background: #f57a03;}
+.btn-bdyhk{background: #d9534f;}
 .btn-gray{background:gray}
-.btn-jb{background:#fff;width:90px;color:gray}
+.btn-jb{display:inline-block;position:relative;margin-top:-10px;background:#fff;width:70px;color:gray;}
 /*彩色文字*/
 .red{color:#d9534f;}
 .black{color:#000}
 .green{color: #8bcb54;}
 .blue{color:#428bca;}
-.gray{color:gray;}
+.gray{color:#8a8a8a;}
 .yellow{color:#f57a03;}
