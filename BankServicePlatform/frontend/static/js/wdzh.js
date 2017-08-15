@@ -11,7 +11,7 @@ var SingleView = Backbone.View.extend({
 });
 var singleView = new SingleView;
 
-//获取数据
+//获取customer信息
 var SingleResult = Backbone.Collection.extend({
     url: '/api/customer/' + localStorage.getItem(key_customer_id)
 });
@@ -20,7 +20,6 @@ singleResult.fetch({
     beforeSend: sendAuthentication,
     success: function(collection, response, options) {
         if (response.data.bank_card_number != null) {
-
             response.data.bank_card_number = response.data.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
         }
         singleView.render({ result: response.data });

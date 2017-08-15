@@ -26,13 +26,13 @@ singleResult.fetch({
     }
 });
 
-//获取数据
-var QuotaResult = Backbone.Collection.extend({
-    url: '/api/quota/pad_increase_amount/' + $("#quota_id").val()
-});
-var quotaResult = new QuotaResult;
-
 $("#btn1").click(function() {
+    //请求调额
+    var QuotaResult = Backbone.Collection.extend({
+        url: '/api/quota/pad_increase_amount/' + $("#quota_id").val()
+    });
+    var quotaResult = new QuotaResult;
+
     quotaResult.fetch({
         beforeSend: sendAuthentication,
         success: function(collection, response, options) {
