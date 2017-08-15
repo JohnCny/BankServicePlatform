@@ -74,7 +74,7 @@ def delete(customer_id):
 @route(bp,'/<customer_id>/add_bank_card',methods=['POST'])
 def add_bank_card(customer_id):
     _customer=customer.update(customer.get_or_404(customer_id),**request.json)
-    set_init_quota(_customer.id,_customer.identification_number_customer.real_name,_customer.phone,_customer.bank_card_number)
+    set_init_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
     return _customer
 
 
