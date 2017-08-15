@@ -25,9 +25,9 @@ js_customer = Bundle("js/customer.js")
 
 def init_app(app):
     webassets = Environment(app)
-    webassets.register('css_all', css_all)
-    webassets.register('js_quote', js_quote)
-    webassets.register('js_main', js_customer)
+    # webassets.register('css_all', css_all)
+    # webassets.register('js_quote', js_quote)
+    # webassets.register('js_main', js_customer)
     webassets.manifest = 'cache' if not app.debug else False
     webassets.cache = not app.debug
     webassets.debug = app.debug
