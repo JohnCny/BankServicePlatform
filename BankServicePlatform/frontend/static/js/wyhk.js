@@ -42,7 +42,7 @@ var LoopView = Backbone.View.extend({
 });
 var loopView = new LoopView;
 
-//获取数据
+//获取customer的billes
 var LoopResult = Backbone.Collection.extend({
     url: '/api/customer/quota_billes/' + localStorage.getItem(key_customer_id)
 });

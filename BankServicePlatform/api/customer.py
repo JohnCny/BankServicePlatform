@@ -115,3 +115,10 @@ def show_customer_quota(customer_id):
         查找用户quota
     """
     return customer.get_or_404(customer_id).quotaes
+	
+@route(bp,'/quota_used_recordes/<customer_id>')
+def show_customer_quota_used_recordes(customer_id):
+    """
+        查找全部quota_used_recordes
+    """
+    return customer.get_or_404(customer_id).quotaes.quota_used_recordes.all()
