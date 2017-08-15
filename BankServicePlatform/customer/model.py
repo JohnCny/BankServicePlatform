@@ -36,7 +36,7 @@ class Customer(CustomerJsonSerializer,db.Model):
     identification_number=db.Column(db.String(20))#身份证
     phone=db.Column(db.String(20))#手机号码
     channel=db.Column(db.Integer())#渠道
-    bank_card_number=db.Column(db.String(25))#银行卡号
+    bank_card_number=db.Column(db.String(25),default=0)#银行卡号
     #flask-security use，未使用flask-security
     email=db.Column(db.String(64))
     active=db.Column(db.Boolean())
@@ -91,4 +91,21 @@ class Customer(CustomerJsonSerializer,db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
+class NullCustomer(Customer):
+    id = None
+    password=None
+    real_name=None
+    identification_number=None
+    phone=None
+    channel=None
+    bank_card_number=None
+    #flask-security use，未使用flask-security
+    email=None
+    active=None
+    last_login_at = None
+    current_login_at = None
+    last_login_ip = None
+    current_login_ip = None
+    login_count = None
 

@@ -59,6 +59,8 @@ def new():
     g.customer=customer.create(**request_json)
     login_user(g.customer)
     token=g.customer.generate_auth_token()
+    set_init_quota(g.customer.id)
+
     return {"customer":g.customer,
             "token":token.decode('ascii')}
 
@@ -74,13 +76,21 @@ def delete(customer_id):
 @route(bp,'/<customer_id>/add_bank_card',methods=['POST'])
 def add_bank_card(customer_id):
     _customer=customer.update(customer.get_or_404(customer_id),**request.json)
-    set_init_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
+    update_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
     return customer.get_or_404(customer_id)
 
 
-def set_init_quota(customer_id,identification_number,real_name,phone,bank_card_number):
-    data={
+def set_init_quota(customer_id):
+    quota_data={
+            "customer_id":customer_id,
+            "amount":0,
+            "available_amount":0
+    }
+    quota.create(**quota_data)
 
+
+def update_quota(customer_id,identification_number,real_name,phone,bank_card_number):
+    data={
         "customerName":real_name,
         "sfzh":str(identification_number),
         "phoneNo":phone,
@@ -92,16 +102,23 @@ def set_init_quota(customer_id,identification_number,real_name,phone,bank_card_n
 
     response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
     result=response_json.get('result',None)
+
     _quota=customer.get_or_404(customer_id).quotaes
-    if not _quota:
-        _quota=result.get('quota',None)
-        _quota=int(_quota)
-        quota_data={
-            "customer_id":customer_id,
-            "amount":_quota,
-            "available_amount":_quota
-        }
-        return quota.create(**quota_data)#todo:重复
+
+    update_quota=result.get('quota',None)
+    update_quota=int(update_quota)
+
+    available_amount=float(_quota.available_amount)
+    quota_diff=update_quota-int(_quota.amount)
+
+    available_amount+=quota_diff
+
+    quota_data={
+        "customer_id":customer_id,
+        "amount":update_quota,
+        "available_amount":available_amount
+    }
+    quota.update(_quota,**quota_data)#todo:重复
 
     return True
 
