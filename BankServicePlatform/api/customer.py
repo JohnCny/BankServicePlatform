@@ -75,7 +75,7 @@ def delete(customer_id):
 def add_bank_card(customer_id):
     _customer=customer.update(customer.get_or_404(customer_id),**request.json)
     set_init_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
-    return _customer
+    return customer.get_or_404(customer_id)
 
 
 def set_init_quota(customer_id,identification_number,real_name,phone,bank_card_number):
