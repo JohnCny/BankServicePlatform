@@ -1,5 +1,6 @@
 function changePage(src) {
-    window.location.href = src
+    var timestamp = new Date().getTime();
+    window.location.href = src + "?t=" + timestamp;
 }
 
 //微信公众号appid
