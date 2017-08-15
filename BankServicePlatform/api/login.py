@@ -52,7 +52,7 @@ def login():
         return {"customer":g.customer,"token":token}
     else:
         g.customer=None
-        return helper.show_result_fail("用户名或者密码错误")
+        return {"info":"用户名或者密码错误","result":"Failed"}
 
 
 @route_nl(bp,'/get_token_by_openid')
