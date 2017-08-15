@@ -49,7 +49,7 @@ def login():
         login_user(g.customer)
         token=g.customer.generate_auth_token()
         redis.set(openid,token)
-        return {"customer":g.customer,"token":token}
+        return {"customer":g.customer,"token":token,"result":"Success"}
     else:
         g.customer=None
         return {"info":"用户名或者密码错误","result":"Failed"}
