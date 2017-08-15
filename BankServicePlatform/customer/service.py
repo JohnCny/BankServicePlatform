@@ -10,7 +10,4 @@ class CustomerService(Service):
 
     def _preprocess_params(self, kwargs):
         kwargs=super(CustomerService,self)._preprocess_params(kwargs)
-        _password=kwargs.get('password')
-        password=pwd_context.encrypt(_password)
-        kwargs['password']=password
-        return kwargs
+        return kwargs.get('customer')

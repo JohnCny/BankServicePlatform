@@ -6,18 +6,16 @@ from functools import wraps
 
 from flask import render_template
 from flask_login import login_required
-from ..factory import auth
 from .. import factory
 from . import assets
-
 
 
 def create_app(settings_override=None):
     """Returns the bankserviceplatform dashboard application instance"""
     app = factory.create_app(__name__, __path__, settings_override)
 
-    # Init assets
-    assets.init_app(app)
+    # # Init assets
+    # assets.init_app(app)
 
     # Register custom error handlers
     if not app.debug:
@@ -34,7 +32,7 @@ def handle_error(e):
 def route(bp, *args, **kwargs):
     def decorator(f):
         @bp.route(*args, **kwargs)
-        @auth.login_required
+        @login_required
         @wraps(f)
         def wrapper(*args, **kwargs):
             return f(*args, **kwargs)
@@ -51,4 +49,3 @@ def route_nl(bp, *args, **kwargs):
         return f
 
     return decorator
-

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from flask import Blueprint,request
+from flask import Blueprint,request,jsonify
 from ..services import quota,quota_record,quota_used_record
-from ..tools import helper
-from .import route
+from ..tools.json_encoding import convert
+import urllib
+import urllib2
+from .import route,route_nl
+import json,yaml
 
 bp=Blueprint('quota',__name__,url_prefix='/quota')
 
@@ -47,7 +50,7 @@ def update(quota_id):
 @route(bp,'/update_amount',methods=['POST'])
 def update_amount():
     #todo:增加额度验证
-    request_json=dict(request.json)
+    request_json=dict(**request.json)
 
     quota_id=request_json['quota_id']
     _quota=quota.get_or_404(quota_id)
@@ -70,3 +73,52 @@ def delete(quota_id):
     return None,204
 
 
+#==================================PAD交互=====================================
+@route_nl(bp,'/pad_increase_amount/<quota_id>')
+def pad_increase_amount(quota_id):
+    _quota=quota.get_or_404(quota_id)
+    _quota_bill=quota.get_or_404(quota_id).quota_used_recordes.first().quota_billes
+    _cutomer=_quota.customer
+    data={
+        "id":_quota.id,
+        "customerName":_cutomer.real_name,
+        "sfzh":str(_cutomer.identification_number),
+        "phoneNo":_cutomer.phone,
+        "cardNum":_cutomer.bank_card_number,
+        "applyAmt":_quota.amount,
+        "loanTerm":_quota_bill.period,
+        "applyTime":_quota_bill.create_date
+    }
+    data=urllib.urlencode(data)
+    req=urllib2.Request("http://139.196.31.230:8080/PCCredit/ipad/ks/getQuotaApply.json",data=data)
+    response=urllib2.urlopen(req,timeout=60)
+
+    response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
+    result=response_json.get('result',None)
+    status=result.get('status',None)
+
+    if status=='success':
+        return 'Success',200
+
+    return 'Failed',200
+
+
+@route_nl(bp,'/pad_update_amount',methods=['POST'])
+def pad_update_amount():
+    #todo:增加额度验证
+    request_json=dict(**request.json)
+
+    quota_id=request_json['quota_id']
+    _quota=quota.get_or_404(quota_id)
+
+    original_quota=_quota.amount
+    updated_quota=request_json['updated_quota']
+
+    data={
+        "quota_id":quota_id,
+        "original_quota":original_quota,
+        "updated_quota":updated_quota
+    }
+    quota_record.create(**data)
+
+    return quota.update(_quota,amount=updated_quota)

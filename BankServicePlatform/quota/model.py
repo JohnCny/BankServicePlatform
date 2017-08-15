@@ -6,7 +6,7 @@ from ..tools.helper import JsonSerializer
 from datetime import datetime
 
 class QuotaJsonSerializer(JsonSerializer):
-    __json_public__ = ["amount","available_amount"]
+    __json_public__ = ["id","amount","available_amount"]
 
 class Quota(QuotaJsonSerializer,db.Model):
     __tablename__="quota"
@@ -23,7 +23,7 @@ class Quota(QuotaJsonSerializer,db.Model):
 
 
 class QuotaRecordJsonSerializer(JsonSerializer):
-    __json_public__ = ["original_quota","updated_quota","create_date"]
+    __json_public__ = ["id","original_quota","updated_quota","create_date"]
 
 class QuotaRecord(QuotaRecordJsonSerializer,db.Model):
     __tablename__="quota_record"
@@ -35,7 +35,7 @@ class QuotaRecord(QuotaRecordJsonSerializer,db.Model):
     updated_quota=db.Column(db.Integer())#变更后额度
 
 class QuotaUsedRecordJsonSerializer(JsonSerializer):
-    __json_public__ = ["used_quota","create_date","status"]
+    __json_public__ = ["id","used_quota","create_date","status"]
 
 class QuotaUsedRecord(QuotaUsedRecordJsonSerializer,db.Model):
     __tablename__="quota_used_record"
@@ -49,7 +49,7 @@ class QuotaUsedRecord(QuotaUsedRecordJsonSerializer,db.Model):
     quota_billes=db.relationship('QuotaBill', backref='quota_used_record',uselist=False)#额度账单
 
 class QuotaBillJsonSerializer(JsonSerializer):
-    __json_public__ = ["period_amount","period_remain","create_date"]
+    __json_public__ = ["id","period_amount","period","period_remain","create_date"]
 
 class QuotaBill(QuotaBillJsonSerializer,db.Model):
     __tablename__="quota_bill"
@@ -57,13 +57,14 @@ class QuotaBill(QuotaBillJsonSerializer,db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     quota_used_record_id=db.Column(db.Integer,db.ForeignKey('quota_used_record.id'))
     period_amount=db.Column(db.Float())#每期应还
+    period=db.Column(db.Integer())#总期数
     period_remain=db.Column(db.Integer())#剩余期数
     create_date=db.Column(db.DateTime(),default=datetime.now())#日期
 
     quota_repaymentes=db.relationship('QuotaRepayment', backref='quota_bill',lazy='dynamic')#账单还款记录
 
 class QuotaRepaymentJsonSerializer(JsonSerializer):
-    __json_public__ = ["repayment_amount","period","repayment_date"]
+    __json_public__ = ["id","repayment_amount","period","repayment_date"]
 
 class QuotaRepayment(QuotaRepaymentJsonSerializer,db.Model):
     __tablename__="quota_repayment"

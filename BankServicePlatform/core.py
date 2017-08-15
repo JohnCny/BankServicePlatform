@@ -10,8 +10,7 @@ __author__ = 'Johnny'
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security
-from flask_login import LoginManager
-
+from flask_redis import FlaskRedis
 
 # #: Flask-SQLAlchemy extension instance
 db = SQLAlchemy()
@@ -22,7 +21,8 @@ mail = Mail()
 #: Flask-Security extension instance
 security = Security()
 
-login_manager=LoginManager()
+redis=FlaskRedis()
+
 
 class BankServicePlatformError(Exception):
     """错误信息基类"""

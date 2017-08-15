@@ -4,16 +4,19 @@ __author__ = 'Johnny'
 import os
 
 from celery import Celery
-from flask import Flask
+from flask import Flask,redirect,request,flash
 
 from flask_httpauth import HTTPBasicAuth
-
-from .core import db,login_manager
+from flask_login import LoginManager
+from .core import db,redis
 from .tools.helper import register_blueprints
 from .middleware import HTTPMethodOverrideMiddleware
 from .models import Customer
 from flask import g
+from functools import wraps
 
+
+login_manager=LoginManager()
 auth=HTTPBasicAuth()
 
 def create_app(package_name, package_path,settings_overrde=None):
@@ -33,6 +36,8 @@ def create_app(package_name, package_path,settings_overrde=None):
     # app.config.from_object(settings_override)
 
     db.init_app(app)
+
+    redis.init_app(app)
 
     login_manager.init_app(app)
 
@@ -64,14 +69,14 @@ def create_celery_app(app=None):
     return celery
 
 
-# @login_manager.unauthorized_handler
-# def unauthorized():
-#     flash('需要登录','error')
-#     return render_template("mmdl.html"),500
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash('需要登录','error')
+    return redirect("/login")
 #
-# @login_manager.user_loader
-# def load_user(id):
-#     return Customer.query.get(int(id))
+@login_manager.user_loader
+def load_user(id):
+    return Customer.query.get(int(id))
 
 @auth.verify_password
 def verify_password(phone_or_token,password):
@@ -89,3 +94,16 @@ def verify_password(phone_or_token,password):
 
     g.customer=customer
     return True
+
+@auth.error_handler
+def unauthorized():
+    return redirect('/login')
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated(*args,**kwargs):
+        if g.customer is None:
+            return redirect('/login',next=request.url)
+        return f(*args,**kwargs)
+    return decorated

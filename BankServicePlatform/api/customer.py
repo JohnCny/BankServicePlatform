@@ -3,12 +3,12 @@ __author__ = 'Johnny'
 
 from flask import Blueprint,request,g
 from ..services import customer
-from ..tools import helper
+from passlib.apps import custom_app_context as pwd_context
+
 from .import route,route_nl
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
-current_user=1;
 
 @route(bp,'/')
 def list():
@@ -17,13 +17,13 @@ def list():
     """
     return customer.all()
 
-@route(bp,'/quota/')
-def get_customer_quota():
+@route(bp,'/<customer_id>/quota/')
+def get_customer_quota(customer_id):
     """
     根据用户获得额度
     :return:
     """
-    return customer.get_or_404(current_user).quotaes
+    return customer.get_or_404(customer_id).quotaes
 
 
 @route(bp,'/<customer_id>')
@@ -45,9 +45,20 @@ def quotas(customer_id):
 """页面组成字典或者json"""
 @route_nl(bp,'/',methods=['POST'])
 def new():
-    g.customer=customer.create(**request.json)
+    request_json=dict(**request.json)
+    _cutomer=dict(request_json.get('customer'))
+
+    _password=_cutomer['password']
+    password=pwd_context.encrypt(_password)
+    _cutomer['password']=password
+
+    request_json['customer']=_cutomer
+
+    g.customer=customer.create(**request_json)
+
     token=g.customer.generate_auth_token()
-    return token.decode('ascii')
+    return {"customer":g.customer,
+            "token":token.decode('ascii')}
 
 @route(bp,'/<customer_id>',methods=['PUT'])
 def update(customer_id):

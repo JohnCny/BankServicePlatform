@@ -25,6 +25,9 @@ var CustomerRouter = Backbone.Router.extend({
 
 });
 
+var CustomerView=Backbone.View.extend({
+
+})
 
 var customers = new Customers();
 

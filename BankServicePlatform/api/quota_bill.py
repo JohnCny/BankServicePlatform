@@ -15,6 +15,13 @@ def show(quota_bill_id):
     """
     return quota_bill.get_or_404(quota_bill_id)
 
+@route(bp,'/')
+def show_quota_billes():
+    """
+        查找全部
+    """
+    return quota_bill.all()
+
 @route(bp,'/<quota_bill_id>/repayment')
 def show_repayment(quota_bill_id):
     """
