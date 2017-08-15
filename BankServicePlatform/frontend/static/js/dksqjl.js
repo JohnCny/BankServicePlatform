@@ -21,15 +21,22 @@ var loopResult = new LoopResult;
 loopResult.fetch({
     beforeSend: sendAuthentication,
     success: function(collection, response, options) {
+
+        var tmp = []
         if (Array.isArray(response.data)) {
-            for (var i = 0; i < response.data.length; i++) {
-                var obj = response.data[i];
+            tmp = response.data;
+        } else {
+            if (response.data != null) {
+                tmp.push(response.data)
+            }
+        }
+        for (var i = 0; i < tmp.length; i++) {
+            var obj = tmp[i];
+            if (obj != null && obj.create_date != null) {
                 obj.create_date = GMTToStr(obj.create_date);
             }
-        } else {
-
         }
-        loopView.render({ result: response.data });
+        loopView.render({ result: tmp });
     },
     error: function(collection, response, options) {
         //错误提示

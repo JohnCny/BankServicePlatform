@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="utf-8">
     <title>快审通—贷款详情</title>
@@ -26,6 +27,8 @@
     </div> -->
     <div id="loop_content" class="center" style="bottom:0">
         <script type="text/template" id="loop_template">
+            <h2 class="gray strong" style="width:96%;margin-left:3%;margin-top:20px;">当前贷款记录 <span class="red strong"><%= result.length %></span> 条</h2>
+
             <% for(var i = 0; i < result.length; i++) { %>
                 <div class="content topContent">
                     <table class="normalTable">
