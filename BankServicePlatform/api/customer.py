@@ -103,8 +103,7 @@ def set_init_quota(customer_id,identification_number,real_name,phone,bank_card_n
         }
         return quota.create(**quota_data)#todo:重复
 
-    return customer.get_or_404(customer_id).quotaes
-
+    return True
 
 @route(bp,'/quota_billes/<customer_id>')
 def show_customer_billes(customer_id):
