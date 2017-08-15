@@ -105,4 +105,5 @@ def get_openid():
 @bp.route('/log_out')
 def log_out():
     logout_user()
+    print "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
     return redirect('/login')
