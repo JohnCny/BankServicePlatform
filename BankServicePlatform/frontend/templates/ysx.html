@@ -21,10 +21,10 @@
 </head>
 
 <body>
-    <div class="top">
+    <!-- <div class="top">
         <span class="back"><img src="../static/img/back.png"/></span>
         <span class="title">快审通</span>
-    </div>
+    </div> -->
     <div class="center">
         <div id="single_content" class="content topContent" style="background:#8bcb54;padding:30px 0;border-radius:10px 10px 0 0;">
             <script type="text/template" id="single_template">
@@ -36,28 +36,32 @@
                 <p class="right sqjl">
                     <a href="dksqjl"><img src="../static/img/sqjl.png" />申请记录</a>
                 </p>
-            </script>
+			</script>
         </div>
         <div class="content topContent" style="margin-top:0;border-radius:0 0 10px 10px;">
             <table class="normalTable">
                 <tr>
-                    <td><span class="black strong kg">总额度</span><span class="gray">（最多可贷5万）</span></td>
-                    <td></td>
+                    <td><span class="black strong kg">总额度</span><span class="gray">（最多可贷5万）</span></td>                    
                 </tr>
                 <tr>
                     <td><span class="black strong kg" style="font-size:20px;">¥ 
                                 <%= result.amount %></span></td>
-                    <td>
-                        <input type="button" class="btn btn-tsed right" value="提升额度" id="btn1">
-                        <input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2">
-                    </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><span class="gray strong right" id="state">提额状态：<span class="strong yellow">正在处理</span></span>
-                    </td>
                 </tr>
             </table>
+        </div>
+		
+        <div class="content topContent" style="border-radius:0 0 10px 10px;background:none;">
+            <p style="width:100%;">				
+				<input type="button" class="btn btn-tsed right" value="提升额度" id="btn1">
+				<input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2">
+				<input type="button" class="btn btn-bdyhk right" value="绑定银行卡">
+			</p>
+            <p class="gray strong right" id="state" style="width:100%;text-align:right">
+				提额状态：<span class="strong yellow">正在处理</span>
+			</p>                   
         </div>
     </div>
     <div class="bottom">
