@@ -46,7 +46,7 @@ loopResult.fetch({
 var Card = Backbone.Model.extend({
     url: '/api/customer/' + localStorage.getItem(key_customer_id) + '/add_bank_card',
     parse: function(response) {
-        window.location.href = 'wydk'
+        changePage('wydk')
     }
 });
 var card = new Card;
