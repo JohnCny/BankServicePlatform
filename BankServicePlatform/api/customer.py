@@ -2,10 +2,12 @@
 __author__ = 'Johnny'
 
 from flask import Blueprint,request,g
-from ..services import customer
+from ..services import customer,quota
 from passlib.apps import custom_app_context as pwd_context
-
+from ..config import PAD_SERVER_URL
 from .import route,route_nl
+from flask_login import login_user
+import urllib,urllib2,yaml,json
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
@@ -55,7 +57,7 @@ def new():
     request_json['customer']=_cutomer
 
     g.customer=customer.create(**request_json)
-
+    login_user(g.customer)
     token=g.customer.generate_auth_token()
     return {"customer":g.customer,
             "token":token.decode('ascii')}
@@ -68,6 +70,37 @@ def update(customer_id):
 def delete(customer_id):
     customer.delete(customer.get_or_404(customer_id))
     return None,204
+
+@route(bp,'/<customer_id>/add_bank_card',methods=['POST'])
+def add_bank_card(customer_id):
+    _customer=customer.update(customer.get_or_404(customer_id),**request.json)
+    set_init_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
+    return _customer
+
+
+def set_init_quota(customer_id,identification_number,real_name,phone,bank_card_number):
+    data={
+
+        "customerName":real_name,
+        "sfzh":str(identification_number),
+        "phoneNo":phone,
+        "cardNum":bank_card_number
+    }
+    data=urllib.urlencode(data)
+    req=urllib2.Request("http://"+PAD_SERVER_URL+":8080/PCCredit/ipad/ks/getCreditAmt.json",data=data)
+    response=urllib2.urlopen(req,timeout=60)
+
+    response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
+    result=response_json.get('result',None)
+    _quota=result.get('quota',None)
+    _quota=int(_quota)
+    quota_data={
+        "customer_id":customer_id,
+        "amount":_quota,
+        "available_amount":_quota
+    }
+    return quota.create(**quota_data)
+
 
 @route(bp,'/quota_billes/<customer_id>')
 def show_customer_billes(customer_id):

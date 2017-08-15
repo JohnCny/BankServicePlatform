@@ -8,6 +8,7 @@ import urllib
 import urllib2
 from .import route,route_nl
 import json,yaml
+from ..config import PAD_SERVER_URL
 
 bp=Blueprint('quota',__name__,url_prefix='/quota')
 
@@ -90,7 +91,8 @@ def pad_increase_amount(quota_id):
         "applyTime":_quota_bill.create_date
     }
     data=urllib.urlencode(data)
-    req=urllib2.Request("http://139.196.31.230:8080/PCCredit/ipad/ks/getQuotaApply.json",data=data)
+
+    req=urllib2.Request("http://"+PAD_SERVER_URL+":8080/PCCredit/ipad/ks/getQuotaApply.json",data=data)
     response=urllib2.urlopen(req,timeout=60)
 
     response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
