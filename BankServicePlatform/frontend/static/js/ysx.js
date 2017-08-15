@@ -33,7 +33,6 @@ var QuotaResult = Backbone.Collection.extend({
 var quotaResult = new QuotaResult;
 
 $("#btn1").click(function() {
-    alert($("#quota_id").val())
     quotaResult.fetch({
         beforeSend: sendAuthentication,
         success: function(collection, response, options) {
