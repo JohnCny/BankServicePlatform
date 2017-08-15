@@ -15,16 +15,18 @@ var singleView = new SingleView;
 var SingleResult = Backbone.Collection.extend({
     url: '/api/customer/' + localStorage.getItem(key_customer_id)
 });
-var singleResult = new SingleResult;
-singleResult.fetch({
-    beforeSend: sendAuthentication,
-    success: function(collection, response, options) {
-        if (response.data.bank_card_number != null) {
-            response.data.bank_card_number = response.data.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
+$(document).ready(function() {
+    var singleResult = new SingleResult;
+    singleResult.fetch({
+        beforeSend: sendAuthentication,
+        success: function(collection, response, options) {
+            if (response.data.bank_card_number != null) {
+                response.data.bank_card_number = response.data.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
+            }
+            singleView.render({ result: response.data });
+        },
+        error: function(collection, response, options) {
+            //错误提示
         }
-        singleView.render({ result: response.data });
-    },
-    error: function(collection, response, options) {
-        //错误提示
-    }
+    });
 });
