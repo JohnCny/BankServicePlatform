@@ -5,8 +5,8 @@ var Customer =  Backbone.Model.extend({
     parse: function(res) {
         if (res.data.result == "Success") {
             //保存customeId和token
-            localStorage.setItem(key_customer_id, res.data.customer.id);
-            localStorage.setItem(key_token, res.data.token);
+            sessionStorage.setItem(key_customer_id, res.data.customer.id);
+            sessionStorage.setItem(key_token, res.data.token);
             //localStorage.setItem(key_customer_id, 1);
             //localStorage.setItem(key_token, "eyJhbGciOiJIUzI1NiIsImV4cCI6MTUwMjc5MjM4NCwiaWF0IjoxNTAyNzA1OTg0fQ.eyJpZCI6NjZ9.r2Uxsm_5YDKdMNrlUof4bYr01qL-w6T_He4NdJnq6jg");
 
