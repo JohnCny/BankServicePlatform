@@ -10,8 +10,7 @@ css_bankserviceplatform = Bundle("less/bankserviceplatform.less",
                        debug=False)
 
 #: consolidated css bundle
-css_all = Bundle("css/bootstrap.min.css", css_bankserviceplatform,
-                 "css/bootstrap-responsive.min.css",
+css_all = Bundle("css/main.css", css_bankserviceplatform,
                  filters="cssmin", output="css/bankserviceplatform.min.css")
 
 #: vendor js bundle
@@ -25,7 +24,7 @@ js_customer = Bundle("js/customer.js")
 
 def init_app(app):
     webassets = Environment(app)
-    # webassets.register('css_all', css_all)
+    webassets.register('css_all', css_all)
     # webassets.register('js_quote', js_quote)
     # webassets.register('js_main', js_customer)
     webassets.manifest = 'cache' if not app.debug else False
