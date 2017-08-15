@@ -9,10 +9,10 @@
     <meta name="author" content="Muhammad Usman">
     <link href="../static/css/main.css" rel="stylesheet">
     <script type="text/javascript" src="../static/js/vendor/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../static/js/main.js"></script>
     <script type="text/javascript" src="../static/js/vendor/underscore-1.8.3.min.js"></script>
     <script type="text/javascript" src="../static/js/vendor/backbone-1.3.3.min.js"></script>
     <script type="text/javascript" src="../static/js/vendor/jquery.serializejson.min.js"></script>
+    <script type="text/javascript" src="../static/js/main.js"></script>
     <style type="text/css">
 
     </style>
@@ -26,12 +26,17 @@
         <span class="title">快审通</span>
     </div>
     <div class="center">
-        <div class="content topContent" style="background:#8bcb54;padding:30px 0;border-radius:10px 10px 0 0;">
-            <p class="bz left">可用额度</p>
-            <h1 class="left">￥5,000.00</h1>
-            <p class="right sqjl">
-                <a href="dksqjl"><img src="../static/img/sqjl.png" />申请记录</a>
-            </p>
+        <div id="single_content" class="content topContent" style="background:#8bcb54;padding:30px 0;border-radius:10px 10px 0 0;">
+            <script type="text/template" id="single_template">
+                <input type="hidden" id="quota_id" value="<%= result.id %>">
+                <p class="bz left">可用额度(￥)</p>
+                <h1 class="left">
+                    <%= result.available_amount %>
+                </h1>
+                <p class="right sqjl">
+                    <a href="dksqjl"><img src="../static/img/sqjl.png" />申请记录</a>
+                </p>
+            </script>
         </div>
         <div class="content topContent" style="margin-top:0;border-radius:0 0 10px 10px;">
             <table class="normalTable">
@@ -40,10 +45,11 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td><span class="black strong kg" style="font-size:20px;">¥ 5,000.00</span></td>
+                    <td><span class="black strong kg" style="font-size:20px;">¥ 
+                                <%= result.amount %></span></td>
                     <td>
-                        <input type="button" class="btn btn-tsed right" value="提升额度" id="btn1" onclick="$('#dialog').show()" />
-                        <input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2" />
+                        <input type="button" class="btn btn-tsed right" value="提升额度" id="btn1">
+                        <input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2">
                     </td>
                 </tr>
                 <tr>
@@ -69,5 +75,7 @@
         <!-- /display-div -->
     </div>
 </body>
+
+<script type="text/javascript" src="../static/js/ysx.js"></script>
 
 </html>

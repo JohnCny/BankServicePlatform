@@ -2,7 +2,7 @@
 __author__ = 'Johnny'
 
 from flask import Blueprint,request
-from ..services import quota_bill,quota_repayment
+from ..services import quota_bill,quota_repayment,customer,quota,quota_used_record
 from ..tools import helper
 from .import route
 
@@ -21,6 +21,7 @@ def show_quota_billes():
         查找全部
     """
     return quota_bill.all()
+
 
 @route(bp,'/<quota_bill_id>/repayment')
 def show_repayment(quota_bill_id):

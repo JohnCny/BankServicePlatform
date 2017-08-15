@@ -44,10 +44,11 @@ var loopView = new LoopView;
 
 //获取数据
 var LoopResult = Backbone.Collection.extend({
-    url: '/api/quota/quota_bill'
+    url: '/api/customer/quota_billes/' + localStorage.getItem(key_customer_id)
 });
 var loopResult = new LoopResult;
 loopResult.fetch({
+    beforeSend: sendAuthentication,
     success: function(collection, response, options) {
         //判断是否json数组
         if (Array.isArray(response.data)) {
@@ -87,13 +88,12 @@ loopResult.fetch({
 
 
 //计算和
-function getCount(){
-    var total=0;
-    $("[name='check_box']:checked").each(function() 
-    {
+function getCount() {
+    var total = 0;
+    $("[name='check_box']:checked").each(function() {
         //alert($(this).val());  
-        var period_amount=$(this).parents("tr").find(".period_amount").text();
-        total+=parseFloat($.trim(period_amount));
+        var period_amount = $(this).parents("tr").find(".period_amount").text();
+        total += parseFloat($.trim(period_amount));
     });
     //alert(total.toFixed(2));
     $("#total").html(total.toFixed(2));

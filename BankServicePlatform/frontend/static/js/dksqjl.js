@@ -14,9 +14,12 @@ var loopView = new LoopView;
 //获取数据
 var LoopResult = Backbone.Collection.extend({
     url: '/api/quota/quota_used_record/11'
+
 });
 var loopResult = new LoopResult;
+
 loopResult.fetch({
+    beforeSend: sendAuthentication,
     success: function(collection, response, options) {
         response.data.create_date = GMTToStr(response.data.create_date)
         loopView.render({ result: response.data });

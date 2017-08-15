@@ -69,5 +69,16 @@ def delete(customer_id):
     customer.delete(customer.get_or_404(customer_id))
     return None,204
 
+@route(bp,'/quota_billes/<customer_id>')
+def show_customer_billes(customer_id):
+    """
+        查找全部billes
+    """
+    return customer.get_or_404(customer_id).quotaes.quota_used_recordes.first().quota_billes
 
-
+@route(bp,'/quota/<customer_id>')
+def show_customer_quota(customer_id):
+    """
+        查找用户quota
+    """
+    return customer.get_or_404(customer_id).quotaes
