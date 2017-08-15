@@ -92,14 +92,18 @@ def set_init_quota(customer_id,identification_number,real_name,phone,bank_card_n
 
     response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
     result=response_json.get('result',None)
-    _quota=result.get('quota',None)
-    _quota=int(_quota)
-    quota_data={
-        "customer_id":customer_id,
-        "amount":_quota,
-        "available_amount":_quota
-    }
-    return quota.create(**quota_data)
+    _quota=customer.get_or_404(customer_id).quotaes
+    if not _quota:
+        _quota=result.get('quota',None)
+        _quota=int(_quota)
+        quota_data={
+            "customer_id":customer_id,
+            "amount":_quota,
+            "available_amount":_quota
+        }
+        return quota.create(**quota_data)#todo:重复
+
+    return customer.get_or_404(customer_id).quotaes
 
 
 @route(bp,'/quota_billes/<customer_id>')
