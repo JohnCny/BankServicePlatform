@@ -27,7 +27,7 @@ singleResult.fetch({
 });
 
 
-//获取数据
+//新增提款
 var Quota_used_record = Backbone.Model.extend({
     url: '/api/quota/quota_used_record',
     parse: function(response) {

@@ -24,28 +24,29 @@
         <span class="back" onclick="changePage('ysx.html')"><img src="../static/img/back.png"/></span>
         <span class="title">贷款详情</span>
     </div> -->
-    <div class="center" style="bottom:0">
-        <div class="content topContent">
-            <table id="single_content" class="normalTable">
-                <script type="text/template" id="single_template">
-                    <tr>
-                        <td><b class="black strong kg"><%= '缺字段' %></b></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result.used_quota %>
+    <div id="loop_content" class="center" style="bottom:0">
+        <script type="text/template" id="loop_template">
+            <% for(var i = 0; i < result.length; i++) { %>
+                <div class="content topContent">
+                    <table class="normalTable">
+                        <tr>
+                            <td><b class="black strong kg"><%= '缺字段' %></b></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="gray kg">借款总额：</span><span class="yellow strong" style="font-size:20px;">¥ <%= result[i].used_quota %>
                     </span>
-                        </td>
-                        <td><span class="gray kg">申请日期：<%= result.create_date %></span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
-                    </tr>
-                </script>
-            </table>
-        </div>
+                            </td>
+                            <td><span class="gray kg">申请日期：<%= result[i].create_date %></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span class="black strong kg">最后还款日期：<%= '缺字段' %></span></td>
+                        </tr>
+                    </table>
+                </div>
+                <% } %>
+        </script>
     </div>
-
 </body>
 
 <script type="text/javascript" src="../static/js/dksqjl.js"></script>

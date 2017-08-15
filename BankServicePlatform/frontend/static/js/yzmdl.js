@@ -1,3 +1,4 @@
+//验证码登陆
 var Customers = Backbone.Collection.extend({
     url: '/api/login',
     parse: function(response) {

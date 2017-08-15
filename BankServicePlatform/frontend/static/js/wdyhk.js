@@ -11,9 +11,9 @@ var LoopView = Backbone.View.extend({
 });
 var loopView = new LoopView;
 
-//获取数据
+//获取customer信息
 var LoopResult = Backbone.Collection.extend({
-    url: '/api/quota/quota_bill/2/repayment'
+    url: '/api/customer/' + localStorage.getItem(key_customer_id)
 });
 var loopResult = new LoopResult;
 loopResult.fetch({
@@ -21,13 +21,34 @@ loopResult.fetch({
     success: function(collection, response, options) {
         //判断是否json数组
         if (Array.isArray(response.data)) {
-            loopView.render({ result: [{}, {}, {}] });
+            for (var i = 0; i < response.data.length; i++) {
+                var obj = response.data[i];
+                obj.bank_card_number = obj.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
+            }
+            loopView.render({ result: response.data });
         } else {
-            loopView.render({ result: [{}, {}, {}] });
+            response.data.bank_card_number = response.data.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
+            loopView.render({ result: [response.data] });
         }
 
     },
     error: function(collection, response, options) {
         //错误提示
     }
+});
+
+//更换银行卡
+var Card = Backbone.Model.extend({
+    url: '/api/customer/' + localStorage.getItem(key_customer_id) + '/add_bank_card',
+    parse: function(response) {
+        window.location.href = 'wdyhk'
+    }
+});
+var card = new Card;
+$("#subBtn").click(function() {
+    var obj = [];
+    obj["customer"] = { "bank_card_number": $("#bank_card_number").val() };
+    card.save(obj, {
+        beforeSend: sendAuthentication
+    });
 });
