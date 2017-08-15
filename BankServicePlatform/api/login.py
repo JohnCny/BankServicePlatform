@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # __author__ = 'Johnny'
 #
-from flask import Blueprint,request,redirect,g,jsonify
+from flask import Blueprint,request,redirect,g,jsonify,flash
 
 import json
 
@@ -13,6 +13,7 @@ from ..core import  redis
 from ..factory import verify_password
 from ..models import Customer
 from flask_login import login_user,logout_user
+from ..tools import helper
 
 bp = Blueprint('login', __name__,url_prefix='/login')
 
@@ -48,7 +49,7 @@ def login():
         return {"customer":g.customer,"token":token}
     else:
         g.customer=None
-        return "Failed",400
+        return helper.show_result_fail("用户名或者密码错误")
 
 
 @route_nl(bp,'/get_token_by_openid')
@@ -96,6 +97,7 @@ def get_openid():
     if openid:
         redis.set(openid,None)
         return jsonify(openid)
+
 
 @bp.route('/log_out')
 def log_out():
