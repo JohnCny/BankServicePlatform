@@ -87,7 +87,7 @@ def set_init_quota(customer_id,identification_number,real_name,phone,bank_card_n
         "cardNum":bank_card_number
     }
     data=urllib.urlencode(data)
-    req=urllib2.Request("http://"+PAD_SERVER_URL+":8080/pccredit_remote/ipad/ks/getCreditAmt.json",data=data)
+    req=urllib2.Request("http://"+PAD_SERVER_URL+":8080/PCCredit/ipad/ks/getCreditAmt.json",data=data)
     response=urllib2.urlopen(req,timeout=60)
 
     response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
