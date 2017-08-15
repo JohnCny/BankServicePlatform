@@ -3,7 +3,7 @@ var Customer =  Backbone.Model.extend({
     url: '/api/login',
     //解析异步请求返回的结果，fetch方法与save方法都会调用它
     parse: function(res) {
-        if (res.result == "Success") {
+        if (res.data.result == "Success") {
             //保存customeId和token
             localStorage.setItem(key_customer_id, res.data.customer.id);
             localStorage.setItem(key_token, res.data.token);
@@ -12,7 +12,7 @@ var Customer =  Backbone.Model.extend({
 
             window.location.href = 'wdzh';
         } else {
-            alert(res.info)
+            alert(res.data.info)
         }
     }
 });
