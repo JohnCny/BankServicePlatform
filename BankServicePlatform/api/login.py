@@ -100,4 +100,4 @@ def get_openid():
 @bp.route('/log_out')
 def log_out():
     logout_user()
-    return redirect('/login')
+    return redirect('http://bsp.qkjr.com.cn/login')
