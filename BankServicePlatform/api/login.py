@@ -40,7 +40,10 @@ def login():
     #     return 'Success',200
     # else:
     #     return "Failed",400\
-    result=verify_password(phone,password)
+    try:
+        result=verify_password(phone,password)
+    except:
+        return helper.show_result_fail("用户名或者密码错误")
     if result:
         g.customer=Customer.query.filter_by(phone=phone).first()
         login_user(g.customer)
