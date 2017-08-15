@@ -6,8 +6,10 @@ var Customer =  Backbone.Model.extend({
         //localStorage.setItem(key_customer_id, res.data.customer.id);
         //localStorage.setItem(key_token, res.data.token);
         localStorage.setItem(key_customer_id, 1);
-        localStorage.setItem(key_token, "111");
+        localStorage.setItem(key_token, "eyJhbGciOiJIUzI1NiIsImV4cCI6MTUwMjc5MjM4NCwiaWF0IjoxNTAyNzA1OTg0fQ.eyJpZCI6NjZ9.r2Uxsm_5YDKdMNrlUof4bYr01qL-w6T_He4NdJnq6jg");
+
         window.location.href = 'wdzh';
+
     }
 });
 
@@ -15,5 +17,7 @@ var customer = new Customer;
 $("#subBtn").click(function() {
     var obj = [];
     obj["customer"] = $('#contentForm').serializeJSON();
-    customer.save(obj);
+    customer.save(obj, {
+        beforeSend: sendAuthentication
+    });
 });

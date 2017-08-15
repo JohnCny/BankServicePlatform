@@ -9,10 +9,10 @@
     <meta name="author" content="Muhammad Usman">
     <link href="../static/css/main.css" rel="stylesheet">
     <script type="text/javascript" src="../static/js/vendor/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../static/js/main.js"></script>
     <script type="text/javascript" src="../static/js/vendor/underscore-1.8.3.min.js"></script>
     <script type="text/javascript" src="../static/js/vendor/backbone-1.3.3.min.js"></script>
     <script type="text/javascript" src="../static/js/vendor/jquery.serializejson.min.js"></script>
+    <script type="text/javascript" src="../static/js/main.js"></script>
     <style type="text/css">
 
     </style>
@@ -25,10 +25,15 @@
         <span class="back"><img src="../static/img/back.png"/></span>
         <span class="title">快审通</span>
     </div>
-    <div class="center">
+    <form id="contentForm" class="center">
         <div id="single_content" class="content topContent" style="background:#ea5e6b;padding:30px 0;border-radius:10px 10px 0 0;">
+
+
             <script type="text/template" id="single_template">
-                <h1>￥ <%= result.available_amount %></h1>
+                <input type="hidden" value="<%= result.id %>" id="quota_id" name="quota_id">
+                <h1>￥
+                    <%= result.available_amount %>
+                </h1>
                 <p class="bz">当前可贷额度</p>
             </script>
         </div>
@@ -36,14 +41,24 @@
             <table class="normalTable">
                 <tr>
                     <td class="pull-right" style="width:20%">贷款金额：</td>
-                    <td><input type="text" placeholder="请输入贷款金额" /></td>
+                    <td><input type="text" placeholder="请输入贷款金额" id="used_quota" name="used_quota" onchange="getAmount()" /></td>
                 </tr>
                 <tr>
                     <td class="pull-right">贷款期限：</td>
                     <td>
-                        <select>
-							<option>1个月</option>
-							<option>2个月</option>
+                        <select id="period" name="period" onchange="getAmount()">
+							<option value="1">1个月</option>
+							<option value="2">2个月</option>
+							<option value="3">3个月</option>
+							<option value="4">4个月</option>
+							<option value="5">5个月</option>
+							<option value="6">6个月</option>
+							<option value="7">7个月</option>
+							<option value="8">8个月</option>
+							<option value="9">9个月</option>
+							<option value="10">10个月</option>
+							<option value="11">11个月</option>
+							<option value="12">12个月</option>
 						</select>
                     </td>
                 </tr>
@@ -54,18 +69,14 @@
                     <td><span class="red strong">每月等额</span></td>
                 </tr>
                 <tr>
-                    <td class="pull-right">总利息：</td>
-                    <td><span class="red strong">￥14.50</span></td>
-                </tr>
-                <tr>
-                    <td class="pull-right">每期应还：</td>
-                    <td><span class="red strong">￥1014.50</span></td>
+                    <td class="pull-right">每期应还(￥)：</td>
+                    <td><span class="red strong" id="amount"></span></td>
                 </tr>
             </table>
-        </div>
+    </form>
     </div>
     <div class="bottom">
-        <input type="button" value="提交" class="btn btn-login" onclick="$('#dialog').show()" />
+        <input id="subBtn" type="button" value="提交" class="btn btn-login" />
     </div>
     <div id="dialog">
         <div class="display-div">

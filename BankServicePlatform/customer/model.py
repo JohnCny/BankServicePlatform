@@ -24,7 +24,7 @@ class Role(db.Model):
                 self.name != getattr(other, 'name', None))
 
 class CustomerJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","real_name","identification_number","phone"]
+    __json_public__ = ["id","real_name","identification_number","phone",'bank_card_number']
 
 class Customer(CustomerJsonSerializer,db.Model):
     __tablename__="customer"

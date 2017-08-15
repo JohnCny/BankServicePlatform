@@ -7,6 +7,14 @@ var appid = "wx8ca1ef28740b0106";
 var key_customer_id = appid + "_customer_id";
 var key_token = appid + "_token";
 
+//封装http请求头
+sendAuthentication = function(xhr) {
+    var user = localStorage.getItem(key_token); // your actual username
+    var pass = "mypassword"; // your actual password
+    var token = user.concat(":", pass);
+    xhr.setRequestHeader('Authorization', ("Basic ".concat(btoa(token))));
+}
+
 //js 深度拷贝
 function deepCopy(obj) {
     var cloneObject = {};
