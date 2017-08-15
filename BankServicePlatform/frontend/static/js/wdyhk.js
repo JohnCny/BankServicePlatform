@@ -20,17 +20,22 @@ loopResult.fetch({
     beforeSend: sendAuthentication,
     success: function(collection, response, options) {
         //判断是否json数组
+        var tmp = []
         if (Array.isArray(response.data)) {
-            for (var i = 0; i < response.data.length; i++) {
-                var obj = response.data[i];
-                obj.bank_card_number = obj.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
-            }
-            loopView.render({ result: response.data });
+            tmp = response.data;
         } else {
-            response.data.bank_card_number = response.data.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
-            loopView.render({ result: [response.data] });
+            if (response.data != null) {
+                tmp.push(response.data)
+            }
         }
 
+        for (var i = 0; i < tmp.length; i++) {
+            var obj = tmp[i];
+            if (obj != null && obj.bank_card_number != null) {
+                obj.bank_card_number = obj.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
+            }
+        }
+        loopView.render({ result: tmp });
     },
     error: function(collection, response, options) {
         //错误提示
