@@ -31,6 +31,9 @@ loopResult.fetch({
 
         for (var i = 0; i < tmp.length; i++) {
             var obj = tmp[i];
+            if (obj.bank_card_number == "0") {
+                obj.bank_card_number = "暂无"
+            }
             if (obj != null && obj.bank_card_number != null) {
                 obj.bank_card_number = obj.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
             }
