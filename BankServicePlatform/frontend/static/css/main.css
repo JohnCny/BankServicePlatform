@@ -1,4 +1,4 @@
-*{margin:0;padding:0;font-size:12px;font-family:"Microsoft YaHei";}
+*{margin:0;padding:0;font-size:12px;font-family:"Microsoft YaHei";-webkit-appearance:none;}
 a{text-decoration:none;color:#fff;}
 /*²¼¾Ö*/
 .top{position:fixed;top:0;left:0;right:0;width:100%;height:50px;background:#63a1ff;text-align:center;}
@@ -58,7 +58,7 @@ input[type=text],input[type=password]{width:85%;margin:0;padding:8px;border-radi
 select{width:85%;margin:0;padding:8px;border-radius:5px;border:0;color:#428bca;}
 .btn{padding:8px 10px;color:#fff;border:0;border-radius:5px;}
 .btn-yzm{background:#888;}
-.btn-login{background:#63a1ff;width:90%;}
+.btn-login{background-color:#63a1ff;width:90%;}
 .btn-tsed{background: #f57a03;}
 .btn-bdyhk{background: #d9534f;}
 .btn-gray{background:gray}
