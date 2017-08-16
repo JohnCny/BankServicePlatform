@@ -108,16 +108,19 @@ def update_quota(customer_id,identification_number,real_name,phone,bank_card_num
     update_quota=result.get('quota',None)
     update_quota=int(update_quota)
 
-    available_amount=float(_quota.available_amount)
-    quota_diff=update_quota-int(_quota.amount)
+    available_amount=int(_quota.available_amount)
+    available_amount=int(int(update_quota)-int(_quota.amount)+available_amount)
 
-    available_amount+=quota_diff
+    if available_amount>0:
+        available_amount=available_amount
+    else:
+        available_amount=0
 
     quota_data={
-        "customer_id":customer_id,
         "amount":update_quota,
         "available_amount":available_amount
     }
+
     quota.update(_quota,**quota_data)#todo:重复
 
     return True
