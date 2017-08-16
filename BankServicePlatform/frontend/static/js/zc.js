@@ -20,7 +20,5 @@ $("#subBtn").click(function() {
     customer.url = customer.url + "?t=" + timestamp;
     var obj = [];
     obj["customer"] = $('#contentForm').serializeJSON();
-    customer.save(obj, {
-        beforeSend: sendAuthentication
-    });
+    customer.save(obj, {});
 });
