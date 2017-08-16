@@ -32,7 +32,7 @@ def route(bp, *args, **kwargs):
 
     def decorator(f):
         @bp.route(*args, **kwargs)
-        @_auth.login_required
+        # @_auth.login_required
         @wraps(f)
         def wrapper(*args, **kwargs):
             sc = 200
