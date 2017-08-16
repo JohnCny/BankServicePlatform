@@ -13,7 +13,7 @@ var singleView = new SingleView;
 
 //获取customer信息
 var SingleResult = Backbone.Collection.extend({
-    url: '/api/customer/' + sessionStorage.getItem(key_customer_id)
+    url: '/api/customer/' + localStorage.getItem(key_customer_id)
 });
 $(document).ready(function() {
     var singleResult = new SingleResult;
