@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>快审通</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
     <link href="../static/css/main.css" rel="stylesheet">
@@ -55,15 +55,22 @@
 
             </script>
         </div>
-        <div class="content topContent" style="border-radius:0 0 10px 10px;background:none;">
-            <p style="width:100%;">
-                <input type="button" class="btn btn-tsed right" value="提升额度" id="btn1">
-                <input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2">
-                <input type="button" class="btn btn-bdyhk right" value="绑定银行卡" onclick="changePage('wdyhk')">
-            </p>
-            <p class="gray strong right" id="state" style="width:100%;text-align:right">
-                提额状态：<span class="strong yellow">正在处理</span>
-            </p>
+        <div id="btn_content" class="content topContent" style="border-radius:0 0 10px 10px;background:none;">
+            <script type="text/template" id="btn_template">
+                <p style="width:100%;">
+                    <% if(result.status == '0'){ %>
+                        <input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2">
+                        <% }else{ %>
+                            <input type="button" class="btn btn-tsed right" value="提升额度" id="btn1" onclick="updateQuota()">
+                            <% } %>
+                                <input type="button" class="btn btn-bdyhk right" value="绑定银行卡" onclick="changePage('wdyhk')">
+                </p>
+                <% if(result.status == '0'){ %>
+                    <p class="gray strong right" id="state" style="width:100%;text-align:right">
+                        提额状态：<span class="strong yellow">正在处理</span>
+                    </p>
+                    <% } %>
+            </script>
         </div>
     </div>
     <div class="bottom">
@@ -75,7 +82,7 @@
             <p class="Center">我行将<span class="blue strong">电话或现场</span>调查信息，请保持您<br/>18290895563的电话畅通</p>
 
             <div class="button">
-                <input type="button" value="确定" class="btn btn-login btn-small" onclick="$('#dialog').hide();$('#btn1').hide();$('#btn2').show();$('#state').show();" />
+                <input type="button" value="确定" class="btn btn-login btn-small" onclick="changePage('ysx')" />
             </div>
         </div>
         <!-- /display-div -->

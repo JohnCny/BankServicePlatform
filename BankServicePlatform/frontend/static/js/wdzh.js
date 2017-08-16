@@ -15,6 +15,7 @@ var singleView = new SingleView;
 var SingleResult = Backbone.Collection.extend({
     url: '/api/customer/' + localStorage.getItem(key_customer_id)
 });
+
 $(document).ready(function() {
     var singleResult = new SingleResult;
     var timestamp = new Date().getTime();
