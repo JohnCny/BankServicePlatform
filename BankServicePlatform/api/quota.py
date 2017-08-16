@@ -78,6 +78,8 @@ def delete(quota_id):
 @route_nl(bp,'/pad_increase_amount/<quota_id>')
 def pad_increase_amount(quota_id):
     _quota=quota.get_or_404(quota_id)
+    quota.update(_quota,status=0)
+
     _quota_bill=quota.get_or_404(quota_id).quota_used_recordes.first().quota_billes
     _cutomer=_quota.customer
     data={
@@ -112,6 +114,7 @@ def pad_update_amount():
 
     quota_id=request_json['quota_id']
     _quota=quota.get_or_404(quota_id)
+    quota.update(_quota,status=1)
 
     original_quota=_quota.amount
     updated_quota=request_json['updated_quota']
@@ -122,5 +125,16 @@ def pad_update_amount():
         "updated_quota":updated_quota
     }
     quota_record.create(**data)
+    available_amount=int(_quota.available_amount)
+    available_amount=int(int(updated_quota)-int(original_quota)+available_amount)
 
-    return quota.update(_quota,amount=updated_quota)
+    if available_amount>0:
+        available_amount=available_amount
+    else:
+        available_amount=0
+
+    quota_data={
+        "amount":updated_quota,
+        "available_amount":available_amount
+    }
+    return quota.update(_quota,**quota_data)
