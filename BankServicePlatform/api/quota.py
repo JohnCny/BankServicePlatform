@@ -80,7 +80,7 @@ def pad_increase_amount(quota_id):
     _quota=quota.get_or_404(quota_id)
     quota.update(_quota,status=0)
 
-    _quota_bill=quota.get_or_404(quota_id).quota_used_recordes.first().quota_billes
+    # _quota_bill=quota.get_or_404(quota_id).quota_used_recordes.first().quota_billes
     _cutomer=_quota.customer
     data={
         "id":_quota.id,
@@ -89,8 +89,8 @@ def pad_increase_amount(quota_id):
         "phoneNo":_cutomer.phone,
         "cardNum":_cutomer.bank_card_number,
         "applyAmt":_quota.amount,
-        "loanTerm":_quota_bill.period,
-        "applyTime":_quota_bill.create_date
+        "loanTerm":0,
+        "applyTime":"2017-08-15 16:11:13"
     }
     data=urllib.urlencode(data)
 
