@@ -45,11 +45,11 @@ def login():
     except:
         return {"info":"用户名或者密码错误","result":"Failed"}
     if result:
-        g.customer=Customer.query.filter_by(phone=phone).first()
-        login_user(g.customer)
-        token=g.customer.generate_auth_token()
+        _customer=Customer.query.filter_by(phone=phone).first()
+        login_user(_customer)
+        token=_customer.generate_auth_token()
         redis.set(openid,token)
-        return {"customer":g.customer,"token":token,"result":"Success"}
+        return {"customer":_customer,"token":token,"result":"Success"}
     else:
         g.customer=None
         return {"info":"用户名或者密码错误","result":"Failed"}
@@ -105,5 +105,4 @@ def get_openid():
 @bp.route('/log_out')
 def log_out():
     logout_user()
-    print "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
     return redirect('/login')

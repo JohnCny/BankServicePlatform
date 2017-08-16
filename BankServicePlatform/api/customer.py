@@ -56,12 +56,12 @@ def new():
 
     request_json['customer']=_cutomer
 
-    g.customer=customer.create(**request_json)
-    login_user(g.customer)
-    token=g.customer.generate_auth_token()
-    set_init_quota(g.customer.id)
+    new_customer=customer.create(**request_json)
+    login_user(new_customer)
+    token=new_customer.generate_auth_token()
+    set_init_quota(new_customer.id)
 
-    return {"customer":g.customer,
+    return {"customer":new_customer,
             "token":token.decode('ascii')}
 
 @route(bp,'/<customer_id>',methods=['PUT'])
