@@ -1,7 +1,7 @@
 *{margin:0;padding:0;font-size:12px;font-family:"Microsoft YaHei";}
 a{text-decoration:none;color:#fff;}
 /*²¼¾Ö*/
-.top{position:fixed;top:0;left:0;right:0;width:100%;height:50px;background:rgb(99, 161, 255);text-align:center;}
+.top{position:fixed;top:0;left:0;right:0;width:100%;height:50px;background:#63a1ff;text-align:center;}
 .top span{display:inline-block;font-size:15px;color:#fff;line-height:50px;}
 .back{float:left;margin:10px 0 10px 10px;}
 .right{float:right;margin-right:10px;}
@@ -9,16 +9,16 @@ a{text-decoration:none;color:#fff;}
 
 .center{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;background:#eff0f4;}
 
-.bottom{position:fixed;left:0;right:0;bottom:0;width:100%;height:50px;background:#fff;border-top:1px solid #ddd;box-shadow:-2px -2px 2px #ddd;text-align:center;line-height:50px;}
+.bottom{position:fixed;left:0;right:0;bottom:0;width:100%;height:70px;background:#fff;border-top:1px solid #ddd;box-shadow:-2px -2px 2px #ddd;text-align:center;line-height:50px;}
 
 /*µÇÂ¼*/
 .loginTab{float:left;width:94%;margin-left:3%;margin-top:15px;}
 .loginTab li{color:gray;float:left;list-style:none;border-radius:10px 10px 0 0;width:50%;padding:10px 0;text-align:center;border-bottom: 1px dotted #fff;}
-.loginTab li.active{color:rgb(99, 161, 255);background:#fff;border-color:rgba(0, 0, 0, 0.2);}
+.loginTab li.active{color:#63a1ff;background:#fff;border-color:rgba(0, 0, 0, 0.2);}
 
 .content{float:left;width:94%;margin-left:3%;background:#fff;border-radius:0 0 10px 10px;}
 .topContent{margin-top:20px;border-radius:10px;}
-.normalTable{background: rgb(247, 247, 247);width: 95%;margin-left: 2.5%;margin-top:10px;margin-bottom:10px;}
+.normalTable{background:#f7f7f7;width: 95%;margin-left: 2.5%;margin-top:10px;margin-bottom:10px;}
 .normalTable tr{border:0;}
 .normalTable tr td{padding:10px 0;}
 .normalTable .pull-right{text-align: right;color:#676767;}
@@ -58,7 +58,7 @@ input[type=text],input[type=password]{width:85%;margin:0;padding:8px;border-radi
 select{width:85%;margin:0;padding:8px;border-radius:5px;border:0;color:#428bca;}
 .btn{padding:8px 10px;color:#fff;border:0;border-radius:5px;}
 .btn-yzm{background:#888;}
-.btn-login{background:rgb(99, 161, 255);width:90%;}
+.btn-login{background:#63a1ff;width:90%;}
 .btn-tsed{background: #f57a03;}
 .btn-bdyhk{background: #d9534f;}
 .btn-gray{background:gray}
