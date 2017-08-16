@@ -17,6 +17,8 @@ var SingleResult = Backbone.Collection.extend({
 });
 $(document).ready(function() {
     var singleResult = new SingleResult;
+    var timestamp = new Date().getTime();
+    singleResult.url = singleResult.url + "?t=" + timestamp;
     singleResult.fetch({
         beforeSend: sendAuthentication,
         success: function(collection, response, options) {
