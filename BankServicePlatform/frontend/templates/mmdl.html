@@ -19,13 +19,13 @@
     </script>
 </head>
 
-<body>
-    <!-- <div class="top">
-        <span class="back"><img src="../static/img/back.png"/></span>
-        <span class="title">登录</span>
-        <span class="right" onclick="changePage('zc')">注册</span>
-    </div> -->
-    <form id="contentForm" class="center">
+<body onload="setTimeOut();">
+    <form id="contentForm" class="center">		
+		<img src="../static/img/zc.png" style="width:100%"/>
+		<!--提示信息-->
+		<div class="alert">
+			<p><img src="../static/img/alert.png"/>登录失败，手机号或密码错误！</p>
+		</div><!--/提示信息-->
         <input type="hidden" name="openid" value="1" />
         <!-- <ul class="loginTab">
             <li onclick="changePage('yzmdl')">验证码登录</li>
