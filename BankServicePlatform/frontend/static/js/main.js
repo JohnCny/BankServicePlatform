@@ -3,6 +3,14 @@ function changePage(src) {
     window.location.href = src + "?t=" + timestamp;
 }
 
+//提示信息
+function setTimeOut(){
+    setTimeout(function(){
+        $(".alert").fadeOut("slow");
+        $(".alert").fadeOut("slow");
+    },3000)
+}
+
 //微信公众号appid
 var appid = "wx8ca1ef28740b0106";
 var key_customer_id = appid + "_customer_id";

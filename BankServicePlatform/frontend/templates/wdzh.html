@@ -20,12 +20,49 @@
 </head>
 
 
-<body>
-    <!-- <div class="top">
-        <span class="back"><img src="../static/img/back.png"/></span>
-        <span class="title">我的账户</span>
-    </div> -->
-    <div class="center" style="bottom:0;">
+<body style="background:#eff0f4">	
+	<div id="single_content">
+		<script type="text/template" id="single_template">
+			<input type="hidden" id="quota_id" value="<%= result.id %>">
+			<div class="wdzh">
+				<div class="kyed">
+					<p>可用额度</p>			
+					<h2>￥
+						<%= result.available_amount %>
+					</h2>
+				</div>		
+				<div class="zed">
+					<p>总额度</p>			
+					<h2>￥
+						<%= result.amount %>
+					</h2>
+				</div>
+				<div class="grxx">
+					<p>姓名：<span><%= result.real_name %></span></p>
+					<p>电话：<span><%= result.phone %></span></p>
+					<p>身份证号：<span><%= result.identification_number %></span></p>
+					<p>银行卡号：<span><%= result.bank_card_number %></span></p>    
+				</div>
+			</div>	
+			<div class="content topContent" style="margin-bottom:15px;">
+				<table class="normalTable Center">
+					<tr>
+						<td><p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ 5,000.00</span></td>
+					</tr>
+				</table>	
+			</div>
+        </script>
+	</div>
+	<div style="width:94%;margin-left:3%;">
+		<input type="button" class="btn btn-login" value="申请记录" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('dksqjl')"/>
+		<input type="button" class="btn btn-bdyhk" value="我要贷款" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('wydk')"/>
+		<input type="button" class="btn" value="我要还款" style="width:23.5%;margin-right:2%;float:left;background:#8bcb54;" id="" onclick="changePage('wyhk')"/>	
+		<input type="button" class="btn btn-tsed" value="提升额度" style="width:23.5%;float:left;" id="" onclick=""/>
+		<p class="gray strong right" id="state" style="width:100%;text-align:right">
+			提额状态：<span class="strong yellow">正在处理</span>
+		</p>
+	</div>
+   <!--  <div class="center" style="bottom:0;">
         <div class="content topContent">
             <table id="single_content" class="normalTable">
                 <script type="text/template" id="single_template">
@@ -48,7 +85,7 @@
                 </script>
             </table>
         </div>
-		<h2 class="red Right" onclick="changePage('ysx')">额度查询</h2>
+		<h2 class="red Right" onclick="changePage('ysx')">额度查询</h2> -->
     </div>
 </body>
 
