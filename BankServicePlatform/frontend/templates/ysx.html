@@ -21,57 +21,43 @@
 </head>
 
 <body>
-    <!-- <div class="top">
-        <span class="back"><img src="../static/img/back.png"/></span>
-        <span class="title">快审通</span>
-    </div> -->
     <div class="center">
-        <div id="single_content">
+		<div id="single_content" class="wdzh" style="background:url(../static/img/bj3.png);margin-bottom:15px;">			
             <script type="text/template" id="single_template">
-                <div class="content topContent" style="background:#8bcb54;padding:30px 0;border-radius:10px 10px 0 0;">
-                    <input type="hidden" id="quota_id" value="<%= result.id %>">
-                    <p class="bz left">可用额度(￥)</p>
-                    <h1 class="left">
-                        <%= result.available_amount %>
-                    </h1>
-                    <p class="right sqjl">
-                        <a href="dksqjl"><img src="../static/img/sqjl.png" />申请记录</a>
-                    </p>
-                </div>
-                <div class="content topContent" style="margin-top:0;border-radius:0 0 10px 10px;">
-                    <table class="normalTable">
-                        <tr>
-                            <td><span class="black strong kg">总额度</span><span class="gray">（最多可贷5万）</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="black strong kg" style="font-size:20px;">¥ 
-                                <%= result.amount %></span></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
+				<input type="hidden" id="quota_id" value="<%= result.id %>">
+				<div class="kyed">
+					<p>可用额度</p>			
+					<h2>￥
+						<%= result.available_amount %>
+					</h2>
+				</div>
+				
+				<div class="zed">
+					<p>总额度</p>			
+					<h2>￥
+						<%= result.amount %>
+					</h2>
+				</div>
+			</script>
+		</div>	
 
-            </script>
-        </div>
-        <div id="btn_content" class="content topContent" style="border-radius:0 0 10px 10px;background:none;">
-            <script type="text/template" id="btn_template">
-                <p style="width:100%;">
-                    <% if(result.status == '0'){ %>
-                        <input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2">
+		<div id="btn_content" style="width:94%;margin-left:3%;">
+			<script type="text/template" id="btn_template">
+				<% if(result.status == '0'){ %>
+                        <input type="button" class="btn btn-tsed right btn-gray" value="提升额度" id="btn2" style="width:23.5%;margin-right:2%;">
                         <% }else{ %>
-                            <input type="button" class="btn btn-tsed right" value="提升额度" id="btn1" onclick="updateQuota()">
+                            <input type="button" class="btn btn-tsed right" value="提升额度" id="btn1" onclick="updateQuota()" style="width:23.5%;margin-right:2%;">
                             <% } %>
-                                <input type="button" class="btn btn-bdyhk right" value="绑定银行卡" onclick="changePage('wdyhk')">
-                </p>
-                <% if(result.status == '0'){ %>
+                                <input type="button" class="btn btn-bdyhk right" value="绑定银行卡" onclick="changePage('wdyhk')" style="width:23.5%;margin-right:2%;
+				
+				<input type="button" class="btn btn-login right" value="申请记录" onclick="changePage('dksqjl')" style="width:23.5%;margin-right:2%;"/>
+				<% if(result.status == '0'){ %>
                     <p class="gray strong right" id="state" style="width:100%;text-align:right">
                         提额状态：<span class="strong yellow">正在处理</span>
                     </p>
                     <% } %>
             </script>
-        </div>
+		</div>	
     </div>
     <div class="bottom">
         <input type="button" value="申请贷款" class="btn btn-login" onclick="changePage('wydk')" />

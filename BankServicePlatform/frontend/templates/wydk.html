@@ -19,13 +19,23 @@
     </script>
 </head>
 
-<body>
-    <!-- <div class="top">
-        <span class="back"><img src="../static/img/back.png"/></span>
-        <span class="title">快审通</span>
-    </div> -->
+<body onload="setTimeOut();">
     <form id="contentForm" class="center">
-        <div id="single_content" class="content topContent" style="background:#ea5e6b;padding:30px 0;border-radius:10px 10px 0 0;">
+		<div id="single_content" class="wdzh" style="background:url(../static/img/bj2.png);padding-bottom:20px;">
+			<script type="text/template" id="single_template">
+                <input type="hidden" value="<%= result.id %>" id="quota_id" name="quota_id">
+				<div class="kyed">
+					<p>当前可贷额度</p>			
+					<h2>￥<%= result.available_amount %></h2>
+				</div>	
+			</script>
+		</div>				
+		<!--提示信息-->
+		<div class="alert">
+			<p><img src="../static/img/alert.png"/>贷款失败！</p>
+		</div><!--/提示信息-->
+		
+        <!-- <div id="single_content" class="content topContent" style="background:#ea5e6b;padding:30px 0;border-radius:10px 10px 0 0;">
 
 
             <script type="text/template" id="single_template">
@@ -35,11 +45,11 @@
                 </h1>
                 <p class="bz">当前可贷额度</p>
             </script>
-        </div>
-        <div class="content topContent" style="margin-top:0;border-radius:0 0 10px 10px;">
+        </div> -->
+        <div class="content topContent" style="margin-top:10px;">
             <table class="normalTable">
                 <tr>
-                    <td class="pull-right" style="width:20%">贷款金额：</td>
+                    <td class="pull-right" style="width:30%">贷款金额：</td>
                     <td><input type="text" placeholder="请输入贷款金额" id="used_quota" name="used_quota" onchange="getAmount()" /></td>
                 </tr>
                 <tr>
@@ -64,7 +74,7 @@
             </table>
             <table class="normalTable">
                 <tr>
-                    <td class="pull-right">还款方式：</td>
+                    <td class="pull-right" style="width:30%">还款方式：</td>
                     <td><span class="red strong">每月等额</span></td>
                 </tr>
                 <tr>
@@ -73,7 +83,6 @@
                 </tr>
             </table>
     </form>
-    </div>
     <div class="bottom">
         <input id="subBtn" type="button" value="提交" class="btn btn-login" />
     </div>

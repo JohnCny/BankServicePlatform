@@ -17,7 +17,7 @@ a{text-decoration:none;color:#fff;}
 .loginTab li.active{color:#63a1ff;background:#fff;border-color:rgba(0, 0, 0, 0.2);}
 
 .content{float:left;width:94%;margin-left:3%;background:#fff;border-radius:0 0 10px 10px;}
-.topContent{margin-top:20px;border-radius:10px;}
+.topContent{margin-top:15px;border-radius:10px;}
 .normalTable{background:#f7f7f7;width: 95%;margin-left: 2.5%;margin-top:10px;margin-bottom:10px;}
 .normalTable tr{border:0;}
 .normalTable tr td{padding:10px 0;}
@@ -35,7 +35,37 @@ h1{color:#fff;font-size:30px;text-align:center;margin-top:10px;}
 .sqjl img{vertical-align:text-bottom;}
 .kg{margin-left:20px;}
 
+
+/*我的账户*/
+.wdzh{width:100;background:url(../img/bj.jpg);margin-top:-20px;padding-top:20px;}
+.kyed{width:180px;height:180px;border-radius:200px;margin:0 auto;margin-top:20px;border:10px solid rgba(255,255,255,0.8);text-align:center;}
+.kyed p{margin-top:60px;font-size:15px;color:#fff;}
+.kyed h2{color:#fff;font-size:25px;}
+
+.zed{margin:0 auto;text-align:right;padding-right:3%;padding-bottom:15px;}
+.zed p{font-size:15px;color:#ddd;}
+.zed h2{font-size:18px;color:#ddd;font-weight:normal;}
+
+.grxx{background:rgba(24,43,102,0.5);color:#fff;padding:10px;}
+.grxx p{color:rgba(255,255,255,0.5)}
+.grxx span{color:#fff;font-size:15px;}
+
+.title{text-align:center;font-weight:bold;margin-bottom:10px;}
+
+
 /*添加银行卡*/
+.yhk{padding:30px 0;border-radius:10px;}
+.zgyh{background:#9c354c url(../img/yhk/zgyh_b.png) no-repeat right center;}
+.jh{background:#16428c url(../img/yhk/jh_b.png) no-repeat right center;}
+.jt{background:#204b8c url(../img/yhk/jt_b.png) no-repeat right center;}
+.nh{background:#428345 url(../img/yhk/nh_b.png) no-repeat right center;}
+.logo{margin-left:10px;display:inline-block;float:left;width:auto;margin-right:10px;}
+.logo img{width:30px;background:rgba(255,255,255,0.8);padding:8px;border-radius:200px;}
+.yhkMessage{display:inline-block;float:left;width:auto;}
+.yhkMessage p{color:#fff;font-size:15px;line-height:25px;}
+.yhkMessage p.kz{color:rgba(255,255,255,0.6)}
+.yhkMessage p.kh{font-size:20px;margin-top:10px;}
+
 .addYhk{float:left;width:96%;margin-left:3%;font-size:15px;line-height:25px;margin-top:15px;}
 .addYhk img{width:25px;vertical-align:middle;}
 
@@ -61,7 +91,7 @@ select{width:85%;margin:0;padding:8px;border-radius:5px;border:0;color:#428bca;}
 .btn-tsed{background: #f57a03;}
 .btn-bdyhk{background: #d9534f;}
 .btn-gray{background:gray}
-.btn-jb{display:inline-block;position:relative;margin-top:-10px;background:#fff;width:70px;color:gray;}
+.btn-jb{display:inline-block;position:relative;margin-top:-10px;background:#fff;width:60px;color:gray;}
 /*彩色文字*/
 .red{color:#d9534f;}
 .black{color:#000}
@@ -69,3 +99,7 @@ select{width:85%;margin:0;padding:8px;border-radius:5px;border:0;color:#428bca;}
 .blue{color:#428bca;}
 .gray{color:#8a8a8a;}
 .yellow{color:#f57a03;}
+/*alert*/
+.alert{border:1px solid #ebccd1;background:#f2dede;width:94%;margin-left:3%;border-radius:5px;margin-top:10px;}
+.alert p{margin:5px 10px;font-size:15px;color:#ad4442;}
+.alert p img{vertical-align:middle;margin-right:5px;}
