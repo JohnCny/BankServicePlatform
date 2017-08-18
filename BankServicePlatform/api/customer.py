@@ -55,11 +55,11 @@ def new():
     _cutomer['password']=password
 
     #验证身份证号码是否存在
-    cus_phone_ls = customer.find(phone=_cutomer['phone'])
+    cus_phone_ls = customer.find(phone=_cutomer['phone']).all()
     if cus_phone_ls != None and len(cus_phone_ls)>0:
         return {"info":"电话号码已存在","result":"Failed"}
 
-    cus_card_ls = customer.find(identification_number=_cutomer['identification_number']) 
+    cus_card_ls = customer.find(identification_number=_cutomer['identification_number']).all()
     if cus_card_ls != None and len(cus_card_ls)>0:
         return {"info":"证件号码已存在","result":"Failed"}
 
