@@ -153,7 +153,4 @@ def show_customer_quota_used_recordes(customer_id):
     """
         查找全部quota_used_recordes
     """
-    if customer.get_or_404(customer_id).quotaes :
-        return customer.get_or_404(customer_id).quotaes.quota_used_recordes.all()
-    else:
-        return None;
+    return customer.get_or_404(customer_id).quotaes.quota_used_recordes.all()
