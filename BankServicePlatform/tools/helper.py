@@ -86,8 +86,24 @@ def show_result_content(obj):
 
 # 返回成功提示
 def show_result_success(info):
-    return json.dumps({'result':'Success','info':info})
+    return {"result":"Success","info":info}
 
 # 返回失败提示
 def show_result_fail(info):
-    return json.dumps({'result':'Failed','info':info})
+    return {"result":"Failed","info":info}
+
+# 返回成功提示以及数据
+def show_result_data_success(info,data):
+    return {"result":"Success","data":data,"info":info}
+
+# 返回失败提示以及数据
+def show_result_data_fail(info,data):
+    return {"result":"Failed","data":data,"info":info}
+
+# 返回成功数据
+def show_data_success(data):
+    return {"result":"Success","data":data}
+
+# 返回失败数据
+def show_data_fail(data):
+    return {"result":"Failed","data":data}

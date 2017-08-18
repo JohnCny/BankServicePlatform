@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from flask import Blueprint,request,g
+from flask import Blueprint,request
 from ..services import customer,quota
 from passlib.apps import custom_app_context as pwd_context
-from ..config import PAD_SERVER_URL
+from ..config import PAD_SERVER_URL,logger
 from .import route,route_nl
 from flask_login import login_user
+from ..tools import helper
 import urllib,urllib2,yaml,json
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
 
-@route(bp,'/')
-def list():
-    """
-        查询，返回全部
-    """
-    return customer.all()
+# @route(bp,'/')
+# def list():
+#     """
+#         查询，返回全部
+#     """
+#     return customer.all()
 
 @route(bp,'/<customer_id>/quota/')
 def get_customer_quota(customer_id):
@@ -47,22 +48,26 @@ def quotas(customer_id):
 """页面组成字典或者json"""
 @route_nl(bp,'/',methods=['POST'])
 def new():
-    request_json=dict(**request.json)
-    _cutomer=dict(request_json.get('customer'))
+    try:
+        request_json=dict(**request.json)
+        _cutomer=dict(request_json.get('customer'))
 
-    _password=_cutomer['password']
-    password=pwd_context.encrypt(_password)
-    _cutomer['password']=password
+        _password=_cutomer['password']
+        password=pwd_context.encrypt(_password)
+        _cutomer['password']=password
 
-    request_json['customer']=_cutomer
+        request_json['customer']=_cutomer
 
-    new_customer=customer.create(**request_json)
-    login_user(new_customer)
-    token=new_customer.generate_auth_token()
-    set_init_quota(new_customer.id)
+        new_customer=customer.create(**request_json)
+        login_user(new_customer)
+        token=new_customer.generate_auth_token()
+        set_init_quota(new_customer.id)
+    except:
+        logger.exception("error")
+        return helper.show_result_fail("注册用户失败")
 
-    return {"customer":new_customer,
-            "token":token.decode('ascii')}
+    return helper.show_result_data_success("注册用户成功",{"customer":new_customer,
+            "token":token.decode('ascii')})
 
 @route(bp,'/<customer_id>',methods=['PUT'])
 def update(customer_id):
@@ -75,9 +80,14 @@ def delete(customer_id):
 
 @route(bp,'/<customer_id>/add_bank_card',methods=['POST'])
 def add_bank_card(customer_id):
-    _customer=customer.update(customer.get_or_404(customer_id),**request.json)
-    update_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
-    return customer.get_or_404(customer_id)
+    try:
+        _customer=customer.update(customer.get_or_404(customer_id),**request.json)
+        update_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
+    except:
+        logger.exception("error")
+        return helper.show_result_fail("新增银行卡失败")
+
+    return helper.show_result_data_success("新增银行卡成功",customer.get_or_404(customer_id))
 
 
 def set_init_quota(customer_id):
@@ -105,8 +115,7 @@ def update_quota(customer_id,identification_number,real_name,phone,bank_card_num
 
     _quota=customer.get_or_404(customer_id).quotaes
 
-    update_quota=result.get('quota',None)
-    update_quota=int(update_quota)
+    update_quota=result.get('quota',None).encode('utf8')
 
     available_amount=int(_quota.available_amount)
     available_amount=int(int(update_quota)-int(_quota.amount)+available_amount)

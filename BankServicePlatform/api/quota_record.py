@@ -4,6 +4,7 @@ __author__ = 'Johnny'
 from flask import Blueprint,request
 from ..services import quota_record
 from ..tools import helper
+from ..config import logger
 from .import route
 
 bp=Blueprint('quota_record',__name__,url_prefix='/quota/quota_record')
@@ -19,14 +20,12 @@ def show(quota_record_id):
 """页面组成字典或者json"""
 @route(bp,'/',methods=['POST'])
 def new():
-    return helper.show_result_content(quota_record.create(**request.json))
+    try:
+        _quota_record=quota_record.create(**request.json)
+    except:
+        logger.exception("error")
+        return helper.show_result_fail("贷款记录新增失败")
 
-@route(bp,'/<quota_record_id>',methods=['PUT'])
-def update(quota_record_id):
-    return helper.show_result_content(quota_record.update(quota_record.get_or_404(quota_record_id),**request.json))
+    return helper.show_result_data_success("贷款记录新增成功",_quota_record)
 
-@route(bp,'/<quota_record_id>',methods=['DELETE'])
-def delete(quota_record_id):
-    quota_record.delete(quota_record.get_or_404(quota_record_id))
-    return None,204
 
