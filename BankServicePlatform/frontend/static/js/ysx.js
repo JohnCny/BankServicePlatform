@@ -40,19 +40,30 @@ singleResult.fetch({
     }
 });
 
+
 function updateQuota() {
+    if (submitFlag) {
+        submitFlag = false;
+
+    } else {
+        return;
+    }
     //请求调额
-    var QuotaResult = Backbone.Collection.extend({
+    var UpdateQuotaResult = Backbone.Collection.extend({
         url: '/api/quota/pad_increase_amount/' + $("#quota_id").val()
     });
-    var quotaResult = new QuotaResult;
+    var updateQuotaResult = new UpdateQuotaResult;
 
-    quotaResult.url = getChangePage(quotaResult.url);
+    updateQuotaResult.url = getChangePage(updateQuotaResult.url);
 
-    quotaResult.fetch({
+    updateQuotaResult.fetch({
         beforeSend: sendAuthentication,
         success: function(collection, response, options) {
-            $('#dialog').show();
+            if (response.data.result == null || response.data.result != "Failed") {
+                $('#dialog').show();
+            } else {
+                setTimeOut("申请提交失败！！")
+            }
         },
         error: function(collection, response, options) {
             //错误提示

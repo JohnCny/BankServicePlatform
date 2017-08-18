@@ -9,6 +9,7 @@ import urllib2
 from .import route,route_nl
 import json,yaml
 from ..config import PAD_SERVER_URL,logger
+import datetime
 
 bp=Blueprint('quota',__name__,url_prefix='/quota')
 
@@ -95,7 +96,7 @@ def pad_increase_amount(quota_id):
             "cardNum":_cutomer.bank_card_number,
             "applyAmt":_quota.amount,
             "loanTerm":0,
-            "applyTime":"2017-08-15 16:11:13"
+            "applyTime":datetime.datetime.now()
         }
         data=urllib.urlencode(data)
 
