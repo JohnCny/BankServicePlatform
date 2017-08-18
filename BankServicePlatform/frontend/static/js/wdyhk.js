@@ -78,7 +78,7 @@ $("#subBtn").click(function() {
     obj["customer"] = { "bank_card_number": $("#bank_card_number").val() };
 
 
-    singlcardeResult.url = getChangePage(singleResult.url);
+    card.url = getChangePage(card.url);
     card.save(obj, {
         beforeSend: sendAuthentication
     });

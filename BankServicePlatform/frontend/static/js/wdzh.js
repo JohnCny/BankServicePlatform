@@ -78,36 +78,6 @@ quotaResult.fetch({
     }
 });
 
-function updateQuota() {
-    if (submitFlag) {
-        submitFlag = false;
-
-    } else {
-        return;
-    }
-    //请求调额
-    var UpdateQuotaResult = Backbone.Collection.extend({
-        url: '/api/quota/pad_increase_amount/' + $("#quota_id").val()
-    });
-    var updateQuotaResult = new UpdateQuotaResult;
-
-    updateQuotaResult.url = getChangePage(updateQuotaResult.url);
-
-    updateQuotaResult.fetch({
-        beforeSend: sendAuthentication,
-        success: function(collection, response, options) {
-            if (response.data.result == null || response.data.result != "Failed") {
-                $('#dialog').show();
-            } else {
-                setTimeOut("申请提交失败！！")
-            }
-        },
-        error: function(collection, response, options) {
-            //错误提示
-        }
-    });
-}
-
 //模板
 var RepaymentView = Backbone.View.extend({
     el: "#repayment_content",

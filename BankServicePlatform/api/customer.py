@@ -128,7 +128,7 @@ def update_quota(customer_id,identification_number,real_name,phone,bank_card_num
 
     _quota=customer.get_or_404(customer_id).quotaes
 
-    update_quota=result.get('quota',None).encode('utf8')
+    update_quota=result.get('quota',None)#.encode('utf8')
 
     available_amount=int(_quota.available_amount)
     available_amount=int(int(update_quota)-int(_quota.amount)+available_amount)
@@ -140,6 +140,7 @@ def update_quota(customer_id,identification_number,real_name,phone,bank_card_num
 
     quota_data={
         "amount":update_quota,
+        "is_bankcard_binded":1,
         "available_amount":available_amount
     }
 

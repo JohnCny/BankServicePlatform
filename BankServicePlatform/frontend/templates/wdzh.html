@@ -62,26 +62,13 @@
             </table>
         </div>
     </div>
-    <!--提示信息-->
-    <div class="alert" style="display:none">
-        <p><img src="../static/img/alert.png" />还款失败！</p>
-    </div>
     <div id="btn_content" style="width:94%;margin-left:3%;">
         <script type="text/template" id="btn_template">
             <input type="button" class="btn btn-login" value="申请记录" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('dksqjl')" />
             <input type="button" class="btn btn-bdyhk" value="我要贷款" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('wydk')" />
             <input type="button" class="btn" value="我要还款" style="width:23.5%;margin-right:2%;float:left;background:#8bcb54;" id="" onclick="changePage('wyhk')" />
 
-            <% if(result.status == '0'){ %>
-                <input type="button" class="btn btn-tsed btn-gray" value="提升额度" style="width:23.5%;float:left;">
-                <% }else{ %>
-                    <input type="button" class="btn btn-tsed" value="提升额度" style="width:23.5%;float:left;" onclick="updateQuota()" />
-                    <% } 
-					if(result.status == '0'){ %>
-                        <p class="gray strong right" id="state" style="width:100%;text-align:right">
-                            提额状态：<span class="strong yellow ">正在处理</span>
-                        </p>
-                        <% } %>
+            <input type="button" class="btn btn-tsed" value="提升额度" style="width:23.5%;float:left;" onclick="changePage('ysx')" />
         </script>
     </div>
     <!--  <div class="center" style="bottom:0;">
@@ -108,17 +95,6 @@
             </table>
         </div>
 		<h2 class="red Right" onclick="changePage('ysx')">额度查询</h2> -->
-    </div>
-    <div id="dialog">
-        <div class="display-div">
-            <p class="tsTitle"><img src="../static/img/ok.png" style="width:21px;margin-top:-4px;" />您的提额申请已提交<img src="../static/img/sqjl_g.png" style="width:21px;" /></p>
-            <p class="Center">我行将<span class="blue strong">电话或现场</span>调查信息，请保持您<br/>18290895563的电话畅通</p>
-
-            <div class="button">
-                <input type="button" value="确定" class="btn btn-login btn-small" onclick="changePage('ysx')" />
-            </div>
-        </div>
-        <!-- /display-div -->
     </div>
 </body>
 
