@@ -117,7 +117,7 @@ def pad_update_amount():
     quota.update(_quota,status=1)
 
     original_quota=_quota.amount
-    updated_quota=request_json['updated_quota']
+    updated_quota=request_json['updated_quota'].encode('utf8')
 
     data={
         "quota_id":quota_id,
