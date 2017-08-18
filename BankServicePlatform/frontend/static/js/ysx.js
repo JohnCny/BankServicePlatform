@@ -47,6 +47,8 @@ function updateQuota() {
     });
     var quotaResult = new QuotaResult;
 
+    quotaResult.url = getChangePage(quotaResult.url);
+
     quotaResult.fetch({
         beforeSend: sendAuthentication,
         success: function(collection, response, options) {

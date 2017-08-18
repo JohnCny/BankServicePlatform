@@ -3,7 +3,7 @@ var Customer =  Backbone.Model.extend({
     url: '/api/login',
     //解析异步请求返回的结果，fetch方法与save方法都会调用它
     parse: function(res) {
-        if (res.data.result == "Success") {
+        if (res.data.result == null || res.data.result != "Failed") {
             //保存customeId和token
             localStorage.setItem(key_customer_id, res.data.customer.id);
             localStorage.setItem(key_token, res.data.token);
@@ -12,12 +12,19 @@ var Customer =  Backbone.Model.extend({
 
             changePage('wdzh');
         } else {
-            //alert(res.data.info)
+            setTimeOut(res.data.info)
         }
     }
 });
 
 var customer = new Customer;
 $("#subBtn").click(function() {
+    var phone = $("input[name='phone']").val();
+    if (!Validator.VerityLib.IsNotEmpty(phone) ||
+        !Validator.VerityLib.IsMobilePhoneNumber(phone)) {
+        setTimeOut("请填写正确的手机号码！")
+        return;
+    }
+    customer.url = getChangePage(customer.url);
     customer.save($('#contentForm').serializeJSON());
 });

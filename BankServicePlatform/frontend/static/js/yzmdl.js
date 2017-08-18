@@ -12,5 +12,6 @@ var Customers = Backbone.Collection.extend({
 var customers = new Customers;
 
 $("#subBtn").click(function() {
+    customers.url = getChangePage(customers.url);
     customers.create($('#contentForm').serializeJSON());
 });
