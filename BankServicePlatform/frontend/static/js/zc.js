@@ -19,6 +19,13 @@ var Customer =  Backbone.Model.extend({
 
 var customer = new Customer;
 $("#subBtn").click(function() {
+    if (submitFlag) {
+        submitFlag = false;
+
+    } else {
+        setTimeOut('处理中，请勿重复点击！！')
+        return;
+    }
     //验证
     var real_name = $("input[name='real_name']").val();
     if (!Validator.VerityLib.IsNotEmpty(real_name) ||

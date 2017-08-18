@@ -22,9 +22,9 @@
 
 
 <body style="background:#eff0f4">
-    <div>
-        <div class="wdzh">
-            <div id="quota_content">
+    <div class="wdzh">
+        <div id="quota_content">
+            <div>
                 <script type="text/template" id="quota_template">
                     <input type="hidden" id="quota_id" value="<%= result.id %>">
                     <div class="kyed">
@@ -51,13 +51,20 @@
             </div>
         </div>
         <div class="content topContent" style="margin-bottom:15px;">
-            <table class="normalTable Center">
-                <tr>
-                    <td>
-                        <p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ 5,000.00</span></td>
-                </tr>
+            <table id="repayment_content" class="normalTable Center">
+                <script type="text/template" id="repayment_template">
+                    <tr>
+                        <td>
+                            <p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ <%= result %></span>
+                        </td>
+                    </tr>
+                </script>
             </table>
         </div>
+    </div>
+    <!--提示信息-->
+    <div class="alert" style="display:none">
+        <p><img src="../static/img/alert.png" />还款失败！</p>
     </div>
     <div id="btn_content" style="width:94%;margin-left:3%;">
         <script type="text/template" id="btn_template">
@@ -101,6 +108,17 @@
             </table>
         </div>
 		<h2 class="red Right" onclick="changePage('ysx')">额度查询</h2> -->
+    </div>
+    <div id="dialog">
+        <div class="display-div">
+            <p class="tsTitle"><img src="../static/img/ok.png" style="width:21px;margin-top:-4px;" />您的提额申请已提交<img src="../static/img/sqjl_g.png" style="width:21px;" /></p>
+            <p class="Center">我行将<span class="blue strong">电话或现场</span>调查信息，请保持您<br/>18290895563的电话畅通</p>
+
+            <div class="button">
+                <input type="button" value="确定" class="btn btn-login btn-small" onclick="changePage('ysx')" />
+            </div>
+        </div>
+        <!-- /display-div -->
     </div>
 </body>
 

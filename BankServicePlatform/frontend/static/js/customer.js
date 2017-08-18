@@ -10,7 +10,7 @@ var Customers = Backbone.Collection.extend({
     url: '/api/customer',
     model: Customer,
     parse: function(response) {
-        return response.data;
+        return response.data.data;
     }
 });
 
@@ -25,7 +25,7 @@ var CustomerRouter = Backbone.Router.extend({
 
 });
 
-var CustomerView=Backbone.View.extend({
+var CustomerView = Backbone.View.extend({
 
 })
 
