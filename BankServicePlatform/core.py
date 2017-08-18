@@ -80,7 +80,7 @@ class Service(object):
         条件查询，返回全部
         :param **kwargs: 查询条件
         """
-        return self.__model__.query.filter_by(**kwargs)
+        return self.__model__.query.filter_by(**kwargs).all()
 
     def first(self, **kwargs):
         """
