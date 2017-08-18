@@ -30,16 +30,29 @@ singleResult.fetch({
 //新增提款
 var Quota_used_record = Backbone.Model.extend({
     url: '/api/quota/quota_used_record',
-    parse: function(response) {
-        $('#dialog').show();
+    parse: function(res) {
+        if (res.data.result == null || res.data.result != "Failed") {
+            $('#dialog').show();
+        } else {
+            setTimeOut(res.data.info)
+        }
     }
 });
 var quota_used_record = new Quota_used_record;
 $("#subBtn").click(function() {
+    //验证
+    var used_quota = $("input[name='used_quota']").val();
+    if (!Validator.VerityLib.IsNotEmpty(used_quota) ||
+        !Validator.VerityLib.IsIntegerNotNagtive(used_quota)) {
+        setTimeOut("请填写正确的金额(大于0的整数)！")
+        return;
+    }
     //var obj = [];
     //obj["quota_used_record"] = $('#contentForm').serializeJSON();
     //obj["period"] = $('#period').val();
     var obj = { "quota_used_record": { "quota_id": $('#quota_id').val(), "used_quota": $('#used_quota').val() }, "period": $('#period').val() }
+
+    quota_used_record.url = getChangePage(quota_used_record.url);
     quota_used_record.save(obj, {
         beforeSend: sendAuthentication
     });
