@@ -79,6 +79,12 @@ quotaResult.fetch({
 });
 
 function updateQuota() {
+    if (submitFlag) {
+        submitFlag = false;
+
+    } else {
+        return;
+    }
     //请求调额
     var UpdateQuotaResult = Backbone.Collection.extend({
         url: '/api/quota/pad_increase_amount/' + $("#quota_id").val()
