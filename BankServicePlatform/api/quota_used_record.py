@@ -42,7 +42,7 @@ def new():
         avaliable_amount=float(quota.get_or_404(quota_id).available_amount)
         avaliable_remain=avaliable_amount-used_quota
         #获得利率和期限
-        rate=0.18#todo:从产品获取利率
+        rate=0.015#todo:从产品获取利率
         period=int(request_json['period'])
 
         #判断可用余额
