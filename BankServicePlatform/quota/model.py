@@ -6,7 +6,7 @@ from ..tools.helper import JsonSerializer
 from datetime import datetime
 
 class QuotaJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","amount","available_amount","status"]
+    __json_public__ = ["id","amount","available_amount","status","is_bankcard_binded"]
 
 class Quota(QuotaJsonSerializer,db.Model):
     __tablename__="quota"
@@ -18,6 +18,7 @@ class Quota(QuotaJsonSerializer,db.Model):
     available_amount=db.Column(db.Float(),default=0)#可用额度
     version=db.Column(db.Integer())#防并发，每次更新该值+1
     status=db.Column(db.Integer(),default=1)#0不可提额，1可以提额
+    is_bankcard_binded=db.Column(db.Integer(),default=0)#0未绑，1已绑
 
     quota_recordes=db.relationship('QuotaRecord', backref='quota',lazy='dynamic')#额度记录
     quota_used_recordes=db.relationship('QuotaUsedRecord', backref='quota',lazy='dynamic')#使用额度记录

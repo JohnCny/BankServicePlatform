@@ -68,7 +68,6 @@ def new():
 
         request_json['customer']=_cutomer
 
-
         new_customer=customer.create(**request_json)
         login_user(new_customer)
         token=new_customer.generate_auth_token()
@@ -138,6 +137,7 @@ def update_quota(customer_id,identification_number,real_name,phone,bank_card_num
 
     quota_data={
         "amount":update_quota,
+        "is_bankcard_binded":1,
         "available_amount":available_amount
     }
 
