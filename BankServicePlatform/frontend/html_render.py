@@ -7,6 +7,8 @@ from flask import Blueprint, render_template
 from . import route,route_nl
 
 
+
+
 bp = Blueprint('frontend', __name__)
 
 @route_nl(bp, '/')

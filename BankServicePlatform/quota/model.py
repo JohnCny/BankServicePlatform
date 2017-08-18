@@ -74,6 +74,11 @@ class QuotaRepayment(QuotaRepaymentJsonSerializer,db.Model):
     quota_bill_id=db.Column(db.Integer,db.ForeignKey('quota_bill.id'))
     repayment_amount=db.Column(db.Float())#还款金额
     period=db.Column(db.Integer())#期数
-    repayment_date=db.Column(db.DateTime(),default=datetime.now())#日期
+    principal=db.Column(db.Float())#应还本金
+    interest=db.Column(db.Float())#应还利息
+    repayment_date=db.Column(db.DateTime())#还款日期
+    repaid=db.Column(db.Float())#已还金额 todo:今后需要区分已还本金还是利息
+    is_repaid=db.Column(db.Integer())#是否已还清，0否，1是
+    final_repayment_date=db.Column(db.DateTime())#最后还款日期
 
 

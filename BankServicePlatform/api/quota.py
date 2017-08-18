@@ -3,12 +3,12 @@ __author__ = 'Johnny'
 
 from flask import Blueprint,request,jsonify
 from ..services import quota,quota_record,quota_used_record
-from ..tools.json_encoding import convert
+from ..tools import helper
 import urllib
 import urllib2
 from .import route,route_nl
 import json,yaml
-from ..config import PAD_SERVER_URL
+from ..config import PAD_SERVER_URL,logger
 
 bp=Blueprint('quota',__name__,url_prefix='/quota')
 
@@ -51,22 +51,27 @@ def update(quota_id):
 @route(bp,'/update_amount',methods=['POST'])
 def update_amount():
     #todo:增加额度验证
-    request_json=dict(**request.json)
+    try:
+        request_json=dict(**request.json)
 
-    quota_id=request_json['quota_id']
-    _quota=quota.get_or_404(quota_id)
+        quota_id=request_json['quota_id']
+        _quota=quota.get_or_404(quota_id)
 
-    original_quota=_quota.amount
-    updated_quota=request_json['updated_quota']
+        original_quota=_quota.amount
+        updated_quota=request_json['updated_quota']
 
-    data={
-        "quota_id":quota_id,
-        "original_quota":original_quota,
-        "updated_quota":updated_quota
-    }
-    quota_record.create(**data)
+        data={
+            "quota_id":quota_id,
+            "original_quota":original_quota,
+            "updated_quota":updated_quota
+        }
+        quota_record.create(**data)
+        _quota=quota.update(_quota,amount=updated_quota)
+    except:
+        logger.exception("error")
+        return helper.show_result_fail("额度更新失败")
 
-    return quota.update(_quota,amount=updated_quota)
+    return helper.show_result_data_success("额度更新成功",_quota)
 
 @route(bp,'/<quota_id>',methods=['DELETE'])
 def delete(quota_id):
@@ -79,62 +84,71 @@ def delete(quota_id):
 def pad_increase_amount(quota_id):
     _quota=quota.get_or_404(quota_id)
     quota.update(_quota,status=0)
-
+    try:
     # _quota_bill=quota.get_or_404(quota_id).quota_used_recordes.first().quota_billes
-    _cutomer=_quota.customer
-    data={
-        "id":_quota.id,
-        "customerName":_cutomer.real_name,
-        "sfzh":str(_cutomer.identification_number),
-        "phoneNo":_cutomer.phone,
-        "cardNum":_cutomer.bank_card_number,
-        "applyAmt":_quota.amount,
-        "loanTerm":0,
-        "applyTime":"2017-08-15 16:11:13"
-    }
-    data=urllib.urlencode(data)
+        _cutomer=_quota.customer
+        data={
+            "id":_quota.id,
+            "customerName":_cutomer.real_name,
+            "sfzh":str(_cutomer.identification_number),
+            "phoneNo":_cutomer.phone,
+            "cardNum":_cutomer.bank_card_number,
+            "applyAmt":_quota.amount,
+            "loanTerm":0,
+            "applyTime":"2017-08-15 16:11:13"
+        }
+        data=urllib.urlencode(data)
 
-    req=urllib2.Request("http://"+PAD_SERVER_URL+":8080/PCCredit/ipad/ks/getQuotaApply.json",data=data)
-    response=urllib2.urlopen(req,timeout=60)
+        req=urllib2.Request("http://"+PAD_SERVER_URL+":8080/PCCredit/ipad/ks/getQuotaApply.json",data=data)
+        response=urllib2.urlopen(req,timeout=60)
 
-    response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
-    result=response_json.get('result',None)
-    status=result.get('status',None)
+        response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
+        result=response_json.get('result',None)
+        status=result.get('status',None)
+    except:
+        logger.exception("error")
+        return helper.show_result_fail("提额失败")
 
     if status=='success':
-        return 'Success',200
+        return helper.show_result_success("提额成功")
 
-    return 'Failed',200
+    return helper.show_result_fail("提额失败")
 
 
 @route_nl(bp,'/pad_update_amount',methods=['POST'])
 def pad_update_amount():
     #todo:增加额度验证
-    request_json=dict(**request.json)
+    try:
+        request_json=dict(**request.json)
 
-    quota_id=request_json['quota_id']
-    _quota=quota.get_or_404(quota_id)
-    quota.update(_quota,status=1)
+        quota_id=request_json['quota_id']
+        _quota=quota.get_or_404(quota_id)
+        quota.update(_quota,status=1)
 
-    original_quota=_quota.amount
-    updated_quota=request_json['updated_quota'].encode('utf8')
+        original_quota=_quota.amount
+        updated_quota=request_json['updated_quota'].encode('utf8')
 
-    data={
-        "quota_id":quota_id,
-        "original_quota":original_quota,
-        "updated_quota":updated_quota
-    }
-    quota_record.create(**data)
-    available_amount=int(_quota.available_amount)
-    available_amount=int(int(updated_quota)-int(original_quota)+available_amount)
+        data={
+            "quota_id":quota_id,
+            "original_quota":original_quota,
+            "updated_quota":updated_quota
+        }
+        quota_record.create(**data)
+        available_amount=int(_quota.available_amount)
+        available_amount=int(int(updated_quota)-int(original_quota)+available_amount)
 
-    if available_amount>0:
-        available_amount=available_amount
-    else:
-        available_amount=0
+        if available_amount>0:
+            available_amount=available_amount
+        else:
+            available_amount=0
 
-    quota_data={
-        "amount":updated_quota,
-        "available_amount":available_amount
-    }
-    return quota.update(_quota,**quota_data)
+        quota_data={
+            "amount":updated_quota,
+            "available_amount":available_amount
+        }
+        _quota=quota.update(_quota,**quota_data)
+    except:
+        logger.exception("error")
+        return helper.show_result_fail("额度更新失败")
+
+    return helper.show_result_data_success("额度更新成功",_quota)
