@@ -90,7 +90,11 @@ function updateQuota() {
     updateQuotaResult.fetch({
         beforeSend: sendAuthentication,
         success: function(collection, response, options) {
-            $('#dialog').show();
+            if (response.data.result == null || response.data.result != "Failed") {
+                $('#dialog').show();
+            } else {
+                setTimeOut("申请提交失败！！")
+            }
         },
         error: function(collection, response, options) {
             //错误提示
