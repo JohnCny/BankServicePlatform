@@ -51,11 +51,14 @@
             </div>
         </div>
         <div class="content topContent" style="margin-bottom:15px;">
-            <table class="normalTable Center">
-                <tr>
-                    <td>
-                        <p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ 5,000.00</span></td>
-                </tr>
+            <table id="repayment_content" class="normalTable Center">
+                <script type="text/template" id="repayment_template">
+                    <tr>
+                        <td>
+                            <p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ <%= result %></span>
+                        </td>
+                    </tr>
+                </script>
             </table>
         </div>
     </div>

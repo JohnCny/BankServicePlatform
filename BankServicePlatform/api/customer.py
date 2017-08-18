@@ -7,8 +7,10 @@ from passlib.apps import custom_app_context as pwd_context
 from ..config import PAD_SERVER_URL,logger
 from .import route,route_nl
 from flask_login import login_user
-from ..tools import helper
+from ..tools import helper,json_encoding
 import urllib,urllib2,yaml,json
+from ..models import QuotaRepayment, QuotaBill, QuotaUsedRecord, Quota, Customer
+import datetime
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
@@ -158,7 +160,21 @@ def show_customer_quota(customer_id):
         查找用户quota
     """
     return customer.get_or_404(customer_id).quotaes
-	
+
+@route(bp,'/repayments/<customer_id>')
+def show_customer_repayments(customer_id):
+    """
+        查找用户show_customer_repayments
+    """
+    GMT_FORMAT = '%Y-%b-%d %H:%M:%S'
+    _res = QuotaRepayment.query.join(QuotaBill).join(QuotaUsedRecord).join(Quota).join(Customer).filter \
+            (Customer.id == customer_id,
+             QuotaRepayment.is_repaid == 0).order_by(QuotaRepayment.period).all()
+    for obj in _res:
+        obj.final_repayment_date = str(obj.final_repayment_date)[0:10]
+        
+    return _res
+
 @route(bp,'/quota_used_recordes/<customer_id>')
 def show_customer_quota_used_recordes(customer_id):
     """

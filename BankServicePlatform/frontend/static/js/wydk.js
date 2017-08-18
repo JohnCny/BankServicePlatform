@@ -61,7 +61,7 @@ $("#subBtn").click(function() {
 //计算金额
 function getAmount() {
     var used_quota = $("#used_quota").val();
-    var rate = 0.18;
+    var rate = 0.015;
     var period = $("#period").val();
     var total = used_quota * rate * Math.pow((1 + rate), period) / (Math.pow((1 + rate), period) - 1);
 
