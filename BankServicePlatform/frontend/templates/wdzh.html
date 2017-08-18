@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="utf-8">
     <title>快审通—我的账户</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
     <link href="../static/css/main.css" rel="stylesheet">
@@ -20,49 +21,63 @@
 </head>
 
 
-<body style="background:#eff0f4">	
-	<div id="single_content">
-		<script type="text/template" id="single_template">
-			<input type="hidden" id="quota_id" value="<%= result.id %>">
-			<div class="wdzh">
-				<div class="kyed">
-					<p>可用额度</p>			
-					<h2>￥
-						<%= result.available_amount %>
-					</h2>
-				</div>		
-				<div class="zed">
-					<p>总额度</p>			
-					<h2>￥
-						<%= result.amount %>
-					</h2>
-				</div>
-				<div class="grxx">
-					<p>姓名：<span><%= result.real_name %></span></p>
-					<p>电话：<span><%= result.phone %></span></p>
-					<p>身份证号：<span><%= result.identification_number %></span></p>
-					<p>银行卡号：<span><%= result.bank_card_number %></span></p>    
-				</div>
-			</div>	
-			<div class="content topContent" style="margin-bottom:15px;">
-				<table class="normalTable Center">
-					<tr>
-						<td><p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ 5,000.00</span></td>
-					</tr>
-				</table>	
-			</div>
+<body style="background:#eff0f4">
+    <div>
+        <div class="wdzh">
+            <div id="quota_content">
+                <script type="text/template" id="quota_template">
+                    <input type="hidden" id="quota_id" value="<%= result.id %>">
+                    <div class="kyed">
+                        <p>可用额度</p>
+                        <h2>￥
+                            <%= result.available_amount %>
+                        </h2>
+                    </div>
+                    <div class="zed">
+                        <p>总额度</p>
+                        <h2>￥
+                            <%= result.amount %>
+                        </h2>
+                    </div>
+                </script>
+            </div>
+            <div id="single_content" class="grxx">
+                <script type="text/template" id="single_template">
+                    <p>姓名：<span><%= result.real_name %></span></p>
+                    <p>电话：<span><%= result.phone %></span></p>
+                    <p>身份证号：<span><%= result.identification_number %></span></p>
+                    <p>银行卡号：<span><%= result.bank_card_number %></span></p>
+                </script>
+            </div>
+        </div>
+        <div class="content topContent" style="margin-bottom:15px;">
+            <table class="normalTable Center">
+                <tr>
+                    <td>
+                        <p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ 5,000.00</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="btn_content" style="width:94%;margin-left:3%;">
+        <script type="text/template" id="btn_template">
+            <input type="button" class="btn btn-login" value="申请记录" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('dksqjl')" />
+            <input type="button" class="btn btn-bdyhk" value="我要贷款" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('wydk')" />
+            <input type="button" class="btn" value="我要还款" style="width:23.5%;margin-right:2%;float:left;background:#8bcb54;" id="" onclick="changePage('wyhk')" />
+
+            <% if(result.status == '0'){ %>
+                <input type="button" class="btn btn-tsed btn-gray" value="提升额度" style="width:23.5%;float:left;">
+                <% }else{ %>
+                    <input type="button" class="btn btn-tsed" value="提升额度" style="width:23.5%;float:left;" onclick="updateQuota()" />
+                    <% } 
+					if(result.status == '0'){ %>
+                        <p class="gray strong right" id="state" style="width:100%;text-align:right">
+                            提额状态：<span class="strong yellow ">正在处理</span>
+                        </p>
+                        <% } %>
         </script>
-	</div>
-	<div style="width:94%;margin-left:3%;">
-		<input type="button" class="btn btn-login" value="申请记录" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('dksqjl')"/>
-		<input type="button" class="btn btn-bdyhk" value="我要贷款" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('wydk')"/>
-		<input type="button" class="btn" value="我要还款" style="width:23.5%;margin-right:2%;float:left;background:#8bcb54;" id="" onclick="changePage('wyhk')"/>	
-		<input type="button" class="btn btn-tsed" value="提升额度" style="width:23.5%;float:left;" id="" onclick=""/>
-		<p class="gray strong right" id="state" style="width:100%;text-align:right">
-			提额状态：<span class="strong yellow">正在处理</span>
-		</p>
-	</div>
-   <!--  <div class="center" style="bottom:0;">
+    </div>
+    <!--  <div class="center" style="bottom:0;">
         <div class="content topContent">
             <table id="single_content" class="normalTable">
                 <script type="text/template" id="single_template">

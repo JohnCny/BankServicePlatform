@@ -18,6 +18,7 @@ var LoopResult = Backbone.Collection.extend({
 });
 var loopResult = new LoopResult;
 
+loopResult.url = getChangePage(loopResult.url);
 loopResult.fetch({
     beforeSend: sendAuthentication,
     success: function(collection, response, options) {

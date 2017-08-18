@@ -3,12 +3,24 @@ function changePage(src) {
     window.location.href = src + "?t=" + timestamp;
 }
 
+function getChangePage(src) {
+    var timestamp = new Date().getTime();
+    var index = src.indexOf("?");
+    if (index < 0) {
+        return src + "?t=" + timestamp;
+    } else {
+        return src.slice(0, index) + "?t=" + timestamp;
+    }
+}
 //提示信息
-function setTimeOut(){
-    setTimeout(function(){
+function setTimeOut(info) {
+    //alert($(".alert").text())
+    $(".alert").show();
+    $(".alert").html("<p><img src='../static/img/alert.png' />" + info + "！</p>")
+    setTimeout(function() {
         $(".alert").fadeOut("slow");
         $(".alert").fadeOut("slow");
-    },3000)
+    }, 3000)
 }
 
 //微信公众号appid

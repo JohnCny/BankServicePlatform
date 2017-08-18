@@ -47,6 +47,8 @@ var LoopResult = Backbone.Collection.extend({
     url: '/api/customer/quota_billes/' + localStorage.getItem(key_customer_id)
 });
 var loopResult = new LoopResult;
+loopResult.url = getChangePage(loopResult.url);
+
 loopResult.fetch({
     beforeSend: sendAuthentication,
     success: function(collection, response, options) {

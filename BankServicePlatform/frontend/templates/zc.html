@@ -12,21 +12,22 @@
     <script type="text/javascript" src="../static/js/vendor/backbone-1.3.3.min.js"></script>
     <script type="text/javascript" src="../static/js/vendor/jquery.serializejson.min.js"></script>
     <script type="text/javascript" src="../static/js/main.js"></script>
+    <script type="text/javascript" src="../static/js/validation.js"></script>
     <style type="text/css">
 
     </style>
     <script type="text/javascript">
-		
     </script>
 </head>
 
-<body onload="setTimeOut();">
+<body>
     <form id="contentForm" class="center">
-		<img src="../static/img/zc.png" style="width:100%"/>
-		<!--提示信息-->
-		<div class="alert">
-			<p><img src="../static/img/alert.png"/>注册失败，请检查信息输入是否正确！</p>
-		</div><!--/提示信息-->
+        <img src="../static/img/zc.png" style="width:100%" />
+        <!--提示信息-->
+        <div class="alert" style="display:none">
+            <p><img src="../static/img/alert.png" />注册失败，请检查信息输入是否正确！</p>
+        </div>
+        <!--/提示信息-->
         <div class="content topContent">
             <table class="normalTable">
                 <tr>
@@ -61,7 +62,7 @@
                 </tr> -->
             </table>
         </div>
-		<h2 class="red Right" onclick="changePage('mmdl')">已有账号，直接登录</h2>
+        <h2 class="red Right" onclick="changePage('mmdl')">已有账号，直接登录</h2>
     </form>
     <div class="bottom">
         <input id="subBtn" type="button" value="注册并登陆" class="btn btn-login" />

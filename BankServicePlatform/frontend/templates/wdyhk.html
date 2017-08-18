@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>快审通—我的银行卡</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
     <link href="../static/css/main.css" rel="stylesheet">
@@ -22,7 +22,7 @@
 
 <body>
     <div class="center" style="bottom:0;">
-		<div class="content topContent yhk zgyh">	
+        <!-- <div class="content topContent yhk zgyh">	
 			<div class="logo"><img src="../static/img/yhk/zgyh.png"/></div>
 			<div class="yhkMessage">
 				<p>中国银行</p>
@@ -53,7 +53,8 @@
 				<p class="kz">储蓄卡</p>
 				<p class="kh">****  ****  **** ****  4431&nbsp;&nbsp;<input type="button" class="btn btn-jb right" value="更换"/></p>
 			</div>			
-		</div>
+        </div>
+    -->
         <div id="loop_content">
             <script type="text/template" id="loop_template">
                 <% for(var i = 0; i < result.length; i++) { %>
@@ -79,7 +80,7 @@
         <div id="dialog">
             <div class="display-div">
                 <div style="margin-top:20px;margin-left:20px;">
-                    <b style="font-size:18px;">输入新卡号：</b> <input type="text" id="bank_card_number" style="background:#dedede" />
+                    <b style="font-size:18px;">输入新卡号：</b> <input type="text" id="bank_card_number" name="bank_card_number" style="background:#dedede" />
                 </div>
                 <div class="button">
                     <input type="button" value="确定" class="btn btn-login btn-small" id="subBtn" />

@@ -32,7 +32,7 @@ loopResult.fetch({
         for (var i = 0; i < tmp.length; i++) {
             var obj = tmp[i];
             if (obj.bank_card_number == "0") {
-                obj.bank_card_number = "暂无"
+                obj.bank_card_number = "未绑定银行卡"
             }
             if (obj != null && obj.bank_card_number != null) {
                 obj.bank_card_number = obj.bank_card_number.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
@@ -48,14 +48,29 @@ loopResult.fetch({
 //更换银行卡
 var Card = Backbone.Model.extend({
     url: '/api/customer/' + localStorage.getItem(key_customer_id) + '/add_bank_card',
-    parse: function(response) {
-        changePage('wydk')
+    parse: function(res) {
+        if (res.data.result == null || res.data.result != "Failed") {
+            changePage('wydk')
+        } else {
+            setTimeOut(res.data.info)
+        }
     }
 });
 var card = new Card;
 $("#subBtn").click(function() {
+    //验证
+    var bank_card_number = $("input[name='bank_card_number']").val();
+    if (!Validator.VerityLib.IsNotEmpty(bank_card_number) ||
+        !Validator.VerityLib.IsIntegerNotNagtive(bank_card_number) ||
+        !Validator.VerityLib.IsBankCard(bank_card_number)) {
+        setTimeOut("请填写正确的卡号！")
+        return;
+    }
     var obj = [];
     obj["customer"] = { "bank_card_number": $("#bank_card_number").val() };
+
+
+    singlcardeResult.url = getChangePage(singleResult.url);
     card.save(obj, {
         beforeSend: sendAuthentication
     });
