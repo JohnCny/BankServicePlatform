@@ -26,8 +26,8 @@ def show(quota_repayment_id):
 
 
 @route(bp, '/', methods=['POST'])
-@transaction
-def new():
+
+def update():
     # todo:增加事务,多期合并
     request_json_origin = dict(**request.json)
     request_json_origin = request_json_origin["repayments"]
