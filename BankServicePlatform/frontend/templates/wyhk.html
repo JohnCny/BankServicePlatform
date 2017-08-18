@@ -60,16 +60,16 @@
                             <tr>
                                 <td><input type="checkbox" name="check_box" class="kg" onclick="getCount();" /></td>
                                 <td>
-                                    <%= result[i].quota_used_record_id %>
+                                    <%= result[i].quota_bill_id %>
                                 </td>
                                 <td>
-                                    <%= result[i].period_remain %>
+                                    <%= result[i].period %>
                                 </td>
                                 <td>
-                                    <%= result[i].create_date %>
+                                    <%= result[i].final_repayment_date %>
                                 </td>
                                 <td class="period_amount">
-                                    <%= result[i].period_amount %>
+                                    <%= result[i].repayment_amount %>
                                 </td>
                             </tr>
                             <% } %>

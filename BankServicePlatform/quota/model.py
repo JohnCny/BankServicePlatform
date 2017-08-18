@@ -65,7 +65,7 @@ class QuotaBill(QuotaBillJsonSerializer,db.Model):
     quota_repaymentes=db.relationship('QuotaRepayment', backref='quota_bill',lazy='dynamic')#账单还款记录
 
 class QuotaRepaymentJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","repayment_amount","period","repayment_date"]
+    __json_public__ = ["id","repayment_amount","period","final_repayment_date","quota_bill_id"]
 
 class QuotaRepayment(QuotaRepaymentJsonSerializer,db.Model):
     __tablename__="quota_repayment"

@@ -44,7 +44,7 @@ var loopView = new LoopView;
 
 //获取customer的billes
 var LoopResult = Backbone.Collection.extend({
-    url: '/api/customer/quota_billes/' + localStorage.getItem(key_customer_id)
+    url: '/api/customer/repayments/' + localStorage.getItem(key_customer_id)
 });
 var loopResult = new LoopResult;
 loopResult.url = getChangePage(loopResult.url);
@@ -53,7 +53,7 @@ loopResult.fetch({
     beforeSend: sendAuthentication,
     success: function(collection, response, options) {
         //判断是否json数组
-        if (Array.isArray(response.data)) {
+        /*if (Array.isArray(response.data)) {
             var arr = [];
             for (var i = 0; i < response.data.length; i++) {
                 var obj = response.data[i];
@@ -80,7 +80,17 @@ loopResult.fetch({
                 arr.push(tmp)
             }
             loopView.render({ result: arr });
+        }*/
+        if (Array.isArray(response.data)) {
+            for (var i = 0; i < response.data.length; i++) {
+                var obj = response.data[i];
+                //obj.final_repayment_date = GMTToStr(obj.final_repayment_date);
+            }
+            loopView.render({ result: response.data });
+        } else {
+
         }
+
 
     },
     error: function(collection, response, options) {
