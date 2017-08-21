@@ -5,6 +5,7 @@ from flask import Blueprint,request
 from ..services import quota_bill,quota_repayment,customer,quota,quota_used_record
 from ..tools import helper
 from .import route
+from ..config import logger
 
 bp=Blueprint('quota_bill',__name__,url_prefix='/quota/quota_bill')
 
@@ -36,14 +37,10 @@ def show_repayment(quota_bill_id):
 """页面组成字典或者json"""
 @route(bp,'/',methods=['POST'])
 def new():
-    return quota_bill.create(**request.json)
-
-@route(bp,'/<quota_bill_id>',methods=['PUT'])
-def update(quota_bill_id):
-    return quota_bill.update(quota_bill.get_or_404(quota_bill_id),**request.json)
-
-@route(bp,'/<quota_bill_id>',methods=['DELETE'])
-def delete(quota_bill_id):
-    quota_bill.delete(quota_bill.get_or_404(quota_bill_id))
-    return None,204
+    try:
+        _quota_bill=quota_bill.create(**request.json)
+    except:
+        logger.exception("error")
+        helper.show_result_fail("账单新增失败")
+    return helper.show_result_data_success("账单新增成功",_quota_bill)
 

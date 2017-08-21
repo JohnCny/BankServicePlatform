@@ -5,8 +5,8 @@ var Customer =  Backbone.Model.extend({
     parse: function(res) {
         if (res.data.result == null || res.data.result != "Failed") {
             //保存customeId和token
-            localStorage.setItem(key_customer_id, res.data.customer.id);
-            localStorage.setItem(key_token, res.data.token);
+            localStorage.setItem(key_customer_id, res.data.data.customer.id);
+            localStorage.setItem(key_token, res.data.data.token);
             //localStorage.setItem(key_customer_id, 1);
             //localStorage.setItem(key_token, "eyJhbGciOiJIUzI1NiIsImV4cCI6MTUwMjc5MjM4NCwiaWF0IjoxNTAyNzA1OTg0fQ.eyJpZCI6NjZ9.r2Uxsm_5YDKdMNrlUof4bYr01qL-w6T_He4NdJnq6jg");
             changePage('wdzh');
@@ -19,6 +19,13 @@ var Customer =  Backbone.Model.extend({
 
 var customer = new Customer;
 $("#subBtn").click(function() {
+    if (submitFlag) {
+        submitFlag = false;
+
+    } else {
+        setTimeOut('处理中，请勿重复点击！！')
+        return;
+    }
     //验证
     var real_name = $("input[name='real_name']").val();
     if (!Validator.VerityLib.IsNotEmpty(real_name) ||

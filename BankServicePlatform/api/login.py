@@ -21,38 +21,30 @@ bp = Blueprint('login', __name__,url_prefix='/login')
 
 @route_nl(bp,'/',methods=['POST'])
 def login():
+    #todo:移到front
     """
     传入手机号码和获得的openid，将opeid和token的匹配写入redis
     :return:
     """
-
     phone=dict(**request.json)['phone']
     password=dict(**request.json)['password']
     openid=dict(**request.json)['openid']
 
-    # customer=Customer.query.filter_by(phone=phone).first()
-    #
-    # result=customer.verify_password(password)
-        # if result:
-    #     customer=Customer.query.filter_by(phone=phone).first()
-    #     token=g.customer.generate_auth_token()
-    #     #redis.set(openid,token,ex=3600*24*7)
-    #     return 'Success',200
-    # else:
-    #     return "Failed",400\
     try:
         result=verify_password(phone,password)
     except:
-        return {"info":"用户名或者密码错误","result":"Failed"}
+        return helper.show_result_fail("用户名或者密码错误")
     if result:
         _customer=Customer.query.filter_by(phone=phone).first()
         login_user(_customer)
         token=_customer.generate_auth_token()
         redis.set(openid,token)
-        return {"customer":_customer,"token":token,"result":"Success"}
+
+        return_data={"customer":_customer,"token":token}
+
+        return helper.show_data_success(return_data)
     else:
-        g.customer=None
-        return {"info":"用户名或者密码错误","result":"Failed"}
+        return helper.show_result_fail("用户名或者密码错误")
 
 
 @route_nl(bp,'/get_token_by_openid')
@@ -60,9 +52,9 @@ def get_token_by_openid():
     openid=dict(**request.json)['openid']
     token=redis.get(openid)
     if token:
-        return token,200
+        return helper.show_data_success(token)
     else:
-        return "Need Logged In",500
+        return helper.show_result_fail("需要登录")
 
 @bp.route('/get_token')
 def get_token():

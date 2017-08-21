@@ -22,9 +22,9 @@
 
 
 <body style="background:#eff0f4">
-    <div>
-        <div class="wdzh">
-            <div id="quota_content">
+    <div class="wdzh">
+        <div id="quota_content">
+            <div>
                 <script type="text/template" id="quota_template">
                     <input type="hidden" id="quota_id" value="<%= result.id %>">
                     <div class="kyed">
@@ -51,11 +51,14 @@
             </div>
         </div>
         <div class="content topContent" style="margin-bottom:15px;">
-            <table class="normalTable Center">
-                <tr>
-                    <td>
-                        <p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ 5,000.00</span></td>
-                </tr>
+            <table id="repayment_content" class="normalTable Center">
+                <script type="text/template" id="repayment_template">
+                    <tr>
+                        <td>
+                            <p class="title">7日内应还款</p><span class="yellow strong" style="font-size:25px;">¥ <%= result %></span>
+                        </td>
+                    </tr>
+                </script>
             </table>
         </div>
     </div>
@@ -65,16 +68,7 @@
             <input type="button" class="btn btn-bdyhk" value="我要贷款" style="width:23.5%;margin-right:2%;float:left;" id="" onclick="changePage('wydk')" />
             <input type="button" class="btn" value="我要还款" style="width:23.5%;margin-right:2%;float:left;background:#8bcb54;" id="" onclick="changePage('wyhk')" />
 
-            <% if(result.status == '0'){ %>
-                <input type="button" class="btn btn-tsed btn-gray" value="提升额度" style="width:23.5%;float:left;">
-                <% }else{ %>
-                    <input type="button" class="btn btn-tsed" value="提升额度" style="width:23.5%;float:left;" onclick="updateQuota()" />
-                    <% } 
-					if(result.status == '0'){ %>
-                        <p class="gray strong right" id="state" style="width:100%;text-align:right">
-                            提额状态：<span class="strong yellow ">正在处理</span>
-                        </p>
-                        <% } %>
+            <input type="button" class="btn btn-tsed" value="提升额度" style="width:23.5%;float:left;" onclick="changePage('ysx')" />
         </script>
     </div>
     <!--  <div class="center" style="bottom:0;">

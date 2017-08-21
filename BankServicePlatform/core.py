@@ -11,6 +11,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security
 from flask_redis import FlaskRedis
+from functools import wraps
 
 # #: Flask-SQLAlchemy extension instance
 db = SQLAlchemy()

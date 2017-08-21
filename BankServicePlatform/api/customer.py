@@ -1,23 +1,26 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-from flask import Blueprint,request,g
+from flask import Blueprint,request
 from ..services import customer,quota
 from passlib.apps import custom_app_context as pwd_context
-from ..config import PAD_SERVER_URL
+from ..config import PAD_SERVER_URL,logger
 from .import route,route_nl
 from flask_login import login_user
+from ..tools import helper,json_encoding
 import urllib,urllib2,yaml,json
+from ..models import QuotaRepayment, QuotaBill, QuotaUsedRecord, Quota, Customer
+import datetime
 
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
 
-@route(bp,'/')
-def list():
-    """
-        查询，返回全部
-    """
-    return customer.all()
+# @route(bp,'/')
+# def list():
+#     """
+#         查询，返回全部
+#     """
+#     return customer.all()
 
 @route(bp,'/<customer_id>/quota/')
 def get_customer_quota(customer_id):
@@ -47,22 +50,36 @@ def quotas(customer_id):
 """页面组成字典或者json"""
 @route_nl(bp,'/',methods=['POST'])
 def new():
-    request_json=dict(**request.json)
-    _cutomer=dict(request_json.get('customer'))
+    try:
+        request_json=dict(**request.json)
+        _cutomer=dict(request_json.get('customer'))
 
-    _password=_cutomer['password']
-    password=pwd_context.encrypt(_password)
-    _cutomer['password']=password
+        _password=_cutomer['password']
+        password=pwd_context.encrypt(_password)
+        _cutomer['password']=password
 
-    request_json['customer']=_cutomer
 
-    new_customer=customer.create(**request_json)
-    login_user(new_customer)
-    token=new_customer.generate_auth_token()
-    set_init_quota(new_customer.id)
+        #验证身份证号码是否存在
+        cus_phone_ls = customer.find(phone=_cutomer['phone']).all()
+        if cus_phone_ls != None and len(cus_phone_ls)>0:
+            return {"info":"电话号码已存在","result":"Failed"}
 
-    return {"customer":new_customer,
-            "token":token.decode('ascii')}
+        cus_card_ls = customer.find(identification_number=_cutomer['identification_number']).all()
+        if cus_card_ls != None and len(cus_card_ls)>0:
+            return {"info":"证件号码已存在","result":"Failed"}
+
+        request_json['customer']=_cutomer
+
+        new_customer=customer.create(**request_json)
+        login_user(new_customer)
+        token=new_customer.generate_auth_token()
+        set_init_quota(new_customer.id)
+    except:
+        logger.exception("error")
+        return helper.show_result_fail("注册用户失败")
+
+    return helper.show_result_data_success("注册用户成功",{"customer":new_customer,
+            "token":token.decode('ascii')})
 
 @route(bp,'/<customer_id>',methods=['PUT'])
 def update(customer_id):
@@ -75,9 +92,14 @@ def delete(customer_id):
 
 @route(bp,'/<customer_id>/add_bank_card',methods=['POST'])
 def add_bank_card(customer_id):
-    _customer=customer.update(customer.get_or_404(customer_id),**request.json)
-    update_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
-    return customer.get_or_404(customer_id)
+    try:
+        _customer=customer.update(customer.get_or_404(customer_id),**request.json)
+        update_quota(_customer.id,_customer.identification_number,_customer.real_name,_customer.phone,_customer.bank_card_number)
+    except:
+        logger.exception("error")
+        return helper.show_result_fail("新增银行卡失败")
+
+    return helper.show_result_data_success("新增银行卡成功",customer.get_or_404(customer_id))
 
 
 def set_init_quota(customer_id):
@@ -105,8 +127,7 @@ def update_quota(customer_id,identification_number,real_name,phone,bank_card_num
 
     _quota=customer.get_or_404(customer_id).quotaes
 
-    update_quota=result.get('quota',None)
-    update_quota=int(update_quota)
+    update_quota=result.get('quota',None)#.encode('utf8')
 
     available_amount=int(_quota.available_amount)
     available_amount=int(int(update_quota)-int(_quota.amount)+available_amount)
@@ -118,6 +139,7 @@ def update_quota(customer_id,identification_number,real_name,phone,bank_card_num
 
     quota_data={
         "amount":update_quota,
+        "is_bankcard_binded":1,
         "available_amount":available_amount
     }
 
@@ -138,7 +160,21 @@ def show_customer_quota(customer_id):
         查找用户quota
     """
     return customer.get_or_404(customer_id).quotaes
-	
+
+@route(bp,'/repayments/<customer_id>')
+def show_customer_repayments(customer_id):
+    """
+        查找用户show_customer_repayments
+    """
+    GMT_FORMAT = '%Y-%b-%d %H:%M:%S'
+    _res = QuotaRepayment.query.join(QuotaBill).join(QuotaUsedRecord).join(Quota).join(Customer).filter \
+            (Customer.id == customer_id,
+             QuotaRepayment.is_repaid == 0).order_by(QuotaRepayment.period).all()
+    for obj in _res:
+        obj.final_repayment_date = str(obj.final_repayment_date)[0:10]
+        
+    return _res
+
 @route(bp,'/quota_used_recordes/<customer_id>')
 def show_customer_quota_used_recordes(customer_id):
     """

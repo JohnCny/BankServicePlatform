@@ -40,6 +40,14 @@ var Quota_used_record = Backbone.Model.extend({
 });
 var quota_used_record = new Quota_used_record;
 $("#subBtn").click(function() {
+    if (submitFlag) {
+        submitFlag = false;
+
+    } else {
+        setTimeOut('处理中，请勿重复点击！！')
+        return;
+    }
+
     //验证
     var used_quota = $("input[name='used_quota']").val();
     if (!Validator.VerityLib.IsNotEmpty(used_quota) ||
@@ -61,7 +69,7 @@ $("#subBtn").click(function() {
 //计算金额
 function getAmount() {
     var used_quota = $("#used_quota").val();
-    var rate = 0.18;
+    var rate = 0.015;
     var period = $("#period").val();
     var total = used_quota * rate * Math.pow((1 + rate), period) / (Math.pow((1 + rate), period) - 1);
 

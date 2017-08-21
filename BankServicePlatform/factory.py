@@ -97,13 +97,14 @@ def verify_password(phone_or_token,password):
 
 @auth.error_handler
 def unauthorized():
+    flash("需要登录","error")
     return redirect('/login')
 
 
-def login_required(f):
-    @wraps(f)
-    def decorated(*args,**kwargs):
-        if g.customer is None:
-            return redirect('/login',next=request.url)
-        return f(*args,**kwargs)
-    return decorated
+# def login_required(f):
+#     @wraps(f)
+#     def decorated(*args,**kwargs):
+#         if g.customer is None:
+#             return redirect('/login',next=request.url)
+#         return f(*args,**kwargs)
+#     return decorated

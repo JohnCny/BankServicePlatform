@@ -58,6 +58,14 @@ var Card = Backbone.Model.extend({
 });
 var card = new Card;
 $("#subBtn").click(function() {
+    if (submitFlag) {
+        submitFlag = false;
+
+    } else {
+        setTimeOut('处理中，请勿重复点击！！')
+        return;
+    }
+
     //验证
     var bank_card_number = $("input[name='bank_card_number']").val();
     if (!Validator.VerityLib.IsNotEmpty(bank_card_number) ||
@@ -70,7 +78,7 @@ $("#subBtn").click(function() {
     obj["customer"] = { "bank_card_number": $("#bank_card_number").val() };
 
 
-    singlcardeResult.url = getChangePage(singleResult.url);
+    card.url = getChangePage(card.url);
     card.save(obj, {
         beforeSend: sendAuthentication
     });

@@ -6,7 +6,7 @@ from ..tools.helper import JsonSerializer
 from datetime import datetime
 
 class QuotaJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","amount","available_amount","status"]
+    __json_public__ = ["id","amount","available_amount","status","is_bankcard_binded"]
 
 class Quota(QuotaJsonSerializer,db.Model):
     __tablename__="quota"
@@ -18,6 +18,7 @@ class Quota(QuotaJsonSerializer,db.Model):
     available_amount=db.Column(db.Float(),default=0)#可用额度
     version=db.Column(db.Integer())#防并发，每次更新该值+1
     status=db.Column(db.Integer(),default=1)#0不可提额，1可以提额
+    is_bankcard_binded=db.Column(db.Integer(),default=0)#0未绑，1已绑
 
     quota_recordes=db.relationship('QuotaRecord', backref='quota',lazy='dynamic')#额度记录
     quota_used_recordes=db.relationship('QuotaUsedRecord', backref='quota',lazy='dynamic')#使用额度记录
@@ -65,7 +66,7 @@ class QuotaBill(QuotaBillJsonSerializer,db.Model):
     quota_repaymentes=db.relationship('QuotaRepayment', backref='quota_bill',lazy='dynamic')#账单还款记录
 
 class QuotaRepaymentJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","repayment_amount","period","repayment_date"]
+    __json_public__ = ["id","repayment_amount","period","final_repayment_date","quota_bill_id"]
 
 class QuotaRepayment(QuotaRepaymentJsonSerializer,db.Model):
     __tablename__="quota_repayment"
@@ -74,6 +75,11 @@ class QuotaRepayment(QuotaRepaymentJsonSerializer,db.Model):
     quota_bill_id=db.Column(db.Integer,db.ForeignKey('quota_bill.id'))
     repayment_amount=db.Column(db.Float())#还款金额
     period=db.Column(db.Integer())#期数
-    repayment_date=db.Column(db.DateTime(),default=datetime.now())#日期
+    principal=db.Column(db.Float())#应还本金
+    interest=db.Column(db.Float())#应还利息
+    repayment_date=db.Column(db.DateTime())#还款日期
+    repaid=db.Column(db.Float())#已还金额 todo:今后需要区分已还本金还是利息
+    is_repaid=db.Column(db.Integer())#是否已还清，0否，1是
+    final_repayment_date=db.Column(db.DateTime())#最后还款日期
 
 

@@ -5,7 +5,7 @@ from functools import wraps
 
 from flask import jsonify,url_for,redirect
 from ..factory import auth
-from ..core import BankServicePlatformError,BankServicePlatformFormError
+from ..core import BankServicePlatformError,BankServicePlatformFormError,db
 from ..tools.helper import JSONEncoder
 from .. import factory
 
@@ -61,6 +61,19 @@ def route_nl(bp, *args, **kwargs):
         return f
 
     return decorator
+
+def transaction(f):
+    @wraps(f)
+    def decorated(*args,**kwargs):
+        try:
+            session=db.Session()
+            f(*args,**kwargs)
+        except:
+            session.rollback()
+            raise
+        return f(*args,**kwargs)
+
+    return decorated
 
 
 def on_bankserviceplatform_error(e):

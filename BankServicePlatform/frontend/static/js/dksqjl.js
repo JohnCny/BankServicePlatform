@@ -22,7 +22,6 @@ loopResult.url = getChangePage(loopResult.url);
 loopResult.fetch({
     beforeSend: sendAuthentication,
     success: function(collection, response, options) {
-
         var tmp = []
         if (Array.isArray(response.data)) {
             tmp = response.data;
