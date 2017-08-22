@@ -98,13 +98,47 @@ loopResult.fetch({
     }
 });
 
+//还款
+var Repayment =  Backbone.Model.extend({
+    url: '/api/quota/quota_repayment',
+    //解析异步请求返回的结果，fetch方法与save方法都会调用它
+    parse: function(res) {
+        if (res.data.result == null || res.data.result != "Failed") {
+            setTimeOut("还款成功！！")
+            changePage('wyhk')
+        } else {
+            setTimeOut(res.data.info)
+        }
+
+    }
+});
+
+var repayment = new Repayment;
+$("#subBtn").click(function() {
+    var objs = []
+    objs['repayments'] = []
+    $("[name='check_box']:checked").each(function() {
+        var quota_repayment_id = $.trim($(this).parents("tr").find("input").val());
+        var repayment_amount = $.trim($(this).parents("tr").find(".repayment_amount").text());
+        var obj = { "quota_repayment_id": quota_repayment_id, "repayment_amount": repayment_amount };
+        //var obj = [];
+        //obj['quota_repayment_id'] = quota_repayment_id
+        //obj['period_amount'] = period_amount
+        objs['repayments'].push(obj)
+    });
+
+    repayment.url = getChangePage(repayment.url);
+    repayment.save(objs, {
+        beforeSend: sendAuthentication
+    });
+});
 
 //计算和
 function getCount() {
     var total = 0;
     $("[name='check_box']:checked").each(function() {
         //alert($(this).val());  
-        var period_amount = $(this).parents("tr").find(".period_amount").text();
+        var period_amount = $(this).parents("tr").find(".repayment_amount").text();
         total += parseFloat($.trim(period_amount));
     });
     //alert(total.toFixed(2));
