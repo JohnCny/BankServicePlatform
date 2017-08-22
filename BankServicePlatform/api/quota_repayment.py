@@ -26,8 +26,8 @@ def show(quota_repayment_id):
 
 
 @route(bp, '/', methods=['POST'])
-
-def update():
+@transaction
+def new():
     # todo:增加事务,多期合并
     request_json_origin = dict(**request.json)
     request_json_origin = request_json_origin["repayments"]
@@ -35,19 +35,20 @@ def update():
     try:
         for _request in request_json_origin:
             request_json = dict(_request)
+            
             quota_repayment_id = request_json['quota_repayment_id']
             repayment_amount = request_json['repayment_amount']
-
             _quota_repayment = quota_repayment.get_or_404(quota_repayment_id)
 
             if repayment_amount >= _quota_repayment.repayment_amount:
-                update_quota_bill(_quota_repayment.quota_bill_id)
+                _quota_bill = quota_bill.get_or_404(_quota_repayment.quota_bill_id)
+                update_quota_bill(_quota_bill)
                 repaid_data = {
                     "repaid": repayment_amount,
                     "is_repaid": 1,
                     "repayment_date": datetime.datetime.now()
                 }
-                quota_repayment.update(**repaid_data)
+                quota_repayment.update(_quota_repayment,**repaid_data)
             else:
                 repaid_data = {
                     "repaid": repayment_amount,
@@ -56,7 +57,7 @@ def update():
                 quota_repayment.update(**repaid_data)
     except:
         logger.exception("error")
-        return helper.show_result_success("还款失败")
+        return helper.show_result_fail("还款失败")
 
     return helper.show_result_success("还款成功")
 

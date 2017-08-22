@@ -23,10 +23,11 @@
 <body>
     <div class="center">
 
-            <!--提示信息-->
-            <div class="alert" style="display:none">
-                <p><img src="../static/img/alert.png" />还款失败！</p>
-            </div>        <!--/提示信息-->
+        <!--提示信息-->
+        <div class="alert" style="display:none">
+            <p><img src="../static/img/alert.png" />还款失败！</p>
+        </div>
+        <!--/提示信息-->
         <div class="content topContent">
             <!-- 不显示了
             <table id="single_content" class="normalTable">
@@ -47,7 +48,7 @@
             <table class="normalTable Center">
                 <thead>
                     <tr>
-                        <th style="width:30px"><img src="../static/img/ok_y.png" class="kg" style="width:20px;" /></th>
+                        <th style="width:30px"><img src="../static/img/ok_y.png" style="width:20px;margin-left: 20px;" /></th>
                         <th><span class="yellow">订单号</span></th>
                         <th><span class="yellow">期次</span></th>
                         <th><span class="yellow">还款日</span></th>
@@ -58,7 +59,7 @@
                     <script type="text/template" id="loop_template">
                         <% for(var i = 0; i < result.length; i++) { %>
                             <tr>
-                                <td><input type="checkbox" name="check_box" class="kg" onclick="getCount();" /></td>
+                                <td><input value="<%= result[i].id %>" type="checkbox" name="check_box" class="kg" onclick="getCount();" /></td>
                                 <td>
                                     <%= result[i].quota_bill_id %>
                                 </td>
@@ -68,7 +69,7 @@
                                 <td>
                                     <%= result[i].final_repayment_date %>
                                 </td>
-                                <td class="period_amount">
+                                <td class="repayment_amount">
                                     <%= result[i].repayment_amount %>
                                 </td>
                             </tr>
