@@ -133,6 +133,8 @@ def pad_update_amount():
         if isinstance(updated_quota,unicode):
             updated_quota=updated_quota.encode('utf8')
 
+        updated_quota=str(updated_quota)
+
         data={
             "quota_id":quota_id,
             "original_quota":original_quota,
