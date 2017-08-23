@@ -7,6 +7,8 @@ from ..tools.helper import JsonSerializer
 import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer,SignatureExpired,BadSignature
 from BankServicePlatform.config import SECRET_KEY
+from ..factories.models import BasicModel
+from ..factories.gof import Singleton
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -26,7 +28,7 @@ class Role(db.Model):
 class CustomerJsonSerializer(JsonSerializer):
     __json_public__ = ["id","real_name","identification_number","phone",'bank_card_number']
 
-class Customer(CustomerJsonSerializer,db.Model):
+class Customer(CustomerJsonSerializer,db.Model,BasicModel):
     __tablename__="customer"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -92,20 +94,11 @@ class Customer(CustomerJsonSerializer,db.Model):
     def get_id(self):
         return unicode(self.id)
 
-class NullCustomer(Customer):
-    id = None
-    password=None
-    real_name=None
-    identification_number=None
-    phone=None
-    channel=None
-    bank_card_number=None
-    #flask-security use，未使用flask-security
-    email=None
-    active=None
-    last_login_at = None
-    current_login_at = None
-    last_login_ip = None
-    current_login_ip = None
-    login_count = None
+    def newNone(self):
+        return NoneCustomer()
+
+class NoneCustomer(Customer,Singleton):
+
+    def isNone(self):
+        return True
 

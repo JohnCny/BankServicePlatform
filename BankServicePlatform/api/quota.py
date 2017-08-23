@@ -141,8 +141,8 @@ def pad_update_amount():
             "updated_quota":updated_quota
         }
         quota_record.create(**data)
-        available_amount=int(_quota.available_amount)
-        available_amount=int(int(updated_quota)-int(original_quota)+available_amount)
+        available_amount=float(_quota.available_amount)
+        available_amount=float(float(updated_quota)-float(original_quota)+available_amount)
 
         if available_amount>0:
             available_amount=available_amount

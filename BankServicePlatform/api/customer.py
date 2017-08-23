@@ -129,8 +129,8 @@ def update_quota(customer_id,identification_number,real_name,phone,bank_card_num
 
     update_quota=result.get('quota',None)#.encode('utf8')
 
-    available_amount=int(_quota.available_amount)
-    available_amount=int(int(update_quota)-int(_quota.amount)+available_amount)
+    available_amount=float(_quota.available_amount)
+    available_amount=float(float(update_quota)-float(_quota.amount)+available_amount)
 
     if available_amount>0:
         available_amount=available_amount
