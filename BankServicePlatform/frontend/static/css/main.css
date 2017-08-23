@@ -183,7 +183,11 @@ h1 {
 .kg {
     margin-left: 20px;
     -webkit-appearance: checkbox;
-	vertical-align:middle;
+    vertical-align: middle;
+}
+
+.kg1 {
+    margin-left: 20px;
 }
 
 
@@ -336,10 +340,10 @@ h1 {
 #dialog {
     background: rgba(0, 0, 0, 0.5);
     position: fixed;
-	top:0;
-	left:0;
-	right:0;
-	bottom:0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 1000000;
     display: none;
 }
