@@ -56,18 +56,19 @@ def update_amount():
         request_json=dict(**request.json)
 
         quota_id=request_json['quota_id']
-        _quota=quota.get_or_404(quota_id)
+        _quota=quota.get(quota_id)
 
-        original_quota=_quota.amount
-        updated_quota=request_json['updated_quota']
+        if not _quota.isNone():
+            original_quota=_quota.amount
+            updated_quota=request_json['updated_quota']
 
-        data={
-            "quota_id":quota_id,
-            "original_quota":original_quota,
-            "updated_quota":updated_quota
-        }
-        quota_record.create(**data)
-        _quota=quota.update(_quota,amount=updated_quota)
+            data={
+                "quota_id":quota_id,
+                "original_quota":original_quota,
+                "updated_quota":updated_quota
+            }
+            quota_record.create(**data)
+            _quota=quota.update(_quota,amount=updated_quota)
     except:
         logger.exception("error")
         return helper.show_result_fail("额度更新失败")
@@ -83,37 +84,40 @@ def delete(quota_id):
 #==================================PAD交互=====================================
 @route_nl(bp,'/pad_increase_amount/<quota_id>')
 def pad_increase_amount(quota_id):
-    _quota=quota.get_or_404(quota_id)
-    quota.update(_quota,status=0)
-    try:
-    # _quota_bill=quota.get_or_404(quota_id).quota_used_recordes.first().quota_billes
-        _cutomer=_quota.customer
-        data={
-            "id":_quota.id,
-            "customerName":_cutomer.real_name,
-            "sfzh":str(_cutomer.identification_number),
-            "phoneNo":_cutomer.phone,
-            "cardNum":_cutomer.bank_card_number,
-            "applyAmt":_quota.amount,
-            "loanTerm":0,
-            "applyTime":datetime.datetime.now()
-        }
-        data=urllib.urlencode(data)
+    _quota=quota.get(quota_id)
+    if not _quota.isNone():
+        quota.update(_quota,status=0)
+        try:
+        # _quota_bill=quota.get_or_404(quota_id).quota_used_recordes.first().quota_billes
+            _cutomer=_quota.customer
+            data={
+                "id":_quota.id,
+                "customerName":_cutomer.real_name,
+                "sfzh":str(_cutomer.identification_number),
+                "phoneNo":_cutomer.phone,
+                "cardNum":_cutomer.bank_card_number,
+                "applyAmt":_quota.amount,
+                "loanTerm":0,
+                "applyTime":datetime.datetime.now()
+            }
+            data=urllib.urlencode(data)
 
-        req=urllib2.Request("http://"+PAD_SERVER_URL+":8080/PCCredit/ipad/ks/getQuotaApply.json",data=data)
-        response=urllib2.urlopen(req,timeout=60)
+            req=urllib2.Request("http://"+PAD_SERVER_URL+":8080/PCCredit/ipad/ks/getQuotaApply.json",data=data)
+            response=urllib2.urlopen(req,timeout=60)
 
-        response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
-        result=response_json.get('result',None)
-        status=result.get('status',None)
-    except:
-        logger.exception("error")
+            response_json=yaml.safe_load(json.loads(response.read(),encoding='utf8'))
+            result=response_json.get('result',None)
+            status=result.get('status',None)
+        except:
+            logger.exception("error")
+            return helper.show_result_fail("提额失败")
+
+        if status=='success':
+            return helper.show_result_success("提额成功")
+
         return helper.show_result_fail("提额失败")
-
-    if status=='success':
-        return helper.show_result_success("提额成功")
-
-    return helper.show_result_fail("提额失败")
+    else:
+        return helper.show_result_fail("没有记录")
 
 
 @route_nl(bp,'/pad_update_amount',methods=['POST'])

@@ -11,7 +11,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security
 from flask_redis import FlaskRedis
-from functools import wraps
+from .factories.models import ModelFactory
 
 # #: Flask-SQLAlchemy extension instance
 db = SQLAlchemy()
@@ -68,27 +68,32 @@ class Service(object):
         return model
 
     def all(self):
-        return self.__model__.query.all()
+        query=self.__model__.query.all()
+        return ModelFactory.new(query,self.__model__)
 
     def get(self, id):
-        return self.__model__.query.get(id)
+        query=self.__model__.query.get(id)
+        return ModelFactory.new(query,self.__model__)
 
     def get_all(self, *ids):
-        return self.__model__.query.filter(self.__model__.id.in_(ids)).all()
+        query=self.__model__.query.filter(self.__model__.id.in_(ids)).all()
+        return ModelFactory.new(query,self.__model__)
 
     def find(self, **kwargs):
         """
         条件查询，返回全部
         :param **kwargs: 查询条件
         """
-        return self.__model__.query.filter_by(**kwargs)
+        query=self.__model__.query.filter_by(**kwargs)
+        return ModelFactory.new(query,self.__model__)
 
     def first(self, **kwargs):
         """
         条件查询，返回第一条
         :param **kwargs: 查询条件
         """
-        return self.find(**kwargs).first()
+        query=self.find(**kwargs).first()
+        return ModelFactory.new(query,self.__model__)
 
     def get_or_404(self, id):
         """

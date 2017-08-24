@@ -2,7 +2,7 @@
 __author__ = 'Johnny'
 
 from flask import Blueprint, request
-from ..services import quota_repayment, quota_bill, quota_used_record
+from ..services import quota_repayment, quota_bill, quota_used_record,quota
 from ..tools import helper
 from . import route, transaction
 from ..models import QuotaRepayment, QuotaBill, QuotaUsedRecord, Quota, Customer
@@ -41,14 +41,15 @@ def new():
             _quota_repayment = quota_repayment.get_or_404(quota_repayment_id)
 
             if repayment_amount >= _quota_repayment.repayment_amount:
-                _quota_bill = quota_bill.get_or_404(_quota_repayment.quota_bill_id)
-                update_quota_bill(_quota_bill)
-                repaid_data = {
-                    "repaid": repayment_amount,
-                    "is_repaid": 1,
-                    "repayment_date": datetime.datetime.now()
-                }
-                quota_repayment.update(_quota_repayment,**repaid_data)
+                _quota_bill = quota_bill.get(_quota_repayment.quota_bill_id)
+                if not _quota_bill.isNone():
+                    update_quota_bill(_quota_bill,_quota_repayment.principal)
+                    repaid_data = {
+                        "repaid": repayment_amount,
+                        "is_repaid": 1,
+                        "repayment_date": datetime.datetime.now()
+                    }
+                    quota_repayment.update(_quota_repayment,**repaid_data)
             else:
                 repaid_data = {
                     "repaid": repayment_amount,
@@ -62,21 +63,28 @@ def new():
     return helper.show_result_success("还款成功")
 
 
-def update_quota_bill(_quota_bill):
+def update_quota_bill(_quota_bill,repaid_principal):
     period = _quota_bill.period_remain - 1
-    if period > 0:
-        quota_bill.update(_quota_bill, period_remain=period)
-        return True
-    elif period == 0:
-        quota_bill.update(_quota_bill, period_remain=period)
-        update_quota_used_record(_quota_bill.quota_used_record_id)
-        return True
+    _quota_used_record=quota_used_record.get(_quota_bill.quota_used_record_id)
+    if not _quota_used_record.isNone():
+        if period > 0:
+            quota_bill.update(_quota_bill, period_remain=period)
+        elif period == 0:
+            quota_bill.update(_quota_bill, period_remain=period)
+            update_quota_used_record(_quota_used_record)
 
-    return False
+        return update_quota(_quota_used_record.quota_id,repaid_principal)
 
 
-def update_quota_used_record(quota_used_record_id):
-    return quota_used_record.update(quota_used_record.get_or_404(quota_used_record_id), status=1)
+def update_quota_used_record(_quota_used_record):
+    return quota_used_record.update(_quota_used_record, status=1)
+
+def update_quota(quota_id,repaid_principal):
+    _quota=quota.get(quota_id)
+    if not _quota.isNone():
+        updated_amount=float(_quota.available_amount)+float(repaid_principal)
+        return quota.update(_quota,available_amount=updated_amount)
+    return _quota
 
 
 @route(bp, '/<customer_id>/get_expected_repayment_7d', methods=['GET'])
