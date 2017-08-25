@@ -77,7 +77,8 @@ def new_bill(amount,period,quota_used_record_id):
     data={
         "quota_used_record_id":quota_used_record_id,
         "period_amount":amount,
-        "period_remain":period
+        "period_remain":period,
+        "period":period
     }
     return quota_bill.create(**data)
 

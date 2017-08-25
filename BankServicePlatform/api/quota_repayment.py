@@ -26,7 +26,6 @@ def show(quota_repayment_id):
 
 
 @route(bp, '/', methods=['POST'])
-@transaction
 def new():
     # todo:增加事务,多期合并
     request_json_origin = dict(**request.json)
@@ -73,11 +72,15 @@ def update_quota_bill(_quota_bill,repaid_principal):
             quota_bill.update(_quota_bill, period_remain=period)
             update_quota_used_record(_quota_used_record)
 
-        return update_quota(_quota_used_record.quota_id,repaid_principal)
+    update_quota(_quota_used_record.quota_id,repaid_principal)
 
 
 def update_quota_used_record(_quota_used_record):
-    return quota_used_record.update(_quota_used_record, status=1)
+    #为了配合前端参数预编译
+    update_data={
+        "quota_used_record":{"status":1}
+    }
+    _quota_used_record=quota_used_record.update(_quota_used_record, **update_data)
 
 def update_quota(quota_id,repaid_principal):
     _quota=quota.get(quota_id)
