@@ -42,7 +42,7 @@ def new():
         avaliable_amount=float(quota.get_or_404(quota_id).available_amount)
         avaliable_remain=avaliable_amount-used_quota
         #获得利率和期限
-        rate=0.18#todo:从产品获取利率
+        rate=0.015#todo:从产品获取利率
         period=int(request_json['period'])
 
         #判断可用余额
@@ -85,7 +85,7 @@ def new_repayment(used_quota,amount,period,rate,quota_bill_id):
     period_count=int(period)
     #计算每期还款明细
     while period_count:
-        principal=used_quota*rate*(1+rate)**(period_count-1)/((1+rate)**period-1)
+        principal=(used_quota*rate*(1+rate)**(period_count-1))/((1+rate)**period-1)
         interest=used_quota*rate*((1+rate)**(period)-(1+rate)**(period_count-1))/((1+rate)**period-1)
         frd=datetime.date.today()
         month=frd.month+period_count
