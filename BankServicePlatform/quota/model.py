@@ -4,11 +4,13 @@ __author__ = 'Johnny'
 from ..core import db
 from ..tools.helper import JsonSerializer
 from datetime import datetime
+from ..factories.models import BasicModel
+from ..factories.gof import Singleton
 
 class QuotaJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","amount","available_amount","status","is_bankcard_binded"]
+    __json_public__ = ["id","amount","available_amount","status","is_bankcard_binded","is_none"]
 
-class Quota(QuotaJsonSerializer,db.Model):
+class Quota(QuotaJsonSerializer,db.Model,BasicModel):
     __tablename__="quota"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -23,11 +25,15 @@ class Quota(QuotaJsonSerializer,db.Model):
     quota_recordes=db.relationship('QuotaRecord', backref='quota',lazy='dynamic')#额度记录
     quota_used_recordes=db.relationship('QuotaUsedRecord', backref='quota',lazy='dynamic')#使用额度记录
 
+class NoneQuota(Quota,Singleton):
+    def isNone(self):
+        return True
+
 
 class QuotaRecordJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","original_quota","updated_quota","create_date"]
+    __json_public__ = ["id","original_quota","updated_quota","create_date","is_none"]
 
-class QuotaRecord(QuotaRecordJsonSerializer,db.Model):
+class QuotaRecord(QuotaRecordJsonSerializer,db.Model,BasicModel):
     __tablename__="quota_record"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -36,10 +42,14 @@ class QuotaRecord(QuotaRecordJsonSerializer,db.Model):
     original_quota=db.Column(db.Integer())#原始额度
     updated_quota=db.Column(db.Integer())#变更后额度
 
-class QuotaUsedRecordJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","used_quota","create_date","status"]
+class NoneQuotaRecord(QuotaRecord,Singleton):
+    def isNone(self):
+        return True
 
-class QuotaUsedRecord(QuotaUsedRecordJsonSerializer,db.Model):
+class QuotaUsedRecordJsonSerializer(JsonSerializer):
+    __json_public__ = ["id","used_quota","create_date","status","is_none"]
+
+class QuotaUsedRecord(QuotaUsedRecordJsonSerializer,db.Model,BasicModel):
     __tablename__="quota_used_record"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -50,10 +60,14 @@ class QuotaUsedRecord(QuotaUsedRecordJsonSerializer,db.Model):
 
     quota_billes=db.relationship('QuotaBill', backref='quota_used_record',uselist=False)#额度账单
 
-class QuotaBillJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","period_amount","period","period_remain","create_date"]
+class NoneQuotaUsedRecord(QuotaUsedRecord,Singleton):
+    def isNone(self):
+        return True
 
-class QuotaBill(QuotaBillJsonSerializer,db.Model):
+class QuotaBillJsonSerializer(JsonSerializer):
+    __json_public__ = ["id","period_amount","period","period_remain","create_date","is_none"]
+
+class QuotaBill(QuotaBillJsonSerializer,db.Model,BasicModel):
     __tablename__="quota_bill"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -65,10 +79,15 @@ class QuotaBill(QuotaBillJsonSerializer,db.Model):
 
     quota_repaymentes=db.relationship('QuotaRepayment', backref='quota_bill',lazy='dynamic')#账单还款记录
 
-class QuotaRepaymentJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","repayment_amount","period","final_repayment_date","quota_bill_id"]
 
-class QuotaRepayment(QuotaRepaymentJsonSerializer,db.Model):
+class NoneQuotaBill(QuotaBill,Singleton):
+    def isNone(self):
+        return True
+
+class QuotaRepaymentJsonSerializer(JsonSerializer):
+    __json_public__ = ["id","repayment_amount","period","final_repayment_date","quota_bill_id","is_none"]
+
+class QuotaRepayment(QuotaRepaymentJsonSerializer,db.Model,BasicModel):
     __tablename__="quota_repayment"
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -82,4 +101,6 @@ class QuotaRepayment(QuotaRepaymentJsonSerializer,db.Model):
     is_repaid=db.Column(db.Integer())#是否已还清，0否，1是
     final_repayment_date=db.Column(db.DateTime())#最后还款日期
 
-
+class NoneQuotaRepayment(QuotaRepayment,Singleton):
+    def isNone(self):
+        return True

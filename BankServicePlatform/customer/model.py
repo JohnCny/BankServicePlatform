@@ -26,7 +26,7 @@ class Role(db.Model):
                 self.name != getattr(other, 'name', None))
 
 class CustomerJsonSerializer(JsonSerializer):
-    __json_public__ = ["id","real_name","identification_number","phone",'bank_card_number']
+    __json_public__ = ["id","real_name","identification_number","phone",'bank_card_number','is_none']
 
 class Customer(CustomerJsonSerializer,db.Model,BasicModel):
     __tablename__="customer"
@@ -94,11 +94,12 @@ class Customer(CustomerJsonSerializer,db.Model,BasicModel):
     def get_id(self):
         return unicode(self.id)
 
-    def newNone(self):
+    @staticmethod
+    def newNone():
         return NoneCustomer()
 
 class NoneCustomer(Customer,Singleton):
-
+    is_none=1
     def isNone(self):
         return True
 

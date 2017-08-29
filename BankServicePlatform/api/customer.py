@@ -15,7 +15,7 @@ import datetime
 bp=Blueprint('customer',__name__,url_prefix='/customer')
 
 
-# @route(bp,'/')
+# @route(bp,'/')#todo:测试完注释掉
 # def list():
 #     """
 #         查询，返回全部
@@ -36,7 +36,7 @@ def show(customer_id):
     """
         查找单个
     """
-    return customer.get_or_404(customer_id)
+    return customer.get(customer_id)
 
 @route(bp,'/<customer_id>/quotas')
 def quotas(customer_id):
