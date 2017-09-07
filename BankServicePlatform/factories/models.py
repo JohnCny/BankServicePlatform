@@ -3,8 +3,6 @@ __author__ = 'Johnny'
 
 from ..tools.helper import JsonSerializer
 
-
-
 class BasicModel():
     is_none=0
     def isNone(self):

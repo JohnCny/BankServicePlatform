@@ -32,7 +32,7 @@ def show_quota_bill(quota_used_record_id):
 @route(bp,'/',methods=['POST'])
 def new():
 
-    #todo:需要增加事务
+    #todo:写操作改为事务
     try:
         quota_used_record_json=dict(dict(**request.json)['quota_used_record'])
         request_json=dict(**request.json)

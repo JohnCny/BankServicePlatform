@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Johnny'
 
-
 class Singleton(object):
     """
     单例模式

@@ -51,7 +51,7 @@ def update(quota_id):
 
 @route(bp,'/update_amount',methods=['POST'])
 def update_amount():
-    #todo:增加额度验证
+    #todo:增加额度验证，写操作改为事务
     try:
         request_json=dict(**request.json)
 
@@ -122,7 +122,7 @@ def pad_increase_amount(quota_id):
 
 @route_nl(bp,'/pad_update_amount',methods=['POST'])
 def pad_update_amount():
-    #todo:增加额度验证
+    #todo:增加额度验证，写操作改为事务
     try:
         request_json=dict(**request.json)
 

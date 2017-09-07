@@ -27,7 +27,7 @@ def show(quota_repayment_id):
 
 @route(bp, '/', methods=['POST'])
 def new():
-    # todo:增加事务,多期合并
+    # todo:写操作改为事务
     request_json_origin = dict(**request.json)
     request_json_origin = request_json_origin["repayments"]
 
@@ -89,7 +89,7 @@ def update_quota(quota_id,repaid_principal):
         return quota.update(_quota,available_amount=updated_amount)
     return _quota
 
-
+#获得7天内应还金额
 @route(bp, '/<customer_id>/get_expected_repayment_7d', methods=['GET'])
 def get_expected_repayment_7d(customer_id):
     try:

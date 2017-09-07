@@ -11,7 +11,7 @@ bp=Blueprint('token',__name__,url_prefix='/token')
 @route(bp,'/token')
 def get_token():
     """
-        根据你openid获得token
+        根据openid获得token
     """
     result=customer.first(**request.json)
     if result:

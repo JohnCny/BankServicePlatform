@@ -22,6 +22,7 @@ mail = Mail()
 #: Flask-Security extension instance
 security = Security()
 
+
 redis=FlaskRedis()
 
 
