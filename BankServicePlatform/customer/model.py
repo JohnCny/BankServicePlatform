@@ -49,7 +49,7 @@ class Customer(CustomerJsonSerializer,db.Model,BasicModel):
     current_login_ip = db.Column(db.String(100))
     login_count = db.Column(db.Integer)
 
-    create_date=db.Column(db.DateTime(),default=datetime.datetime.now())#创建时间
+    create_date=db.Column(db.DateTime(),default=datetime.datetime.now)#创建时间
 
     quotaes=db.relationship('Quota', backref='customer',uselist=False)#额度关联
 
